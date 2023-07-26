@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "925039317330",
+    "project_id": "artisian-25b23",
+    "storage_bucket": "artisian-25b23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925039317330:android:9528419a34b2368f6eea8b",
+        "android_client_info": {
+          "package_name": "com.example.artisian"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925039317330-dc0q89rpu223l2egf6gjs43i90gsi2eq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5VrH3-rpgrYtY8xyleGg4bcs8ugV_pt0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925039317330-dc0q89rpu223l2egf6gjs43i90gsi2eq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
