@@ -61,19 +61,24 @@ class Carosalview extends StatelessWidget {
                 children: [
                   MyGridTile(
                       imagePath: 'assets/icons/stage1.png',
-                      title: 'Begineer',
+                      title: 'Beginner',
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Syllabus()));
+                                builder: (context) =>
+                                    Syllabus(level: 'Beginner')));
                       }),
                   MyGridTile(
                     imagePath: 'assets/icons/stage2.png',
                     title: 'Intermediate',
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Syllabus()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Syllabus(
+                                    level: 'Intermediate',
+                                  )));
                     },
                   ),
                 ],
@@ -85,8 +90,12 @@ class Carosalview extends StatelessWidget {
                     imagePath: 'assets/icons/stage3.png',
                     title: 'Advance',
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Syllabus()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Syllabus(
+                                    level: 'Advance',
+                                  )));
                     },
                   ),
                 ],
