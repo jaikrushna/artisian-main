@@ -82,7 +82,7 @@ class _CarosalState extends State<Carosal> with SingleTickerProviderStateMixin {
       ),
       Container(
         alignment: Alignment.center,
-        child: ChatScreen(),
+        // child: ChatScreen(),
       ),
       Container(
         alignment: Alignment.center,

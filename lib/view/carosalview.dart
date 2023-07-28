@@ -60,20 +60,25 @@ class Carosalview extends StatelessWidget {
               Row(
                 children: [
                   MyGridTile(
-                      imagePath: 'assets/icons/stage1.png',
-                      title: 'Begineer',
+                      // imagePath: '',
+                      title: 'Beginner',
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Syllabus()));
+                                builder: (context) =>
+                                    Syllabus(level: 'Beginner')));
                       }),
                   MyGridTile(
-                    imagePath: 'assets/icons/stage2.png',
+                    // imagePath: '',
                     title: 'Intermediate',
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Syllabus()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Syllabus(
+                                    level: 'Intermediate',
+                                  )));
                     },
                   ),
                 ],
@@ -82,11 +87,15 @@ class Carosalview extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   MyGridTile(
-                    imagePath: 'assets/icons/stage3.png',
+                    // imagePath: '',
                     title: 'Advance',
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Syllabus()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Syllabus(
+                                    level: 'Advance',
+                                  )));
                     },
                   ),
                 ],

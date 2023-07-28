@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MyGridTile extends StatelessWidget {
-  final String imagePath;
+  // final String imagePath;
   final String title;
   final VoidCallback onPressed;
 
   MyGridTile({
-    required this.imagePath,
+    // required this.imagePath,
     required this.title,
     required this.onPressed,
   });
@@ -34,11 +34,12 @@ class MyGridTile extends StatelessWidget {
               children: [
                 Container(
                   width: 180,
-                  child: Image.network(
-                    imagePath,
-                    width: 100,
-                    height: 100,
-                  ),
+                  // child:
+                  // Image.network(
+                  //   // imagePath,
+                  //   width: 100,
+                  //   height: 100,
+                  // ),
                 ),
                 SizedBox(width: 8.0),
                 Text(
