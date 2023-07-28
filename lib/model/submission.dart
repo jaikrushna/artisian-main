@@ -25,6 +25,7 @@ class Submission extends StatelessWidget {
           showBottomSheet(context);
         },
         subtitle: '',
+        field: '',
       ),
     );
   }
