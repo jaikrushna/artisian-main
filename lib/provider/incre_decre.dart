@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'datediff.dart';
+
 void incrementField(String? email) {
   CollectionReference collection =
       FirebaseFirestore.instance.collection('user');
@@ -8,8 +9,7 @@ void incrementField(String? email) {
     'date': DateTime.now(),
   });
   Future<int> diff = calculateDaysDifference(email);
-  if(diff==1)
-  {
+  if (diff == 1) {
     collection.doc('${email}').update({
       fieldName: FieldValue.increment(1),
     });
@@ -24,10 +24,9 @@ void decrementField(String? email) {
     'date': DateTime.now(),
   });
   Future<int> diff = calculateDaysDifference(email);
-  if(diff==1)
-    {
-      collection.doc('${email}').update({
-        fieldName: FieldValue.increment(-1),
-      });
-    }
+  if (diff == 1) {
+    collection.doc('${email}').update({
+      fieldName: FieldValue.increment(-1),
+    });
+  }
 }
