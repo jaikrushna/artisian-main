@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 class CourseViewModel with ChangeNotifier {
   Course? _customModel;
   Course? get customModel => _customModel;
-  CourseViewModel() {}
   Future<Course?> fetchDocumentData(String? email, String docID) async {
     try {
       DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
@@ -20,7 +19,6 @@ class CourseViewModel with ChangeNotifier {
         _customModel =
             Course.fromMap(documentSnapshot.data() as Map<String, dynamic>);
         notifyListeners();
-        return _customModel;
       }
       return null;
     } catch (error) {

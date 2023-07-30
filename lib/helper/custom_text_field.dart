@@ -1,47 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class ThemeHelper{
-
-  InputDecoration textInputDecoration([String lableText="", String hintText = ""]){
+class ThemeHelper {
+  InputDecoration textInputDecoration(
+      [String lableText = "", String hintText = ""]) {
     return InputDecoration(
       labelText: lableText,
       floatingLabelBehavior: FloatingLabelBehavior.never,
-      //hintText: hintText,      
+      //hintText: hintText,
       fillColor: Colors.white,
       filled: true,
       contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0), borderSide: BorderSide(color: Color(0XFF91919F))),
-      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0), borderSide: BorderSide(color: Colors.grey.shade400)),
-      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0), borderSide: BorderSide(color: Colors.red, width: 2.0)),
-      focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16.0), borderSide: BorderSide(color: Colors.red, width: 2.0)),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: BorderSide(color: Color(0XFF91919F))),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: BorderSide(color: Colors.grey.shade400)),
+      errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: BorderSide(color: Colors.red, width: 2.0)),
+      focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: BorderSide(color: Colors.red, width: 2.0)),
     );
   }
 
   BoxDecoration inputBoxDecorationShaddow() {
     return BoxDecoration(boxShadow: [
-      BoxShadow(  
+      BoxShadow(
         color: Colors.grey.withOpacity(0),
         blurRadius: 20,
-
         offset: const Offset(0, 5),
       )
     ]);
   }
 
-  BoxDecoration buttonBoxDecoration(BuildContext context, [String color1 = "", String color2 = ""]) {
+  BoxDecoration buttonBoxDecoration(BuildContext context,
+      [String color1 = "", String color2 = ""]) {
     Color c1 = Theme.of(context).primaryColor;
-    Color c2 = Theme.of(context).accentColor;
+    // Color c2 = Theme.of(context).accentColor;
     if (color1.isEmpty == false) {
       c1 = HexColor(color1);
     }
     if (color2.isEmpty == false) {
-      c2 = HexColor(color2);
+      // c2 = HexColor(color2);
     }
 
     return BoxDecoration(
       boxShadow: [
-        BoxShadow(color: Color(0XFF91919F), offset: Offset(0, 4), blurRadius: 5.0)
+        BoxShadow(
+            color: Color(0XFF91919F), offset: Offset(0, 4), blurRadius: 5.0)
       ],
       gradient: LinearGradient(
         begin: Alignment.topLeft,
@@ -49,7 +58,7 @@ class ThemeHelper{
         stops: [0.0, 1.0],
         colors: [
           c1,
-          c2,
+          // c2,
         ],
       ),
       color: Colors.deepPurple.shade300,
@@ -89,5 +98,4 @@ class ThemeHelper{
       ],
     );
   }
-
 }

@@ -43,7 +43,7 @@ class _AccountState extends State<Account> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Card(
@@ -54,15 +54,15 @@ class _AccountState extends State<Account> {
                         16.0), // Adjust the radius as needed
                   ),
                   child: Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     width: 159,
                     height: 170,
-                    child: Flexible(
+                    child: const Flexible(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
+                            padding: EdgeInsets.only(bottom: 8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -78,7 +78,7 @@ class _AccountState extends State<Account> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
+                            padding: EdgeInsets.only(bottom: 8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -98,7 +98,7 @@ class _AccountState extends State<Account> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
+                            padding: EdgeInsets.only(bottom: 8.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +121,7 @@ class _AccountState extends State<Account> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
+                            padding: EdgeInsets.only(bottom: 8.0),
                             child: Flexible(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -147,7 +147,7 @@ class _AccountState extends State<Account> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Stack(
@@ -165,7 +165,7 @@ class _AccountState extends State<Account> {
                       )),
                 ),
                 // Text widget positioned at the center of the container
-                Positioned(
+                const Positioned(
                   top: 14,
                   child: Column(
                     children: [
@@ -188,21 +188,21 @@ class _AccountState extends State<Account> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            Completion(),
-            SizedBox(
+            const Completion(),
+            const SizedBox(
               height: 15,
             ),
-            Text(
+            const Text(
               'Post',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
-            Divider(
+            const Divider(
               color: Colors.black,
             ),
 
@@ -227,7 +227,7 @@ class _AccountState extends State<Account> {
                   children: [
                     GridView.builder(
                         shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1, // Number of columns in the grid
                           crossAxisSpacing: 8.0, // Spacing between columns
                           mainAxisSpacing: 8.0, // Spacing between rows
