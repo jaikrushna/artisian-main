@@ -1,5 +1,9 @@
+import 'package:artisian/auth/login_screen.dart';
 import 'package:artisian/helper/custom_text_field.dart';
 import 'package:artisian/widget/custom_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -17,18 +21,17 @@ class Login_View extends StatefulWidget {
 class _Login_ViewState extends State<Login_View> {
   //final _firebase = FirebaseFirestore.instance;
 
-  TextEditingController name = TextEditingController();
+  // TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  bool _isSigningIn = false;
-  bool? isChecked = false;
-  bool _isLoading = false;
-  //final db = FirebaseFirestore.instance;
-  String? _password;
 
-  Future<String> sendData(Map<String, dynamic> data) async {
-    //await _firebase.collection("users").add(data);
-    return "Sucess";
+  bool progress = false;
+  bool? isChecked = false;
+  @override
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    super.dispose();
   }
 
   @override
@@ -123,7 +126,9 @@ class _Login_ViewState extends State<Login_View> {
                         Container(
                           child: custom_button(
                             width: 200,
-                            title: "Continue"
+                            title: "Continue",
+                            email: email.text,
+                            passkey: password.text,
                           ),
                         ),
                       ],
@@ -149,8 +154,7 @@ class _Login_ViewState extends State<Login_View> {
                       Container(
                         width: 343,
                         child: ElevatedButton(
-                          onPressed: () async {
-                          },
+                          onPressed: () async {},
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
                             backgroundColor: Colors.white,
@@ -194,10 +198,14 @@ class _Login_ViewState extends State<Login_View> {
                             ),
                             TextSpan(
                               text: 'Login',
-                              /* recognizer: TapGestureRecognizer()
+                              recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  /* Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationPage())) */;
-                                }, */
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Login_Screen()));
+                                },
                               style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.bold,

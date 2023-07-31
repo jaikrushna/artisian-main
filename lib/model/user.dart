@@ -8,8 +8,9 @@ class Users {
   final String hobby;
   final String email;
   final int streak;
-
+  final String imageUrl;
   Users({
+    required this.imageUrl,
     required this.name,
     required this.age,
     required this.bio,
@@ -20,10 +21,11 @@ class Users {
   });
   Map<String, dynamic> toMap() {
     return {
+      "imageUrl": imageUrl,
       "name": name,
       "age": age,
       "bio": bio,
-      "date": DateTime.timestamp(),
+      "date": date,
       "hobby": hobby,
       "email": email,
       "streak": streak,
@@ -32,18 +34,6 @@ class Users {
 
   static List<Users> fromQuery(QuerySnapshot<Map<String, dynamic>> snapshot) =>
       snapshot.docs.isNotEmpty ? toUsers(snapshot) : [];
-
-  // factory User.fromMap(Map<String, dynamic> map) {
-  //   return User(
-  //     name: map['name'] ?? '',
-  //     age: map['age'] ?? 0,
-  //     bio: map['bio'] ?? '',
-  //     date: map['date'] ?? DateTime.timestamp(),
-  //     hobby: map['hobby'] ?? '',
-  //     email: map['email'] ?? '',
-  //     streak: map['streak'] ?? 0,
-  //   );
-  // }
 }
 
 List<Users> toUsers(QuerySnapshot<Map<String, dynamic>> query) =>
@@ -51,10 +41,11 @@ List<Users> toUsers(QuerySnapshot<Map<String, dynamic>> query) =>
 
 Users? toUser(DocumentSnapshot<Map<String, dynamic>> doc) => doc.exists
     ? Users(
+        imageUrl: doc.data()!["imageUrl"],
         name: doc.data()!["name"],
         age: doc.data()!["age"],
         bio: doc.data()!["bio"],
-        date: DateTime.fromMicrosecondsSinceEpoch(doc.data()!['date'] ?? 0),
+        date: doc.data()!["date"],
         hobby: doc.data()!["hobby"],
         email: doc.data()!["email"],
         streak: doc.data()!["streak"],

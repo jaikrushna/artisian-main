@@ -1,10 +1,7 @@
-import 'package:artisian/auth/login_view.dart';
-import 'package:artisian/auth/register.dart';
-import 'package:artisian/view/landing.dart';
+import 'package:artisian/auth/signup_screen.dart';
 import 'package:artisian/view/syllabus.dart';
 import 'package:artisian/viewmodel/course_view_model.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
-import 'package:artisian/viewmodel/user_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:artisian/view/youtube.dart';
@@ -28,7 +25,6 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => EmailViewModel()),
           ChangeNotifierProvider(create: (context) => CourseViewModel()),
           ChangeNotifierProvider(create: (context) => UserViewModel()),
-          // ChangeNotifierProvider(create: (context) => UserViewModel('', '')),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

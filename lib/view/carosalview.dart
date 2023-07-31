@@ -1,8 +1,8 @@
-import 'package:artisian/model/gridtile.dart';
+import 'package:artisian/widget/gridtile.dart';
 import 'package:artisian/view/syllabus.dart';
 // import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:artisian/model/carousal.dart';
+import 'package:artisian/widget/carousal.dart';
 
 // Widget buildAdvertismentPlace() {
 //   return Padding(

@@ -1,40 +1,42 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Course {
-  final bool sub1;
-  final bool vid1;
-  final bool sub2;
-  final bool vid2;
-  final bool sub3;
-  final bool vid3;
-  final bool sub4;
-  final bool vid4;
-  final bool sub5;
-  final bool vid5;
+  final Map<String, bool> sub;
+  final Map<String, bool> vid;
 
   Course({
-    required this.sub1,
-    required this.vid1,
-    required this.sub2,
-    required this.vid2,
-    required this.sub3,
-    required this.vid3,
-    required this.sub4,
-    required this.vid4,
-    required this.sub5,
-    required this.vid5,
+    required this.sub,
+    required this.vid,
   });
 
-  factory Course.fromMap(Map<String, dynamic> map) {
-    return Course(
-      sub1: map['sub1'] ?? false,
-      vid1: map['vid1'] ?? false,
-      sub2: map['sub2'] ?? false,
-      vid2: map['vid2'] ?? false,
-      sub3: map['sub3'] ?? false,
-      vid3: map['vid3'] ?? false,
-      sub4: map['sub4'] ?? false,
-      vid4: map['vid4'] ?? false,
-      sub5: map['sub5'] ?? false,
-      vid5: map['vid5'] ?? false,
-    );
+  Map<String, dynamic> toMap() {
+    return {
+      'sub': {
+        'sub1': sub['sub1'] ?? false,
+        'sub2': sub['sub2'] ?? false,
+        'sub3': sub['sub3'] ?? false,
+        'sub4': sub['sub4'] ?? false,
+        'sub5': sub['sub5'] ?? false,
+      },
+      'vid': {
+        'vid1': vid['vid1'] ?? false,
+        'vid2': vid['vid2'] ?? false,
+        'vid3': vid['vid3'] ?? false,
+        'vid4': vid['vid4'] ?? false,
+        'vid5': vid['vid5'] ?? false,
+      },
+    };
+  }
+
+  static Course? fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    if (snapshot.exists) {
+      final data = snapshot.data();
+      return Course(
+        sub: Map<String, bool>.from(data!['sub']),
+        vid: Map<String, bool>.from(data!['vid']),
+      );
+    } else {
+      return null;
+    }
   }
 }

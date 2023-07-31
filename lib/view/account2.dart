@@ -3,17 +3,24 @@ import 'package:artisian/provider/posttile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Account extends StatefulWidget {
-  const Account({Key? key}) : super(key: key);
+import '../model/post.dart';
+import '../viewmodel/post_view_model.dart';
 
+class Account extends StatefulWidget {
+  Account({
+    required this.email,
+  });
+  final String email;
   @override
   State<Account> createState() => _AccountState();
 }
 
 class _AccountState extends State<Account> {
-  CollectionReference _reference =
-      FirebaseFirestore.instance.collection('post').doc('jb').collection('jb');
-  late Stream<QuerySnapshot> _stream = _reference.orderBy('date').snapshots();
+  late CollectionReference reference = FirebaseFirestore.instance
+      .collection('post')
+      .doc(widget.email)
+      .collection('${widget.email}');
+  late Stream<QuerySnapshot> _stream = reference.orderBy('date').snapshots();
   late String url;
   var _isloading = false;
   late final _firestone = FirebaseFirestore.instance;
@@ -207,38 +214,36 @@ class _AccountState extends State<Account> {
             ),
 
             // StreamBuilder to display the list of posts
-            StreamBuilder<QuerySnapshot>(
-              stream: _stream,
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(child: Image.asset('assets/icons/nopost.png'));
-                }
-
-                final tiles = snapshot.data!.docs;
-                memberlist
-                    .clear(); // Clear the previous data before adding new data
-                for (var tile in tiles) {
-                  url = tile.get('imageURL') ?? '';
-                  addData(url);
-                }
-
-                return Column(
-                  children: [
-                    GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1, // Number of columns in the grid
-                          crossAxisSpacing: 8.0, // Spacing between columns
-                          mainAxisSpacing: 8.0, // Spacing between rows
+            StreamBuilder<Post?>(
+              stream: PostViewModel()
+                  .getCurrentPostData(), // Replace 'PostViewModel()' with your actual instance of PostViewModel.
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // While waiting for data, you can display a loading indicator.
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  // If an error occurs, display an error message.
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  // If data is available, you can display it.
+                  final post = snapshot.data;
+                  if (post != null) {
+                    return Column(
+                      children: [
+                        Image.network(
+                          post.imageUrl,
+                          width: 100,
+                          height: 100,
                         ),
-                        itemCount: memberlist.length,
-                        itemBuilder: (context, i) => memberlist[i]),
-                  ],
-                );
+                      ],
+                    );
+                  } else {
+                    // If data is null (no post available), display a message.
+                    return Text('No post data available.');
+                  }
+                }
               },
-            ),
+            )
           ],
         ),
       ),

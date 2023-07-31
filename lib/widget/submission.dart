@@ -11,9 +11,9 @@ import 'package:artisian/viewmodel/email_view.dart';
 import 'package:provider/provider.dart';
 
 class Submission extends StatefulWidget {
-  late bool isTicked;
+  late bool? isTicked;
   late String field;
-  late String level;
+  late String? level;
   Submission({
     required this.isTicked,
     required this.field,

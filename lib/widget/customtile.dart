@@ -8,9 +8,9 @@ class CustomTile extends StatefulWidget {
   final String title;
   final String subtitle;
   final VoidCallback onPressed;
-  late bool isTicked;
+  late bool? isTicked;
   late String field;
-  late String level;
+  late String? level;
   CustomTile({
     required this.title,
     required this.subtitle,
