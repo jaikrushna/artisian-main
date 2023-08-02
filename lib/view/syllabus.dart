@@ -20,13 +20,11 @@ class Syllabus extends StatefulWidget {
 class _SyllabusState extends State<Syllabus> {
   @override
   Widget build(BuildContext context) {
-    String? userEmail = Provider.of<EmailViewModel>(context).userEmail;
-    final customModel = Provider.of<CourseViewModel>(context);
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      final model = await customModel.getCurrentCourseData(widget.level);
-    });
-    // final model = customModel.getCurrentCourseData(widget.level);
-    // customModel?.fetchDocumentData(userEmail, widget.level);
+    // String? userEmail = Provider.of<EmailViewModel>(context).userEmail;
+    // final customModel = Provider.of<CourseViewModel>(context);
+    // WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    //   final model = await customModel.getCurrentCourseData(widget.level);
+    // });
     return Scaffold(
         appBar: AppBar(),
         body: Padding(
@@ -54,16 +52,9 @@ class _SyllabusState extends State<Syllabus> {
                             children: [
                               CustomTile(
                                 title: 'Title',
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Youtube_screen()));
-                                },
                                 subtitle: '',
                                 field: 'vid1',
-                                isTicked: course.sub['vid1'],
+                                isTicked: course.vid['vid1'],
                                 level: widget.level,
                               ),
                               Submission(
@@ -73,16 +64,9 @@ class _SyllabusState extends State<Syllabus> {
                               ),
                               CustomTile(
                                 title: 'Title',
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Youtube_screen()));
-                                },
                                 subtitle: '',
                                 field: 'vid2',
-                                isTicked: course.sub['vid2'],
+                                isTicked: course.vid['vid2'],
                                 level: widget.level,
                               ),
                               Submission(
@@ -92,16 +76,9 @@ class _SyllabusState extends State<Syllabus> {
                               ),
                               CustomTile(
                                 title: 'Title',
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Youtube_screen()));
-                                },
                                 subtitle: '',
                                 field: 'vid3',
-                                isTicked: course.sub['vid3'],
+                                isTicked: course.vid['vid3'],
                                 level: widget.level,
                               ),
                               Submission(
@@ -111,16 +88,9 @@ class _SyllabusState extends State<Syllabus> {
                               ),
                               CustomTile(
                                 title: 'Title',
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Youtube_screen()));
-                                },
                                 subtitle: '',
                                 field: 'vid4',
-                                isTicked: course.sub['vid4'],
+                                isTicked: course.vid['vid4'],
                                 level: widget.level,
                               ),
                               Submission(
@@ -130,16 +100,9 @@ class _SyllabusState extends State<Syllabus> {
                               ),
                               CustomTile(
                                 title: 'Title',
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Youtube_screen()));
-                                },
                                 subtitle: '',
                                 field: 'vid5',
-                                isTicked: course.sub['vid5'],
+                                isTicked: course.vid['vid5'],
                                 level: widget.level,
                               ),
                               Submission(

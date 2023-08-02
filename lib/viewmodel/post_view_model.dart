@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class PostViewModel extends ChangeNotifier {
   void addPost({
-    required String email,
+    required String? email,
     required String imageUrl,
   }) {
     Post post = Post(imageUrl: imageUrl, date: DateTime.now());

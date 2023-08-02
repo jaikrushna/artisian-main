@@ -12,9 +12,9 @@ class EmailViewModel with ChangeNotifier {
   Future<void> fetchUserEmail() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      
+
       if (user != null) {
-        _userEmail = 'jai11@gmail.com'; //user.email;
+        _userEmail = user.email;
         notifyListeners();
       }
     } catch (error) {

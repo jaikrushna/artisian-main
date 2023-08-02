@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 class CourseViewModel extends ChangeNotifier {
   void addCourse({
     required String email,
+    required String level,
   }) {
     Course course = Course(sub: Map(), vid: Map());
     FirebaseFirestore.instance
         .collection('course')
         .doc('${email}')
         .collection('${email}')
-        .doc('Beginner')
+        .doc(level)
         .set(course.toMap())
         .then((value) {
       // Data saved successfully
@@ -48,5 +49,64 @@ class CourseViewModel extends ChangeNotifier {
         .get();
 
     return Course.fromSnapshot(beginnerDoc);
+  }
+
+  Future<void> updateFieldValue(String? level, String mapTodate,
+      String fieldToUpdate, dynamic newValue) async {
+    try {
+      final currentuser = FirebaseAuth.instance.currentUser;
+      if (currentuser == null) {
+        // If no authenticated user is found, return early or handle the error accordingly.
+        print('No authenticated user found.');
+        return;
+      }
+
+      String? email = currentuser.email; // Get the email of the current user
+
+      // Get the document reference for the specified level and user email
+      DocumentReference<Map<String, dynamic>> documentRef = FirebaseFirestore
+          .instance
+          .collection('course')
+          .doc(email)
+          .collection(email!)
+          .doc(level);
+
+      // Get the current data from Firestore
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await documentRef.get();
+      if (!snapshot.exists) {
+        print('Document not found for the given level: $level');
+        return;
+      }
+
+      // Get the current data as a map
+      Map<String, dynamic> data = snapshot.data() ?? {};
+
+      // Choose the map to update (either 'vid' or 'sub') based on the input 'mapToUpdate'
+      Map<String, dynamic> mapToUpdate =
+          mapTodate == 'vid' ? data['vid'] ?? {} : data['sub'] ?? {};
+
+      // Update the field in the mapToUpdate
+      List<String> keys = fieldToUpdate.split('.');
+      dynamic currentMap = mapToUpdate;
+      for (int i = 0; i < keys.length - 1; i++) {
+        currentMap = currentMap[keys[i]] ?? {};
+      }
+      currentMap[keys.last] = newValue;
+
+      // Update the 'vid' or 'sub' map in Firestore with the updated data
+      if (mapTodate == 'vid') {
+        await documentRef.update({'vid': mapToUpdate});
+      } else if (mapTodate == 'sub') {
+        await documentRef.update({'sub': mapToUpdate});
+      }
+
+      // Optionally, you can notify the listeners about the successful update.
+      notifyListeners();
+
+      print('Field value updated successfully!');
+    } catch (e) {
+      print('Error updating field: $e');
+      // Handle any error that occurred during the update process
+    }
   }
 }

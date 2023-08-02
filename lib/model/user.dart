@@ -9,6 +9,7 @@ class Users {
   final String email;
   final int streak;
   final String imageUrl;
+
   Users({
     required this.imageUrl,
     required this.name,
@@ -19,6 +20,7 @@ class Users {
     required this.email,
     required this.streak,
   });
+
   Map<String, dynamic> toMap() {
     return {
       "imageUrl": imageUrl,
@@ -37,17 +39,21 @@ class Users {
 }
 
 List<Users> toUsers(QuerySnapshot<Map<String, dynamic>> query) =>
-    query.docs.map((doc) => toUser(doc)).whereType<Users>().toList();
+    query.docs.map((doc) => toUser(doc.data())).whereType<Users>().toList();
 
-Users? toUser(DocumentSnapshot<Map<String, dynamic>> doc) => doc.exists
-    ? Users(
-        imageUrl: doc.data()!["imageUrl"],
-        name: doc.data()!["name"],
-        age: doc.data()!["age"],
-        bio: doc.data()!["bio"],
-        date: doc.data()!["date"],
-        hobby: doc.data()!["hobby"],
-        email: doc.data()!["email"],
-        streak: doc.data()!["streak"],
-      )
-    : null;
+Users? toUser(Map<String, dynamic>? data) {
+  if (data != null) {
+    return Users(
+      imageUrl: data["imageUrl"],
+      name: data["name"],
+      age: data["age"],
+      bio: data["bio"],
+      date: (data["date"] as Timestamp).toDate(),
+      hobby: data["hobby"],
+      email: data["email"],
+      streak: data["streak"],
+    );
+  } else {
+    return null;
+  }
+}

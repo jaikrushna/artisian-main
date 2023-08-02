@@ -6,16 +6,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../model/post.dart';
 import '../viewmodel/post_view_model.dart';
 
-class Account extends StatefulWidget {
-  Account({
+class Account2 extends StatefulWidget {
+  Account2({
     required this.email,
   });
-  final String email;
+  final String? email;
   @override
-  State<Account> createState() => _AccountState();
+  State<Account2> createState() => _Account2State();
 }
 
-class _AccountState extends State<Account> {
+class _Account2State extends State<Account2> {
   late CollectionReference reference = FirebaseFirestore.instance
       .collection('post')
       .doc(widget.email)

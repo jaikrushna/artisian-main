@@ -1,4 +1,5 @@
 import 'package:artisian/provider/TickButton.dart';
+import 'package:artisian/view/youtube.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:artisian/viewmodel/email_view.dart';
@@ -7,14 +8,12 @@ import 'package:provider/provider.dart';
 class CustomTile extends StatefulWidget {
   final String title;
   final String subtitle;
-  final VoidCallback onPressed;
   late bool? isTicked;
   late String field;
   late String? level;
   CustomTile({
     required this.title,
     required this.subtitle,
-    required this.onPressed,
     required this.isTicked,
     required this.field,
     required this.level,
@@ -40,7 +39,10 @@ class _CustomTileState extends State<CustomTile> {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: widget.onPressed,
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Youtube_screen()));
+            },
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -50,6 +52,7 @@ class _CustomTileState extends State<CustomTile> {
                     userEmail: userEmail,
                     field: widget.field,
                     level: widget.level,
+                    mapname: 'vid',
                   ),
                   SizedBox(width: 8.0),
                   Column(

@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:artisian/provider/TickButton.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,8 +10,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:artisian/viewmodel/email_view.dart';
 import 'package:provider/provider.dart';
+import '../viewmodel/post_view_model.dart';
 
 class Submission extends StatefulWidget {
+  static const route = '/submission';
   late bool? isTicked;
   late String field;
   late String? level;
@@ -27,7 +30,7 @@ class Submission extends StatefulWidget {
 class _SubmissionState extends State<Submission> {
   @override
   Widget build(BuildContext context) {
-    String? userEmail = Provider.of<EmailViewModel>(context).userEmail;
+    User? user = FirebaseAuth.instance.currentUser;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -40,8 +43,8 @@ class _SubmissionState extends State<Submission> {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () async {
-              showBottomSheet(context, userEmail);
+            onTap: () {
+              showBottomSheet2(user!.email);
             },
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -49,9 +52,10 @@ class _SubmissionState extends State<Submission> {
                 children: [
                   TickButton(
                     isTicked: widget.isTicked,
-                    userEmail: userEmail,
+                    userEmail: user!.email,
                     field: widget.field,
                     level: widget.level,
+                    mapname: 'sub',
                   ),
                   SizedBox(width: 8.0),
                   Column(
@@ -76,8 +80,8 @@ class _SubmissionState extends State<Submission> {
     );
   }
 
-  void showBottomSheet(BuildContext context, String? email) {
-    String imageUrl = '';
+  void showBottomSheet2(String? email) {
+    String imageUrl;
     String date = DateTime.now().toString();
     final _firestone = FirebaseFirestore.instance;
     showModalBottomSheet(
@@ -108,13 +112,13 @@ class _SubmissionState extends State<Submission> {
                     await referenceImageToUpload.putFile(File(file.path));
                     Navigator.of(context).pop();
                     imageUrl = await referenceImageToUpload.getDownloadURL();
-                    _firestone
+                    FirebaseFirestore.instance
                         .collection('post')
                         .doc('${email}')
                         .collection('${email}')
                         .add({
-                      'imageURL': imageUrl,
-                      'date': date,
+                      'imageUrl': imageUrl,
+                      'date': DateTime.now(),
                     });
                   } catch (error) {
                     //Some error occurred

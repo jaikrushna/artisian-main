@@ -9,7 +9,7 @@ class UserInfoWidget extends StatelessWidget {
     UserViewModel viewModel = Provider.of<UserViewModel>(context);
 
     return StreamBuilder<Users?>(
-      stream: viewModel.getCurrentUserData(),
+      stream: viewModel.getCurrentUserData(''),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Error fetching user data: ${snapshot.error}');

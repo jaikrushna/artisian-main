@@ -148,7 +148,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     email: widget.email,
                     streak: 0,
                   );
-                  courseModel.addCourse(email: widget.email);
+                  courseModel.addCourse(email: widget.email, level: 'Beginner');
+                  courseModel.addCourse(
+                      email: widget.email, level: 'Intermediate');
+                  courseModel.addCourse(email: widget.email, level: 'Advance');
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Landing()));
                 },
