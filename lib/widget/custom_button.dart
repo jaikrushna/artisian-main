@@ -1,30 +1,41 @@
 import 'dart:io';
-
-import 'package:artisian/auth/register_view.dart';
+import 'package:artisian/view/landing.dart';
+import 'package:artisian/viewmodel/course_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import '../auth/signup_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:artisian/viewmodel/post_view_model.dart';
+import 'package:artisian/viewmodel/registration_view_model.dart';
+import 'package:provider/provider.dart';
 
 class custom_button extends StatelessWidget {
   final double? width;
-  String title;
   String email;
   String passkey;
+  String agetext;
+  String selectedAvatar;
+  String nametext;
+  String hobbytext;
+  String biotext;
   custom_button({
-    required this.title,
     required this.width,
     required this.email,
     required this.passkey,
+    required this.selectedAvatar,
+    required this.agetext,
+    required this.hobbytext,
+    required this.biotext,
+    required this.nametext,
   });
 
   final _firestone = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    UserViewModel viewModel = Provider.of<UserViewModel>(context);
+    CourseViewModel courseModel = Provider.of<CourseViewModel>(context);
+    PostViewModel postModel = Provider.of<PostViewModel>(context);
     void signinerror(String error_message) {
       showDialog(
           context: context,
@@ -50,13 +61,23 @@ class custom_button extends StatelessWidget {
             final newuser = await _auth.createUserWithEmailAndPassword(
                 email: email, password: passkey);
             if (newuser != null) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => RegistrationScreen(
-                          email: email,
-                        )),
+              int age = int.tryParse(agetext) ?? 0;
+              viewModel.addUser(
+                imageUrl: selectedAvatar,
+                name: nametext,
+                age: age,
+                bio: biotext,
+                date: DateTime.now(),
+                hobby: hobbytext,
+                email: email,
+                streak: 0,
               );
+              courseModel.addCourse(email: email, level: 'Beginner');
+              courseModel.addCourse(email: email, level: 'Intermediate');
+              courseModel.addCourse(email: email, level: 'Advance');
+              postModel.PostNew(email: email);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Landing()));
             }
           } on HttpException catch (error) {
             print(error);
@@ -85,7 +106,7 @@ class custom_button extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              title,
+              "Register",
               style: GoogleFonts.poppins(
                   fontSize: 15,
                   color: Colors.black,

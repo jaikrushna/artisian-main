@@ -152,7 +152,7 @@ class _SubmissionState extends State<Submission> {
                         .doc('${email}')
                         .collection('${email}')
                         .add({
-                      'imageURL': imageUrl,
+                      'imageUrl': imageUrl,
                       'date': date,
                     });
                   } catch (error) {

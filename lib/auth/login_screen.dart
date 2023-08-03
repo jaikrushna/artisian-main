@@ -1,35 +1,39 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:artisian/helper/custom_text_field.dart';
 import 'package:artisian/view/landing.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class Login_Screen extends StatefulWidget {
+  const Login_Screen({Key? key}) : super(key: key);
+
   @override
   State<Login_Screen> createState() => _Login_ScreenState();
 }
 
+// ignore: camel_case_types
 class _Login_ScreenState extends State<Login_Screen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   final _auth = FirebaseAuth.instance;
   bool progress = false;
   bool? isChecked = false;
-  void signinerror(String error_message) {
+  void signinerror(String errorMessage) {
     showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-              title: Text('Authentication Failed!'),
-              content: Text(error_message),
+              title: const Text('Authentication Failed!'),
+              content: Text(errorMessage),
               actions: <Widget>[
                 TextButton(
                     onPressed: () {
                       Navigator.of(ctx).pop();
                     },
-                    child: Text('Okay'))
+                    child: const Text('Okay'))
               ],
             ));
   }
@@ -42,30 +46,26 @@ class _Login_ScreenState extends State<Login_Screen> {
   }
 
   @override
-  /* void initState() {
-
-    success_message();
-  } */
-
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: ModalProgressHUD(
         inAsyncCall: progress,
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(size.height * 0.022),
             child: Column(
               children: [
                 SizedBox(
-                  height: 10,
+                  height: size.height * 0.015, //10
                 ),
                 Column(
                   children: [
-                    Container(
-                      height: 300,
+                    SizedBox(
+                      height: size.height * 0.35,
                       child: Image.asset(
                         "assets/icons/logo (2).png",
-                        height: 300,
+                        height: size.height * 0.35,
                       ),
                     ),
                   ],
@@ -74,38 +74,35 @@ class _Login_ScreenState extends State<Login_Screen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 66,
-                        width: 380,
+                        height: size.height * 0.078, //66
+                        width: size.width * 0.90,
+                        decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         child: TextField(
                           controller: email,
                           decoration:
                               ThemeHelper().textInputDecoration('Email', ''),
-                          style: TextStyle(fontSize: 17),
+                          style: TextStyle(fontSize: size.width * 0.042),
                         ),
-                        decoration: ThemeHelper().inputBoxDecorationShaddow(),
                       ),
-                      SizedBox(height: 24.0),
+                      SizedBox(height: size.height * 0.030),
                       Container(
-                        height: 66,
-                        width: 380,
+                        height: size.height * 0.078, //66
+                        width: size.width * 0.90,
+                        decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         child: TextField(
                           controller: password,
                           obscureText: true,
                           decoration: ThemeHelper().textInputDecoration(
                               'Password', 'Enter your password'),
-                          style: TextStyle(fontSize: 17),
+                          style: TextStyle(fontSize: size.width * 0.042),
                         ),
-                        decoration: ThemeHelper().inputBoxDecorationShaddow(),
                       ),
-                      SizedBox(height: 17.0),
-                      SizedBox(
-                        height: 27,
-                      ),
+                      SizedBox(height: size.height * 0.022),
                       Column(
                         children: [
-                          Container(
-                            height: 50,
-                            width: 150,
+                          SizedBox(
+                            height: size.height * 0.063,
+                            width: size.width * 0.55,
                             child: ElevatedButton(
                               onPressed: () async {
                                 try {
@@ -120,38 +117,40 @@ class _Login_ScreenState extends State<Login_Screen> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => Landing()));
+                                            builder: (context) =>
+                                                const Landing()));
                                   }
                                   setState(() {
                                     progress = false;
                                   });
                                 } on HttpException catch (error) {
-                                  var error_message = 'Authentication failed';
+                                  var errorMessage = 'Authentication failed';
                                   if (error
                                       .toString()
                                       .contains('EMAIL_EXISTS')) {
-                                    error_message = 'Email already exits';
+                                    errorMessage = 'Email already exits';
                                   }
                                   if (error
                                       .toString()
                                       .contains('EMAIL_NOT_FOUND')) {
-                                    error_message = 'Email not found!!';
+                                    errorMessage = 'Email not found!!';
                                   }
                                   if (error
                                       .toString()
                                       .contains('INVALID_PASSSWORD')) {
-                                    error_message = 'Password incorrect!!';
+                                    errorMessage = 'Password incorrect!!';
                                   }
-                                  signinerror(error_message);
+                                  signinerror(errorMessage);
                                 } catch (e) {
-                                  var error_message = 'Authentication failed';
-                                  signinerror(error_message);
+                                  var errorMessage = 'Authentication failed';
+                                  signinerror(errorMessage);
                                 }
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green.shade300,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
+                                  borderRadius: BorderRadius.circular(
+                                      size.height * 0.030),
                                 ),
                               ),
                               child: Row(
@@ -160,20 +159,17 @@ class _Login_ScreenState extends State<Login_Screen> {
                                   Text(
                                     'Continue',
                                     style: GoogleFonts.poppins(
-                                        fontSize: 15,
+                                        fontSize: size.width * 0.038,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w400),
                                   ),
-                                  Icon(Icons.arrow_forward_ios_sharp,
+                                  const Icon(Icons.arrow_forward_ios_sharp,
                                       color: Colors.black),
                                 ],
                               ),
                             ),
                           ),
                         ],
-                      ),
-                      SizedBox(
-                        height: 17,
                       ),
                     ],
                   ),

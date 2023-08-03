@@ -51,6 +51,39 @@ class CourseViewModel extends ChangeNotifier {
     return Course.fromSnapshot(beginnerDoc);
   }
 
+  Stream<int> getCourseValue(String level) async* {
+    final currentuser = FirebaseAuth.instance.currentUser;
+    if (currentuser == null) {
+      // If no authenticated user is found, yield 0.
+      yield 0;
+      return;
+    }
+
+    String? email = currentuser.email; // Get the email of the current user
+
+    final beginnerDoc = await FirebaseFirestore.instance
+        .collection('course')
+        .doc(email)
+        .collection('${email}')
+        .doc(level)
+        .get();
+
+    Course? course = Course.fromSnapshot(beginnerDoc);
+    int subCount = 0;
+    int vidCount = 0;
+    if (course != null) {
+      // Get the count of 'vid' and 'sub' subfields with value true
+      vidCount = course.countTrueValues('vid');
+      subCount = course.countTrueValues('sub');
+
+      // Print the counts (you can use them as needed)
+      print('Number of true values in vid: $vidCount');
+      print('Number of true values in sub: $subCount');
+    }
+
+    yield vidCount + subCount;
+  }
+
   Future<void> updateFieldValue(String? level, String mapTodate,
       String fieldToUpdate, dynamic newValue) async {
     try {

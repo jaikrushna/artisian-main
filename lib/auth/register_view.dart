@@ -2,7 +2,9 @@ import 'package:artisian/model/user.dart';
 import 'package:artisian/view/landing.dart';
 import 'package:artisian/view/userinfo.dart';
 import 'package:artisian/viewmodel/course_view_model.dart';
+import 'package:artisian/viewmodel/post_view_model.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
+import 'package:artisian/widget/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +12,10 @@ import 'package:artisian/widget/profilepic.dart';
 
 class RegistrationScreen extends StatefulWidget {
   String email;
+  String passkey;
   RegistrationScreen({
     required this.email,
+    required this.passkey,
   });
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
@@ -96,8 +100,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     UserViewModel viewModel = Provider.of<UserViewModel>(context);
     CourseViewModel courseModel = Provider.of<CourseViewModel>(context);
+    PostViewModel postModel = Provider.of<PostViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Add User'),
@@ -135,28 +141,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 decoration: InputDecoration(labelText: 'Hobby'),
               ),
               SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  int age = int.tryParse(ageController.text) ?? 0;
-                  viewModel.addUser(
-                    imageUrl: selectedAvatar,
-                    name: nameController.text,
-                    age: age,
-                    bio: bioController.text,
-                    date: DateTime.now(),
-                    hobby: hobbyController.text,
-                    email: widget.email,
-                    streak: 0,
-                  );
-                  courseModel.addCourse(email: widget.email, level: 'Beginner');
-                  courseModel.addCourse(
-                      email: widget.email, level: 'Intermediate');
-                  courseModel.addCourse(email: widget.email, level: 'Advance');
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Landing()));
-                },
-                child: Text('Add User'),
-              ),
+              custom_button(
+                  width: size.width * 0.55,
+                  email: widget.email,
+                  passkey: widget.passkey,
+                  selectedAvatar: selectedAvatar,
+                  agetext: ageController.text,
+                  hobbytext: hobbyController.text,
+                  biotext: bioController.text,
+                  nametext: nameController.text)
             ],
           ),
         ),

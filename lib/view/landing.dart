@@ -1,11 +1,8 @@
 import 'package:artisian/widget/custombottom.dart';
-import 'package:artisian/view/account2.dart';
 import 'package:artisian/view/carosalview.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:artisian/widget/appdrawer.dart';
-import 'package:provider/provider.dart';
-import 'package:artisian/viewmodel/email_view.dart';
-
 import 'account.dart';
 import 'chatscreen.dart';
 
@@ -22,56 +19,67 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   late String? userEmail;
   @override
   Widget build(BuildContext context) {
-    userEmail = Provider.of<EmailViewModel>(context).userEmail;
+    Size size = MediaQuery.of(context).size;
+    User? user = FirebaseAuth.instance.currentUser;
+    userEmail = user?.email;
     return Scaffold(
         drawer: App_Drawer(),
         appBar: AppBar(
-          leading: Center(
+          leading: const Center(
             child: Text('swipe'),
           ),
           automaticallyImplyLeading: false,
-          title: Center(
+          title: Padding(
+            padding: EdgeInsets.only(left: size.width * 0.130), //57
             child: Image.asset(
-              "assets/icons/logo (2).png",
-              height: 150,
+              "assets/icons/logo.png",
+              height: size.height * 0.18, //140
             ),
           ),
-          backgroundColor: Color(0xff101A30),
+          backgroundColor: const Color(0xff101A30),
         ),
         body: getBody(),
         bottomNavigationBar: _buildBottomBar());
   }
 
   Widget _buildBottomBar() {
+    Size size = MediaQuery.of(context).size;
     return CustomAnimatedBottomBar(
-      containerHeight: 70,
-      backgroundColor: Color(0xff101A30),
+      containerHeight: size.height * 0.085, //70
+      backgroundColor: const Color(0xff101A30),
       selectedIndex: _currentIndex,
       showElevation: true,
-      itemCornerRadius: 24,
+      itemCornerRadius: size.width * 0.82, //24
       curve: Curves.easeIn,
       onItemSelected: (index) => setState(() => _currentIndex = index),
       items: <BottomNavyBarItem>[
         BottomNavyBarItem(
-          icon: Icon(Icons.apps),
-          title: Text('Home'),
-          activeColor: Color(0xffB0EB9F),
+          icon: const Icon(Icons.apps),
+          title: const Text('Home'),
+          activeColor: const Color(0xffB0EB9F),
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
-          icon: Icon(Icons.message),
-          title: Text(
+          icon: const Icon(Icons.message),
+          title: const Text(
             'Messages ',
           ),
-          activeColor: Color(0xffB0EB9F),
+          activeColor: const Color(0xffB0EB9F),
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
-          icon: Icon(Icons.people),
-          title: Text('Users'),
-          activeColor: Color(0xffB0EB9F),
+          icon: const Icon(Icons.people),
+          title: const Text('Users'),
+          activeColor: const Color(0xffB0EB9F),
+          inactiveColor: _inactiveColor,
+          textAlign: TextAlign.center,
+        ),
+        BottomNavyBarItem(
+          icon: const Icon(Icons.settings),
+          title: const Text('Settings'),
+          activeColor: const Color(0xffB0EB9F),
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
@@ -92,6 +100,10 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
       Container(
         alignment: Alignment.center,
         child: Account(email: userEmail),
+      ),
+      Container(
+        alignment: Alignment.center,
+        child: App_Drawer(),
       ),
     ];
     return IndexedStack(

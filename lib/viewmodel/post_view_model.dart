@@ -4,6 +4,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PostViewModel extends ChangeNotifier {
+  void PostNew({
+    required String? email,
+  }) {
+    Post post = Post(imageUrl: '', date: DateTime.now());
+    FirebaseFirestore.instance
+        .collection('post')
+        .doc('${email}')
+        .collection('${email}')
+        .add(post.toMap())
+        .then((value) {
+      // Data saved successfully
+      // Show a success message or navigate to another screen
+      print('Post data saved successfully!');
+      // You can notify the listeners about success.
+      notifyListeners();
+    }).catchError((error) {
+      // Error occurred while saving data
+      print('Error saving Post data: $error');
+      // You can notify the listeners about the error.
+      notifyListeners();
+    });
+  }
+
   void addPost({
     required String? email,
     required String imageUrl,

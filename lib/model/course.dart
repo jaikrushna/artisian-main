@@ -39,4 +39,24 @@ class Course {
       return null;
     }
   }
+
+  int countTrueValues(String mapName) {
+    int count = 0;
+    Map<String, bool>? map;
+    if (mapName == 'sub') {
+      map = sub;
+    } else if (mapName == 'vid') {
+      map = vid;
+    }
+
+    if (map != null) {
+      map.forEach((key, value) {
+        if (value) {
+          count++;
+        }
+      });
+    }
+
+    return count;
+  }
 }

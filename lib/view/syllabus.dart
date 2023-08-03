@@ -1,17 +1,15 @@
 import 'package:artisian/widget/completion.dart';
 import 'package:artisian/widget/customtile.dart';
 import 'package:artisian/widget/submission.dart';
-import 'package:artisian/viewmodel/email_view.dart';
 import 'package:flutter/material.dart';
-import 'package:artisian/view/youtube.dart';
 import 'package:artisian/model/course.dart';
 import 'package:artisian/viewmodel/course_view_model.dart';
-import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class Syllabus extends StatefulWidget {
   static const route = '/syllabus';
   late String level;
-  Syllabus({required this.level});
+  Syllabus({Key? key, required this.level}) : super(key: key);
 
   @override
   State<Syllabus> createState() => _SyllabusState();
@@ -20,33 +18,28 @@ class Syllabus extends StatefulWidget {
 class _SyllabusState extends State<Syllabus> {
   @override
   Widget build(BuildContext context) {
-    // String? userEmail = Provider.of<EmailViewModel>(context).userEmail;
-    // final customModel = Provider.of<CourseViewModel>(context);
-    // WidgetsBinding.instance?.addPostFrameCallback((_) async {
-    //   final model = await customModel.getCurrentCourseData(widget.level);
-    // });
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(size.height * 0.011), //8
           child: FutureBuilder<Course?>(
               future: CourseViewModel().getCurrentCourseData(widget.level),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  // While waiting for data, you can display a loading indicator.
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
-                  // If an error occurs, display an error message.
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  // If data is available, you can display it.
                   final course = snapshot.data;
                   if (course != null) {
                     return ListView(
                       shrinkWrap: true,
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(size.height * 0.020), //8
                       children: [
-                        Completion(),
+                        Completion(
+                          level: widget.level,
+                        ),
                         SingleChildScrollView(
                           child: Column(
                             children: [
@@ -116,7 +109,6 @@ class _SyllabusState extends State<Syllabus> {
                       ],
                     );
                   } else {
-                    // If data is null (no course available), display a message.
                     return Text('No course data available for $widget.level.');
                   }
                 }

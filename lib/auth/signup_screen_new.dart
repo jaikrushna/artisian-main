@@ -1,23 +1,24 @@
+import 'package:artisian/auth/register_view.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:artisian/auth/login_screen.dart';
 import 'package:artisian/helper/custom_text_field.dart';
-import 'package:artisian/widget/custom_button.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:artisian/auth/register_view.dart';
 
-class Login_View extends StatefulWidget {
+class LoginView extends StatefulWidget {
+  const LoginView({Key? key}) : super(key: key);
+
   @override
-  State<Login_View> createState() => _Login_ViewState();
+  // ignore: library_private_types_in_public_api
+  _LoginViewState createState() => _LoginViewState();
 }
 
-class _Login_ViewState extends State<Login_View> {
+class _LoginViewState extends State<LoginView> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  bool progress = false;
-  bool? isChecked = false;
+  bool isChecked = false;
+
   @override
   void dispose() {
     email.dispose();
@@ -31,42 +32,36 @@ class _Login_ViewState extends State<Login_View> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          child: Padding(
-            padding: EdgeInsets.all(size.height * 0.022), //16.0
-            child: Column(
-              children: [
-                SizedBox(
-                  height: size.height * 0.015, //10
+          padding: EdgeInsets.all(size.height * 0.022),
+          child: Column(
+            children: [
+              SizedBox(height: size.height * 0.015),
+              SizedBox(
+                height: size.height * 0.35,
+                child: Image.asset(
+                  "assets/icons/logo (2).png",
+                  height: size.height * 0.35,
                 ),
-                Column(
+              ),
+              Form(
+                child: Column(
                   children: [
                     Container(
-                      height: size.height * 0.35, //300
-                      child: Image.asset(
-                        "assets/icons/logo (2).png",
-                        height: size.height * 0.35,
-                      ),
-                    ),
-                  ],
-                ),
-                Form(
-                    child: Column(
-                  children: [
-                    Container(
-                      height: size.height * 0.078, //66
-                      width: size.width * 0.90, //380
+                      height: size.height * 0.078,
+                      width: size.width * 0.90,
+                      decoration: ThemeHelper().inputBoxDecorationShaddow(),
                       child: TextField(
                         controller: email,
                         decoration:
                             ThemeHelper().textInputDecoration('Email', ''),
-                        style: TextStyle(fontSize: size.width * 0.042), //17
+                        style: TextStyle(fontSize: size.width * 0.042),
                       ),
-                      decoration: ThemeHelper().inputBoxDecorationShaddow(),
                     ),
-                    SizedBox(height: size.height * 0.030), //24
+                    SizedBox(height: size.height * 0.030),
                     Container(
-                      height: size.height * 0.078, //66
+                      height: size.height * 0.078,
                       width: size.width * 0.90,
+                      decoration: ThemeHelper().inputBoxDecorationShaddow(),
                       child: TextField(
                         controller: password,
                         obscureText: true,
@@ -74,16 +69,15 @@ class _Login_ViewState extends State<Login_View> {
                             'Password', 'Enter your password'),
                         style: TextStyle(fontSize: size.width * 0.042),
                       ),
-                      decoration: ThemeHelper().inputBoxDecorationShaddow(),
                     ),
-                    SizedBox(height: size.height * 0.022), //17
+                    SizedBox(height: size.height * 0.022),
                     CheckboxListTile(
-                      selectedTileColor: Color(0XFF7F3DFF),
+                      selectedTileColor: const Color(0XFF7F3DFF),
                       title: Text.rich(
                         TextSpan(
                           text: '',
-                          style: TextStyle(fontSize: size.width * 0.036), //14
-                          children: [
+                          style: TextStyle(fontSize: size.width * 0.036),
+                          children: const [
                             TextSpan(
                               text: 'By signing up, you agree to the ',
                             ),
@@ -100,17 +94,14 @@ class _Login_ViewState extends State<Login_View> {
                       controlAffinity: ListTileControlAffinity.leading,
                       onChanged: (bool? value) {
                         setState(() {
-                          isChecked = value;
+                          isChecked = value ?? false;
                         });
                       },
-                      //secondary: const Icon(Icons.hourglass_empty),
                     ),
-                    SizedBox(
-                      height: size.height * 0.038, //27
-                    ),
+                    SizedBox(height: size.height * 0.038),
                     Column(
                       children: [
-                        Container(
+                        SizedBox(
                             height: 50,
                             width: size.width * 0.55,
                             child: ElevatedButton(
@@ -140,17 +131,15 @@ class _Login_ViewState extends State<Login_View> {
                                         color: Colors.black,
                                         fontWeight: FontWeight.w400),
                                   ),
-                                  Icon(Icons.arrow_forward_ios_sharp,
+                                  const Icon(Icons.arrow_forward_ios_sharp,
                                       color: Colors.black),
                                 ],
                               ),
                             )),
                       ],
                     ),
-                    SizedBox(
-                      height: size.height * 0.024, //17
-                    ),
-                    Row(
+                    SizedBox(height: size.height * 0.024),
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -161,57 +150,61 @@ class _Login_ViewState extends State<Login_View> {
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: size.height * 0.024, //17
-                    ),
-                    Column(children: [
-                      Container(
-                        width: size.width * 0.84, //343
-                        child: ElevatedButton(
-                          onPressed: () async {},
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
+                    SizedBox(height: size.height * 0.024),
+                    Column(
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.84,
+                          child: ElevatedButton(
+                            onPressed: () async {},
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(size.height * 0.022),
-                                side: BorderSide(
-                                    color: Color.fromARGB(255, 195, 195, 196))),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: size.width * 0.16, //20
-                                vertical: size.height * 0.022 //16
+                                side: const BorderSide(
+                                  color: Color.fromARGB(255, 195, 195, 196),
                                 ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset('assets/icons/google icon.png'),
-                              SizedBox(
-                                height: size.height * 0.015, //10
                               ),
-                              Text(
-                                "Sign Up with Google",
-                                style: GoogleFonts.inter(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: size.width * 0.16,
+                                vertical: size.height * 0.022,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/icons/google icon.png'),
+                                SizedBox(
+                                  height: size.height * 0.015,
+                                ),
+                                Text(
+                                  "Sign Up with Google",
+                                  style: GoogleFonts.inter(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: size.width * 0.036), //14
-                              ),
-                            ],
+                                    fontSize: size.width * 0.036,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ]),
+                      ],
+                    ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                      margin: const EdgeInsets.symmetric(vertical: 20),
                       child: Text.rich(
                         TextSpan(
                           children: [
                             TextSpan(
                               text: "Already have an account? ",
                               style: GoogleFonts.inter(
-                                  color: Color(0XFF91919F),
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: size.width * 0.036),
+                                color: const Color(0XFF91919F),
+                                fontWeight: FontWeight.w600,
+                                fontSize: size.width * 0.036,
+                              ),
                             ),
                             TextSpan(
                               text: 'Login',
@@ -221,9 +214,9 @@ class _Login_ViewState extends State<Login_View> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              Login_Screen()));
+                                              const Login_Screen()));
                                 },
-                              style: TextStyle(
+                              style: const TextStyle(
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.green,
@@ -232,11 +225,11 @@ class _Login_ViewState extends State<Login_View> {
                           ],
                         ),
                       ),
-                    )
+                    ),
                   ],
-                ))
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

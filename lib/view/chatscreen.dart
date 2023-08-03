@@ -1,4 +1,5 @@
 import 'package:artisian/view/account.dart';
+import 'package:artisian/view/anotheraccount.dart';
 import 'package:flutter/material.dart';
 import 'package:artisian/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -219,7 +220,9 @@ void showBottomSheet(BuildContext context, String email) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Account(email: email)));
+                        builder: (context) => Account_View(
+                              email: email,
+                            )));
               },
             ),
             ListTile(

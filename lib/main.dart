@@ -1,4 +1,4 @@
-import 'package:artisian/auth/signup_screen.dart';
+import 'package:artisian/auth/signup_screen_new.dart';
 import 'package:artisian/view/syllabus.dart';
 import 'package:artisian/viewmodel/course_view_model.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Login_View(),
+      home: LoginView(),
       // initialRoute: '/home',
       routes: {
         '/syllabus': (context) => Syllabus(
