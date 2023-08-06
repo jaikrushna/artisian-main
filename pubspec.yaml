@@ -51,6 +51,7 @@ dependencies:
   hexcolor: ^3.0.1
   get: ^4.6.5
   modal_progress_hud_nsn: ^0.4.0
+  flutter_switch: ^0.3.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

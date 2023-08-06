@@ -1,7 +1,7 @@
 import 'package:artisian/model/user.dart';
-import 'package:artisian/view/anotheraccount.dart';
 import 'package:artisian/viewmodel/email_view.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +13,11 @@ class App_Drawer extends StatefulWidget {
 class _App_DrawerState extends State<App_Drawer> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     UserViewModel viewModel = Provider.of<UserViewModel>(context);
     EmailViewModel emailModel = Provider.of<EmailViewModel>(context);
     String? email = emailModel.userEmail;
+    bool toggleValue1 = false;
     return Drawer(
       child: StreamBuilder<Users?>(
           stream: viewModel.getCurrentUserData(email),
@@ -65,16 +67,29 @@ class _App_DrawerState extends State<App_Drawer> {
                   automaticallyImplyLeading: false,
                 ),
                 Divider(),
-                TextButton(
-                  child: ListTile(
-                    title: Text("Dark Mode"),
-                    trailing: Icon(
-                      Icons.toggle_off_rounded,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushReplacementNamed('/');
-                  },
+                ListTile(
+                  title: Text("Dark Mode"),
+                  // trailing: FlutterSwitch(
+                  //   activeColor: Color(0xff1E8829),
+                  //   inactiveColor: Color(0xff1E8829),
+                  //   width: size.width * 0.07,
+                  //   height: size.height * 0.018,
+                  //   valueFontSize: size.height * 0.018,
+                  //   toggleSize: size.height * 0.018,
+                  //   value: toggleValue1,
+                  //   borderRadius: 30.0,
+                  //   // padding: 8.0,
+                  //   showOnOff: false,
+                  //   onToggle: (val) {
+                  //     setState(() {
+                  //       if (val == true) {
+                  //         toggleValue1 = val;
+                  //       } else {
+                  //         toggleValue1 = val;
+                  //       }
+                  //     });
+                  //   },
+                  // ),
                 ),
                 Divider(),
                 TextButton(
@@ -86,10 +101,7 @@ class _App_DrawerState extends State<App_Drawer> {
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    // Navigator.pushReplacementNamed('/');
                     Provider.of(context, listen: false).logout();
-                    // Navigator.of(context)
-                    //     .pushReplacementNamed(User_product_screen.routee);
                   },
                 ),
               ],

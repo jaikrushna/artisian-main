@@ -1,10 +1,10 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:artisian/provider/TickButton.dart';
-import 'package:artisian/view/youtube.dart';
+import 'package:artisian/widget/TickButton.dart';
 import 'package:flutter/material.dart';
 import 'package:artisian/viewmodel/email_view.dart';
 import 'package:provider/provider.dart';
+import 'package:artisian/widget/subsyllabus container.dart';
 
 class CustomTile extends StatefulWidget {
   final String title;
@@ -25,7 +25,16 @@ class CustomTile extends StatefulWidget {
   State<CustomTile> createState() => _CustomTileState();
 }
 
-class _CustomTileState extends State<CustomTile> {
+class _CustomTileState extends State<CustomTile>
+    with SingleTickerProviderStateMixin {
+  bool _isDropdownVisible = false;
+
+  void _toggleDropdownVisibility() {
+    setState(() {
+      _isDropdownVisible = !_isDropdownVisible;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     String? userEmail = Provider.of<EmailViewModel>(context).userEmail;
@@ -42,48 +51,48 @@ class _CustomTileState extends State<CustomTile> {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Youtube_screen()));
-            },
+            onTap: _toggleDropdownVisibility,
             child: Padding(
               padding: EdgeInsets.all(size.height * 0.022), //16
-              child: Row(
+              child: Column(
                 children: [
-                  TickButton(
-                    isTicked: widget.isTicked,
-                    userEmail: userEmail,
-                    field: widget.field,
-                    level: widget.level,
-                    mapname: 'vid',
-                  ),
-                  SizedBox(width: size.width * 0.03),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            widget.title,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: size.width * 0.042, //16
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                      TickButton(
+                        isTicked: widget.isTicked,
+                        userEmail: userEmail,
+                        field: widget.field,
+                        level: widget.level,
+                        mapname: 'vid',
                       ),
-                      const SizedBox(height: 4.0),
+                      SizedBox(width: size.width * 0.03),
                       Text(
-                        widget.subtitle,
+                        widget.title,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: size.width * 0.035,
+                          fontSize: size.width * 0.042, //16
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
+                      const SizedBox(width: 150.0),
+                      _isDropdownVisible
+                          ? Icon(
+                              Icons.arrow_drop_up_outlined,
+                              color: Colors.white,
+                            )
+                          : Icon(
+                              Icons.arrow_drop_down_outlined,
+                              color: Colors.white,
+                            )
                     ],
+                  ),
+                  AnimatedSize(
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    child: Visibility(
+                      visible: _isDropdownVisible,
+                      child: BulletTextButtonsContainer(),
+                    ),
                   ),
                 ],
               ),

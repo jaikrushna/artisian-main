@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MyGridTile extends StatelessWidget {
-  // final String imagePath;
+  final String imagePath;
   final String title;
   final VoidCallback onPressed;
 
   MyGridTile({
-    // required this.imagePath,
+    required this.imagePath,
     required this.title,
     required this.onPressed,
   });
@@ -21,7 +21,10 @@ class MyGridTile extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.blue, Colors.green], // You can add more colors here
+            colors: [
+              Colors.deepPurpleAccent.withOpacity(0.10), // 50% transparent blue
+              Colors.deepPurple.withOpacity(0.7), // 50% transparent green
+            ],
           ),
           borderRadius: BorderRadius.circular(8.0),
         ),
@@ -34,12 +37,11 @@ class MyGridTile extends StatelessWidget {
               children: [
                 Container(
                   width: 180,
-                  // child:
-                  // Image.network(
-                  //   // imagePath,
-                  //   width: 100,
-                  //   height: 100,
-                  // ),
+                  child: Image.asset(
+                    imagePath,
+                    width: 100,
+                    height: 100,
+                  ),
                 ),
                 SizedBox(width: 8.0),
                 Text(

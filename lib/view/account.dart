@@ -1,7 +1,9 @@
+import 'package:artisian/auth/register_view.dart';
 import 'package:artisian/model/user.dart';
+import 'package:artisian/viewmodel/email_view.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
 import 'package:artisian/widget/completion.dart';
-import 'package:artisian/provider/posttile.dart';
+import 'package:artisian/widget/posttile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +24,12 @@ class _AccountState extends State<Account> {
 
   List<Widget> memberlist = []; // Renamed from Memberlist to memberlist
 
-  void addData(String url) {
-    memberlist.add(PostTile(url: url));
+  void addData(String url, String id) {
+    memberlist.add(PostTile(
+      url: url,
+      email: email,
+      id: id,
+    ));
   }
 
   @override
@@ -94,7 +100,7 @@ class _AccountState extends State<Account> {
                                       padding: EdgeInsets.only(bottom: 8.0),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Flexible(
                                             child: Text(
@@ -104,6 +110,9 @@ class _AccountState extends State<Account> {
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           ),
+                                          IconButton(
+                                              icon: Icon(Icons.edit),
+                                              onPressed: () {}),
                                         ],
                                       ),
                                     ),
@@ -258,8 +267,11 @@ class _AccountState extends State<Account> {
                               memberlist
                                   .clear(); // Clear the previous data before adding new data
                               for (var tile in tiles) {
+                                final documentId = tile.id;
                                 url = tile.get('imageUrl') ?? '';
-                                addData(url);
+                                if (url != '') {
+                                  addData(url, documentId);
+                                }
                               }
 
                               if (tiles != null && url != '') {

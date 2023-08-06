@@ -89,4 +89,20 @@ class PostViewModel extends ChangeNotifier {
       }
     });
   }
+
+  Future<void> deletePost(String email, String postId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('post')
+          .doc(email)
+          .collection(email)
+          .doc(postId)
+          .delete();
+      print('Post deleted successfully!');
+      notifyListeners();
+    } catch (error) {
+      print('Error deleting Post data: $error');
+      notifyListeners();
+    }
+  }
 }

@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class EmailViewModel with ChangeNotifier {
   String? userEmail;
-
   EmailViewModel() {
     fetchUserEmail();
   }
@@ -15,7 +14,6 @@ class EmailViewModel with ChangeNotifier {
       if (user != null) {
         // Perform any additional validation checks on the email if required
         userEmail = user.email;
-        notifyListeners();
       } else {
         // Handle the case when no authenticated user is found
         userEmail = null;

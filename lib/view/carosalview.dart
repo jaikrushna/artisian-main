@@ -47,63 +47,66 @@ import 'package:artisian/widget/carousal.dart';
 class Carosalview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          // child: buildAdvertismentPlace(),
-          height: 260,
-        ),
-        SizedBox(
-          height: 387,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  MyGridTile(
-                      // imagePath: '',
-                      title: 'Beginner',
+    return Container(
+      color: Color(0xff141414),
+      child: Column(
+        children: [
+          SizedBox(
+            // child: buildAdvertismentPlace(),
+            height: 260,
+          ),
+          SizedBox(
+            height: 387,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    MyGridTile(
+                        imagePath: 'assets/icons/stage32.png',
+                        title: 'Rookie',
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Syllabus(level: 'Beginner')));
+                        }),
+                    MyGridTile(
+                      imagePath: 'assets/icons/stage22.png',
+                      title: 'Master',
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    Syllabus(level: 'Beginner')));
-                      }),
-                  MyGridTile(
-                    // imagePath: '',
-                    title: 'Intermediate',
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Syllabus(
-                                    level: 'Intermediate',
-                                  )));
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  MyGridTile(
-                    // imagePath: '',
-                    title: 'Advance',
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Syllabus(
-                                    level: 'Advance',
-                                  )));
-                    },
-                  ),
-                ],
-              ),
-            ],
+                                builder: (context) => Syllabus(
+                                      level: 'Intermediate',
+                                    )));
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MyGridTile(
+                      imagePath: 'assets/icons/stage12.png',
+                      title: 'Legend',
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Syllabus(
+                                      level: 'Advance',
+                                    )));
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
