@@ -32,7 +32,7 @@ jobs:
         with:
           artifacts: "build/app/outputs/apk/debug/*, build/app/outputs/flutter-apk/*"
           tag: v1.0.${{ github.run_number }}
-        
+          token: ${{ secrets.TOKEN }}
 
 
 
