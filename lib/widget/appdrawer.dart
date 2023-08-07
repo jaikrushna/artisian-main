@@ -1,6 +1,8 @@
+import 'package:artisian/auth/login_screen.dart';
 import 'package:artisian/model/user.dart';
 import 'package:artisian/viewmodel/email_view.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -99,9 +101,10 @@ class _App_DrawerState extends State<App_Drawer> {
                       Icons.logout,
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Provider.of(context, listen: false).logout();
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login_Screen()));
                   },
                 ),
               ],

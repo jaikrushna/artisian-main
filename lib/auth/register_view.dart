@@ -1,3 +1,4 @@
+import 'package:artisian/constants.dart';
 import 'package:artisian/model/user.dart';
 import 'package:artisian/view/landing.dart';
 import 'package:artisian/view/userinfo.dart';
@@ -112,35 +113,98 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               GestureDetector(
                 onTap: () {
                   _showImagePickerBottomSheet();
                 },
-                child: CircleAvatar(
-                  radius: 60,
-                  child: Image.network(selectedAvatar),
+                child: Card(
+                  elevation: 6,
+                  child: selectedAvatar == ''
+                      ? Image.asset(
+                          'assets/icons/select.png',
+                          fit: BoxFit.fill,
+                          height: 170,
+                          width: 170,
+                        )
+                      : Image.network(selectedAvatar),
                 ),
               ),
+              TextButton(
+                onPressed: () {
+                  _showImagePickerBottomSheet();
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 110.0,
+                    ),
+                    Center(child: Icon(Icons.add_a_photo)),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    Center(
+                      child: Text(
+                        'Pick an Avatar',
+                        style: TextStyle(color: Colors.blueAccent),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
+                style: TextStyle(
+                  color: Colors.black87,
+                ),
+                keyboardType: TextInputType.name,
+                textAlign: TextAlign.center,
                 controller: nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration:
+                    kInputDecormail.copyWith(hintText: 'Enter your name'),
+              ),
+              SizedBox(
+                height: 10,
               ),
               TextFormField(
-                controller: ageController,
+                style: TextStyle(
+                  color: Colors.black87,
+                ),
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Age'),
+                textAlign: TextAlign.center,
+                decoration:
+                    kInputDecormail.copyWith(hintText: 'Enter your Age'),
+                controller: ageController,
+              ),
+              SizedBox(
+                height: 10,
               ),
               TextFormField(
+                style: TextStyle(
+                  color: Colors.black87,
+                ),
+                keyboardType: TextInputType.name,
+                textAlign: TextAlign.center,
+                decoration: kInputDecormail.copyWith(
+                    hintText: 'Enter Bio ( Any Quote )'),
                 controller: bioController,
-                decoration: InputDecoration(labelText: 'Bio'),
+              ),
+              SizedBox(
+                height: 10,
               ),
               TextFormField(
+                style: TextStyle(
+                  color: Colors.black87,
+                ),
+                keyboardType: TextInputType.name,
+                textAlign: TextAlign.center,
+                decoration: kInputDecormail.copyWith(
+                    hintText: 'Enter a Hobby (any one)'),
                 controller: hobbyController,
-                decoration: InputDecoration(labelText: 'Hobby'),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 20),
               custom_button(
                   width: size.width * 0.55,
                   email: widget.email,

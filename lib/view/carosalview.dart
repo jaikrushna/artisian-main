@@ -1,59 +1,68 @@
 import 'package:artisian/widget/gridtile.dart';
 import 'package:artisian/view/syllabus.dart';
-// import 'package:carousel_pro/carousel_pro.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:artisian/widget/carousal.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-// Widget buildAdvertismentPlace() {
-//   return Padding(
-//     padding: EdgeInsets.all(18.0),
-//     child: Container(
-//       height: 170,
-//       child:
-//       // Carousel(
-//       //   autoplay: true,
-//       //   animationCurve: Curves.fastOutSlowIn,
-//       //   animationDuration: Duration(microseconds: 1000),
-//       //   showIndicator: false,
-//       //   images: [
-//       //     Container(
-//       //       margin: EdgeInsets.only(right: 10),
-//       //       decoration: BoxDecoration(
-//       //         image: DecorationImage(
-//       //           fit: BoxFit.cover,
-//       //           image: NetworkImage(
-//       //               "https://blog.creatopy.com/wp-content/uploads/2019/03/creative-advertising-and-pop-culture-pop-culture-ads.png"),
-//       //         ),
-//       //         borderRadius: BorderRadius.circular(10.0),
-//       //       ),
-//       //     ),
-//       //     Container(
-//       //       decoration: BoxDecoration(
-//       //         image: DecorationImage(
-//       //           fit: BoxFit.cover,
-//       //           image: NetworkImage(
-//       //             "https://blog.creatopy.com/wp-content/uploads/2018/05/advertisement-ideas-inspiration-advertising.png",
-//       //           ),
-//       //         ),
-//       //         borderRadius: BorderRadius.circular(10.0),
-//       //       ),
-//           ),
-//         ],
-//   //     ),
-//   // //   ),
-//   );
-// }
+class Carosalview extends StatefulWidget {
+  @override
+  State<Carosalview> createState() => _CarosalviewState();
+}
 
-class Carosalview extends StatelessWidget {
+class _CarosalviewState extends State<Carosalview> {
+  final List<String> photoUrls = [
+    'assets/carousel1.png',
+    'assets/carousel2.png',
+  ];
+  List<Widget> widgetList = [
+    Image.asset(
+      'assets/carousel1.png', // Replace with your image URL
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
+    ),
+    Image.asset(
+      'assets/carousel2.png', // Replace with your image URL
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
+    ),
+    
+  ];
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Color(0xff141414),
       child: Column(
         children: [
-          SizedBox(
-            // child: buildAdvertismentPlace(),
-            height: 260,
+          Container(
+            width: double.infinity,
+            height: 190,
+            child: Stack(
+              children: [
+                PageView.builder(
+                  itemCount: photoUrls.length,
+                  controller: PageController(
+                      viewportFraction: 0.94), // Adjust the viewportFraction
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 9.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: widgetList[index],
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 387,
