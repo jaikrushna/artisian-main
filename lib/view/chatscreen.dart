@@ -1,4 +1,3 @@
-import 'package:artisian/view/account.dart';
 import 'package:artisian/view/anotheraccount.dart';
 import 'package:flutter/material.dart';
 import 'package:artisian/constants.dart';
@@ -56,7 +55,10 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    final theme = Theme.of(context);
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      color: theme.disabledColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -98,8 +100,10 @@ class _ChatScreenState extends State<ChatScreen> {
               return Expanded(
                 child: ListView(
                   reverse: true,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.020 //10
+                      ,
+                      vertical: size.height * 0.025), //20
                   children: Messagelist,
                 ),
               );
@@ -156,8 +160,10 @@ class messagebubble extends StatelessWidget {
   String email;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    Size size = MediaQuery.of(context).size;
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(size.height * 0.007), //10
       child: Column(
         crossAxisAlignment:
             isme ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -166,9 +172,10 @@ class messagebubble extends StatelessWidget {
               child: Text(
                 '$name',
                 style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12.0,
+                  color: theme.focusColor,
+                  fontSize: size.width * 0.033, //12
                 ),
+                textAlign: TextAlign.left,
               ),
               onPressed: () {
                 showBottomSheet(context, email);
@@ -176,26 +183,28 @@ class messagebubble extends StatelessWidget {
           Material(
             borderRadius: isme
                 ? BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(0.0),
-                    bottomLeft: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0),
+                    topLeft: Radius.circular(size.width * 0.070),
+                    topRight: Radius.circular(size.width * 0.00),
+                    bottomLeft: Radius.circular(size.width * 0.070),
+                    bottomRight: Radius.circular(size.width * 0.070),
                   )
                 : BorderRadius.only(
                     topLeft: Radius.circular(0.0),
-                    topRight: Radius.circular(30.0),
-                    bottomLeft: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0),
+                    topRight: Radius.circular(size.width * 0.070),
+                    bottomLeft: Radius.circular(size.width * 0.070),
+                    bottomRight: Radius.circular(size.width * 0.070),
                   ),
-            color: isme ? Colors.blueAccent : Colors.white,
+            color: isme ? theme.primaryColor : theme.backgroundColor,
             elevation: 5.0,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              padding: EdgeInsets.symmetric(
+                  vertical: size.height * 0.015,
+                  horizontal: size.width * 0.050),
               child: Text(
                 '$messaged',
                 style: TextStyle(
-                  color: isme ? Colors.white : Colors.blueAccent,
-                  fontSize: 15.0,
+                  color: isme ? Colors.white : theme.indicatorColor,
+                  fontSize: size.width * 0.032,
                 ),
               ),
             ),
@@ -210,6 +219,7 @@ void showBottomSheet(BuildContext context, String email) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
+      Size size = MediaQuery.of(context).size;
       return Container(
         child: Wrap(
           children: <Widget>[
@@ -228,7 +238,15 @@ void showBottomSheet(BuildContext context, String email) {
             ListTile(
               leading: Icon(Icons.warning_rounded),
               title: Text('Report user'),
-              onTap: () {},
+              onTap: () {
+                FirebaseFirestore.instance
+                    .collection('report')
+                    .doc('${email}')
+                    .set({
+                  'email': email,
+                });
+                Navigator.of(context).pop();
+              },
             ),
           ],
         ),

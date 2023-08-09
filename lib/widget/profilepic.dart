@@ -8,14 +8,19 @@ class ProfilePic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: onTap,
-      child: Card(
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.fill,
-          height: 150,
-          width: 100,
+      child: Padding(
+        padding: EdgeInsets.all(size.width * 0.011),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(size.width * 0.055),
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.fill,
+            height: size.height * 0.22,
+            width: size.width * 0.31,
+          ),
         ),
       ),
     );

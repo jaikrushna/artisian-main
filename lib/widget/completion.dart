@@ -16,6 +16,7 @@ class Completion extends StatefulWidget {
 class _CompletionState extends State<Completion> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
     CourseViewModel viewModel = Provider.of<CourseViewModel>(context);
     return StreamBuilder<int?>(
@@ -30,6 +31,7 @@ class _CompletionState extends State<Completion> {
             if (course != null) {
               course = course * 10;
               return Card(
+                color: theme.primaryColor,
                 elevation: size.height * 0.07, //5
                 shadowColor: Colors.grey,
                 child: Row(
@@ -42,8 +44,8 @@ class _CompletionState extends State<Completion> {
                         radius: size.height * 0.075, //60
                         lineWidth: size.height * 0.010,
                         percent: course / 100,
-                        progressColor: Colors.black,
-                        backgroundColor: Colors.black12,
+                        progressColor: theme.backgroundColor,
+                        backgroundColor: Colors.blueGrey,
                         circularStrokeCap: CircularStrokeCap.round,
                         center: Text(
                           '$course%',
@@ -61,7 +63,7 @@ class _CompletionState extends State<Completion> {
                           '$course% Completed',
                           style: TextStyle(
                             fontSize: size.width * 0.042, //17
-                            color: Colors.black,
+                            color: theme.backgroundColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

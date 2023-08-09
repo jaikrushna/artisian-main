@@ -20,6 +20,7 @@ class _PostTileState extends State<PostTile> {
   User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     PostViewModel viewModel = Provider.of<PostViewModel>(context);
     String? userEmail = user?.email;
     void _showDeleteConfirmationDialog() {
@@ -52,16 +53,16 @@ class _PostTileState extends State<PostTile> {
     return Card(
         elevation: 4.0, // Add some elevation for a material shadow effect
         shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(16.0), // Adjust the radius as needed
+          borderRadius: BorderRadius.circular(
+              size.width * 0.06), // Adjust the radius as needed
         ),
         child: Column(
           children: [
             Image.network(
               '${widget.url}',
               fit: BoxFit.fitHeight,
-              width: 200,
-              height: 282,
+              width: size.width * 0.99,
+              height: size.height * 0.35,
             ),
             widget.email == userEmail
                 ? Row(

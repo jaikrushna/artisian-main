@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, camel_case_types
 
 import 'dart:io';
 import 'package:artisian/helper/custom_text_field.dart';
@@ -47,8 +47,10 @@ class _Login_ScreenState extends State<Login_Screen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: theme.disabledColor,
       body: ModalProgressHUD(
         inAsyncCall: progress,
         child: SingleChildScrollView(
@@ -147,7 +149,7 @@ class _Login_ScreenState extends State<Login_Screen> {
                                 }
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green.shade300,
+                                backgroundColor: theme.primaryColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
                                       size.height * 0.030),
@@ -160,7 +162,7 @@ class _Login_ScreenState extends State<Login_Screen> {
                                     'Continue',
                                     style: GoogleFonts.poppins(
                                         fontSize: size.width * 0.038,
-                                        color: Colors.black,
+                                        color: theme.disabledColor,
                                         fontWeight: FontWeight.w400),
                                   ),
                                   const Icon(Icons.arrow_forward_ios_sharp,

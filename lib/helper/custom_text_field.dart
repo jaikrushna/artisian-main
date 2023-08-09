@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+late Size size;
+
 class ThemeHelper {
   InputDecoration textInputDecoration(
       [String lableText = "", String hintText = ""]) {
     return InputDecoration(
       labelText: lableText,
       floatingLabelBehavior: FloatingLabelBehavior.never,
-      //hintText: hintText,
       fillColor: Colors.white,
       filled: true,
       contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 20),
@@ -58,7 +59,6 @@ class ThemeHelper {
         stops: [0.0, 1.0],
         colors: [
           c1,
-          // c2,
         ],
       ),
       color: Colors.deepPurple.shade300,
@@ -80,6 +80,7 @@ class ThemeHelper {
   }
 
   AlertDialog alartDialog(String title, String content, BuildContext context) {
+    size = MediaQuery.of(context).size;
     return AlertDialog(
       title: Text(title),
       content: Text(content),

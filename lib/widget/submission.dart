@@ -32,10 +32,13 @@ class _SubmissionState extends State<Submission> {
     return Padding(
       padding: EdgeInsets.all(size.height * 0.022), //8
       child: Container(
-        height: size.height * 0.09,
+        height: size.height * 0.11,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Colors.blue, Colors.purple],
+          gradient: LinearGradient(
+            colors: [
+              Colors.blueAccent.withOpacity(0.30), // 50% transparent blue
+              Colors.deepPurple.withOpacity(0.7),
+            ],
           ),
           borderRadius: BorderRadius.circular(size.height * 0.011), //8
         ),
@@ -57,18 +60,28 @@ class _SubmissionState extends State<Submission> {
                     mapname: 'sub',
                   ),
                   SizedBox(width: size.width * 0.03), //8
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Submission',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: size.width * 0.042, //16
-                          fontWeight: FontWeight.bold,
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Submission',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: size.width * 0.042, //16
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                        Text(
+                          '(Create a sketch based on the concepts discussed above)',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: size.width * 0.028, //16
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -108,6 +121,24 @@ class _SubmissionState extends State<Submission> {
                 try {
                   await referenceImageToUpload.putFile(File(file.path));
                   Navigator.of(context).pop();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Submission Successful'),
+                        content: Text(
+                            'Your submission has been successfully uploaded.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                   imageUrl = await referenceImageToUpload.getDownloadURL();
                   FirebaseFirestore.instance
                       .collection('post')
@@ -140,8 +171,26 @@ class _SubmissionState extends State<Submission> {
                     referenceDirImages.child(uniqueFileName);
 
                 try {
-                  Navigator.of(context).pop();
                   await referenceImageToUpload.putFile(File(file.path));
+                  Navigator.of(context).pop();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Submission Successful'),
+                        content: Text(
+                            'Your submission has been successfully uploaded.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                   imageUrl = await referenceImageToUpload.getDownloadURL();
                   firestone
                       .collection('post')
@@ -152,7 +201,8 @@ class _SubmissionState extends State<Submission> {
                     'date': date,
                   });
                 } catch (error) {
-                  //Some error occurred
+                  // Handle the error
+                  print('Error: $error');
                 }
               },
             ),

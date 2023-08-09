@@ -1,23 +1,24 @@
 // ignore_for_file: library_private_types_in_public_api, must_be_immutable
 
 import 'package:artisian/helper/custom_text_field.dart';
+import 'package:artisian/viewmodel/registration_view_model.dart';
 import 'package:artisian/widget/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:artisian/widget/profilepic.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class RegistrationScreen extends StatefulWidget {
+class UpdateScreen extends StatefulWidget {
   String email;
-  String passkey;
-  RegistrationScreen({
+  UpdateScreen({
     Key? key,
     required this.email,
-    required this.passkey,
   }) : super(key: key);
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  _UpdateScreenState createState() => _UpdateScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _UpdateScreenState extends State<UpdateScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
@@ -101,9 +102,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final theme = Theme.of(context);
+    UserViewModel viewModel = Provider.of<UserViewModel>(context);
     return Scaffold(
-      backgroundColor: theme.disabledColor,
       appBar: AppBar(
         leading: Center(
             child: IconButton(
@@ -119,7 +119,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             height: size.height * 0.18, //140
           ),
         ),
-        backgroundColor: theme.backgroundColor,
+        backgroundColor: const Color(0xff101A30),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -235,15 +235,43 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               SizedBox(
                 height: size.height * 0.035,
               ),
-              custom_button(
-                  width: size.width * 0.55,
-                  email: widget.email,
-                  passkey: widget.passkey,
-                  selectedAvatar: selectedAvatar,
-                  agetext: ageController.text,
-                  hobbytext: hobbyController.text,
-                  biotext: bioController.text,
-                  nametext: nameController.text)
+              SizedBox(
+                height: size.height * 0.065,
+                width: size.width * 0.34,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Example: Update user profile
+                    viewModel.updateUserProfile(
+                      imageUrl: selectedAvatar,
+                      name: nameController.text,
+                      age: int.parse(ageController.text),
+                      hobby: hobbyController.text,
+                      bio: bioController.text,
+                    );
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green.shade300,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(size.height * 0.030),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Update",
+                        style: GoogleFonts.poppins(
+                            fontSize: size.height * 0.020,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      const Icon(Icons.arrow_forward_ios_sharp,
+                          color: Colors.black),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),

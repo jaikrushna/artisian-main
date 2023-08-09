@@ -1,11 +1,11 @@
+import 'package:artisian/widget/carousal.dart';
 import 'package:artisian/widget/gridtile.dart';
 import 'package:artisian/view/syllabus.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:artisian/widget/carousal.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Carosalview extends StatefulWidget {
+  const Carosalview({Key? key}) : super(key: key);
+
   @override
   State<Carosalview> createState() => _CarosalviewState();
 }
@@ -14,6 +14,7 @@ class _CarosalviewState extends State<Carosalview> {
   final List<String> photoUrls = [
     'assets/carousel1.png',
     'assets/carousel2.png',
+    'assets/carousel3.png',
   ];
   List<Widget> widgetList = [
     Image.asset(
@@ -28,44 +29,25 @@ class _CarosalviewState extends State<Carosalview> {
       width: double.infinity,
       height: double.infinity,
     ),
-    
+    Image.asset(
+      'assets/carousel3.png', // Replace with your image URL
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
+    ),
   ];
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    Size size = MediaQuery.of(context).size;
     return Container(
-      color: Color(0xff141414),
+      color: theme.disabledColor,
       child: Column(
         children: [
-          Container(
-            width: double.infinity,
-            height: 190,
-            child: Stack(
-              children: [
-                PageView.builder(
-                  itemCount: photoUrls.length,
-                  controller: PageController(
-                      viewportFraction: 0.94), // Adjust the viewportFraction
-                  onPageChanged: (index) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  },
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 9.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: widgetList[index],
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
+          AutoRotatingCarousel(widgetList: widgetList, photoUrls: photoUrls),
           SizedBox(
-            height: 387,
+            height: size.height * 0.48, //387
             child: Column(
               children: [
                 Row(
@@ -93,6 +75,9 @@ class _CarosalviewState extends State<Carosalview> {
                       },
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: size.height * 0.03,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

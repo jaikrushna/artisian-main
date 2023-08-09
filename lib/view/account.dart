@@ -1,16 +1,16 @@
-import 'package:artisian/auth/register_view.dart';
 import 'package:artisian/model/user.dart';
-import 'package:artisian/viewmodel/email_view.dart';
+import 'package:artisian/view/updateprofile.dart';
+import 'package:artisian/viewmodel/post_view_model.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
-import 'package:artisian/widget/completion.dart';
 import 'package:artisian/widget/posttile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
 class Account extends StatefulWidget {
   final String? email; // Add the email parameter to the constructor
-  Account({required this.email});
+  const Account({Key? key, required this.email}) : super(key: key);
   @override
   State<Account> createState() => _AccountState();
 }
@@ -20,7 +20,6 @@ class _AccountState extends State<Account> {
   late CollectionReference _reference; // Move the reference to the state class
   late Stream<QuerySnapshot> _stream;
   late String url;
-  var _isloading = false;
 
   List<Widget> memberlist = []; // Renamed from Memberlist to memberlist
 
@@ -45,79 +44,103 @@ class _AccountState extends State<Account> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
+    User? user = FirebaseAuth.instance.currentUser;
+    String? userEmail = user?.email;
     UserViewModel viewModel = Provider.of<UserViewModel>(context);
-    return SingleChildScrollView(
-        child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: StreamBuilder<Users?>(
-                stream: viewModel.getCurrentUserData(email),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Error fetching user data: ${snapshot.error}');
-                  }
+    return Container(
+      color: theme.disabledColor,
+      child: SingleChildScrollView(
+          child: Padding(
+              padding: EdgeInsets.all(size.height * 0.031), //25
+              child: StreamBuilder<Users?>(
+                  stream: viewModel.getCurrentUserData(email),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text(
+                          'Error fetching user data: ${snapshot.error}');
+                    }
 
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
 
-                  Users? user = snapshot.data;
-                  if (user == null) {
-                    return Text('User data not found.');
-                  }
-                  return Column(
-                    children: [
-                      Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(12.0),
-                            child: Image.network(
-                              user.imageUrl,
-                              width: 155,
-                              height: 170,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Card(
-                            elevation:
-                                0.0, // Add some elevation for a material shadow effect
-                            shape: RoundedRectangleBorder(
+                    Users? user = snapshot.data;
+                    if (user == null) {
+                      return const Text('User data not found.');
+                    }
+                    return Column(
+                      children: [
+                        Row(
+                          children: [
+                            ClipRRect(
                               borderRadius: BorderRadius.circular(
-                                  16.0), // Adjust the radius as needed
+                                  size.width * 0.030), //12
+                              child: Image.network(
+                                user.imageUrl,
+                                width: size.width * 0.39, //30
+                                height: size.height * 0.210,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            child: Container(
-                              padding: const EdgeInsets.all(16.0),
-                              width: 159,
-                              height: 170,
-                              child: Flexible(
+                            SizedBox(
+                              width: size.height * 0.024,
+                            ),
+                            Card(
+                              elevation:
+                                  0.0, // Add some elevation for a material shadow effect
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(size.width *
+                                    0.040), // Adjust the radius as needed
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(
+                                    size.height * 0.031,
+                                    size.height * 0.031,
+                                    size.height * 0.0,
+                                    size.height * 0.025),
+                                width: size.width * 0.39, //30
+                                height: size.height * 0.210,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(bottom: 8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              user.name,
-                                              style: TextStyle(
-                                                  fontSize: 20.0,
-                                                  fontWeight: FontWeight.bold),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            user.name,
+                                            style: TextStyle(
+                                              fontSize: size.height * 0.0194,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          IconButton(
-                                              icon: Icon(Icons.edit),
-                                              onPressed: () {}),
-                                        ],
-                                      ),
+                                        ),
+                                        widget.email == userEmail
+                                            ? IconButton(
+                                                iconSize: size.height * 0.019,
+                                                icon: const Icon(Icons.edit),
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              UpdateScreen(
+                                                                  email: widget
+                                                                      .email
+                                                                      .toString())));
+                                                },
+                                              )
+                                            : SizedBox(),
+                                      ],
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(bottom: 8.0),
+                                      padding: EdgeInsets.only(
+                                        bottom: size.height * 0.010,
+                                      ),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -125,20 +148,23 @@ class _AccountState extends State<Account> {
                                           Text(
                                             'age: ',
                                             style: TextStyle(
-                                              fontSize: 14.0,
+                                              fontSize: size.height * 0.015,
                                             ),
                                           ),
                                           Text(
                                             '${user.age}',
                                             style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight: FontWeight.bold),
+                                              fontSize: size.height * 0.016,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(bottom: 8.0),
+                                      padding: EdgeInsets.only(
+                                        bottom: size.height * 0.010,
+                                      ),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -148,39 +174,31 @@ class _AccountState extends State<Account> {
                                           Text(
                                             'hobby: ',
                                             style: TextStyle(
-                                              fontSize: 14.0,
+                                              fontSize: size.height * 0.015,
                                             ),
                                           ),
-                                          Flexible(
+                                          Expanded(
                                             child: Text(
                                               user.hobby,
                                               style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.bold),
+                                                fontSize: size.height * 0.016,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(bottom: 8.0),
-                                      child: Flexible(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Flexible(
-                                              child: Text(
-                                                '\" ${user.bio}\"',
-                                                style: TextStyle(
-                                                    fontSize: 14.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.blue),
-                                              ),
-                                            ),
-                                          ],
+                                      padding: EdgeInsets.only(
+                                        bottom: size.height * 0.010,
+                                      ),
+                                      child: Text(
+                                        '" ${user.bio}"',
+                                        style: TextStyle(
+                                          fontSize: size.height * 0.015,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xffCEA2FD),
                                         ),
                                       ),
                                     ),
@@ -188,121 +206,115 @@ class _AccountState extends State<Account> {
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          // Circular container for the GIF
-                          ClipOval(
-                            child: Container(
-                                width: 180,
-                                height: 180,
-                                color: Colors.grey[300],
-                                child: Image.asset(
-                                  'assets/icons/fire.gif',
-                                  fit: BoxFit.fill,
-                                )),
-                          ),
-                          // Text widget positioned at the center of the container
-                          Positioned(
-                            top: 14,
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Streak',
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                                Text(
-                                  user.streak.toString(),
-                                  style: TextStyle(
-                                      fontSize: 35,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                )
-                              ],
+                          ],
+                        ),
+                        SizedBox(
+                          height: size.height * 0.020,
+                        ),
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            // Circular container for the GIF
+                            ClipOval(
+                              child: Container(
+                                  width: size.width * 0.420, //30
+                                  height: size.height * 0.210,
+                                  color: Colors.grey[300],
+                                  child: Image.asset(
+                                    'assets/icons/fire.gif',
+                                    fit: BoxFit.fill,
+                                  )),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      // Completion(),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      const Text(
-                        'Post',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                      const Divider(
-                        color: Colors.black,
-                      ),
+                            // Text widget positioned at the center of the container
+                            Positioned(
+                              top: size.height * 0.018, //14
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Streak',
+                                    style: TextStyle(
+                                        fontSize: size.height * 0.012,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                  Text(
+                                    user.streak.toString(),
+                                    style: TextStyle(
+                                        fontSize: size.height * 0.040,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: size.height * 0.035,
+                        ),
+                        Text(
+                          'Post',
+                          style: TextStyle(
+                              fontSize: size.height * 0.023, //20
+                              fontWeight: FontWeight.bold,
+                              color: theme.primaryColor),
+                        ),
+                        const Divider(
+                          color: Colors.black,
+                        ),
 
-                      // StreamBuilder to display the list of posts
-                      StreamBuilder<QuerySnapshot>(
-                          stream: _stream,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              // While waiting for data, you can display a loading indicator.
-                              return CircularProgressIndicator();
-                            } else if (snapshot.hasError) {
-                              // If an error occurs, display an error message.
-                              return Text('Error: ${snapshot.error}');
-                            } else {
-                              final tiles = snapshot.data!.docs;
-                              memberlist
-                                  .clear(); // Clear the previous data before adding new data
-                              for (var tile in tiles) {
-                                final documentId = tile.id;
-                                url = tile.get('imageUrl') ?? '';
+                        // StreamBuilder to display the list of posts
+                        StreamBuilder<QuerySnapshot>(
+                            stream: _stream,
+                            builder: (BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                // While waiting for data, you can display a loading indicator.
+                                return const CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                // If an error occurs, display an error message.
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                final tiles = snapshot.data!.docs;
+                                memberlist
+                                    .clear(); // Clear the previous data before adding new data
+                                for (var tile in tiles) {
+                                  final documentId = tile.id;
+                                  url = tile.get('imageUrl') ?? '';
+                                  if (url != '') {
+                                    addData(url, documentId);
+                                  }
+                                }
+
                                 if (url != '') {
-                                  addData(url, documentId);
+                                  return Column(
+                                    children: [
+                                      GridView.builder(
+                                          shrinkWrap: true,
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount:
+                                                1, // Number of columns in the grid
+                                            crossAxisSpacing: size.height *
+                                                0.010, // Spacing between columns
+                                            mainAxisSpacing: size.height *
+                                                0.010, // Spacing between rows
+                                          ),
+                                          itemCount: memberlist.length,
+                                          itemBuilder: (context, i) =>
+                                              memberlist[i]),
+                                    ],
+                                  );
+                                } else {
+                                  // If data is null (no post available), display a message.
+                                  return Image.asset('assets/icons/nopost.png');
                                 }
                               }
-
-                              if (tiles != null && url != '') {
-                                return Column(
-                                  children: [
-                                    GridView.builder(
-                                        shrinkWrap: true,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount:
-                                              1, // Number of columns in the grid
-                                          crossAxisSpacing:
-                                              8.0, // Spacing between columns
-                                          mainAxisSpacing:
-                                              8.0, // Spacing between rows
-                                        ),
-                                        itemCount: memberlist.length,
-                                        itemBuilder: (context, i) =>
-                                            memberlist[i]),
-                                  ],
-                                );
-                              } else {
-                                // If data is null (no post available), display a message.
-                                return Container(
-                                  child: Image.asset('assets/icons/nopost.png'),
-                                );
-                              }
-                            }
-                          }),
-                    ],
-                  );
-                })));
+                            }),
+                      ],
+                    );
+                  }))),
+    );
   }
 }

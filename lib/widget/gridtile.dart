@@ -13,20 +13,21 @@ class MyGridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(size.width * 0.02),
       child: Container(
-        height: 160,
+        height: size.height * 0.2,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.deepPurpleAccent.withOpacity(0.10), // 50% transparent blue
+              Color(0xff5D0B5F).withOpacity(0.10), // 50% transparent blue
               Colors.deepPurple.withOpacity(0.7), // 50% transparent green
             ],
           ),
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(size.width * 0.02),
         ),
         child: Material(
           color: Colors.transparent,
@@ -36,19 +37,19 @@ class MyGridTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 180,
+                  width: size.width * 0.46,
                   child: Image.asset(
                     imagePath,
-                    width: 100,
-                    height: 100,
+                    width: size.width * 0.22,
+                    height: size.height * 0.12,
                   ),
                 ),
-                SizedBox(width: 8.0),
+                SizedBox(width: size.width * 0.02),
                 Text(
                   title,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16.0,
+                    fontSize: size.width * 0.04,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

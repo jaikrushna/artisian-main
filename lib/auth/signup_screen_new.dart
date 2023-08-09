@@ -28,8 +28,10 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: theme.disabledColor,
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(size.height * 0.022),
@@ -102,7 +104,7 @@ class _LoginViewState extends State<LoginView> {
                     Column(
                       children: [
                         SizedBox(
-                            height: 50,
+                            height: size.height * 0.065,
                             width: size.width * 0.55,
                             child: ElevatedButton(
                               onPressed: () {
@@ -116,9 +118,10 @@ class _LoginViewState extends State<LoginView> {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green.shade300,
+                                backgroundColor: theme.primaryColor,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
+                                  borderRadius:
+                                      BorderRadius.circular(size.width * 0.042),
                                 ),
                               ),
                               child: Row(
@@ -127,8 +130,8 @@ class _LoginViewState extends State<LoginView> {
                                   Text(
                                     "Continue",
                                     style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                        color: Colors.black,
+                                        fontSize: size.width * 0.038,
+                                        color: theme.disabledColor,
                                         fontWeight: FontWeight.w400),
                                   ),
                                   const Icon(Icons.arrow_forward_ios_sharp,
@@ -143,58 +146,17 @@ class _LoginViewState extends State<LoginView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Or with",
+                          "Or",
                           style: TextStyle(
                             color: Color(0XFF91919F),
                           ),
                         )
                       ],
                     ),
-                    SizedBox(height: size.height * 0.024),
-                    Column(
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.84,
-                          child: ElevatedButton(
-                            onPressed: () async {},
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(size.height * 0.022),
-                                side: const BorderSide(
-                                  color: Color.fromARGB(255, 195, 195, 196),
-                                ),
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: size.width * 0.16,
-                                vertical: size.height * 0.022,
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/icons/google icon.png'),
-                                SizedBox(
-                                  height: size.height * 0.015,
-                                ),
-                                Text(
-                                  "Sign Up with Google",
-                                  style: GoogleFonts.inter(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: size.width * 0.036,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    SizedBox(height: size.height * 0.095),
                     Container(
-                      margin: const EdgeInsets.symmetric(vertical: 20),
+                      margin:
+                          EdgeInsets.symmetric(vertical: size.height * 0.042),
                       child: Text.rich(
                         TextSpan(
                           children: [

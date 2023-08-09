@@ -1,20 +1,34 @@
+// ignore_for_file: camel_case_types
+
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class Youtube_screen extends StatefulWidget {
-  const Youtube_screen({Key? key}) : super(key: key);
+  Youtube_screen({required this.link});
   static const route = '/youtube';
-
+  String link;
   @override
   State<Youtube_screen> createState() => _Youtube_screenState();
 }
 
 class _Youtube_screenState extends State<Youtube_screen> {
-  final videoURL = "https://www.youtube.com/watch?v=n0ciQf4HDxg";
+  late String videoURL;
   late YoutubePlayerController _controller;
+  String? videoID;
+  Video? _videoMetaData;
+  Future<Video> fetchVideoMetadata(String videoUrl) async {
+    final yt = YoutubeExplode();
+    final videoId = YoutubePlayer.convertUrlToId(videoUrl);
+
+    final video = await yt.videos.get(videoId);
+    return video;
+  }
 
   @override
   void initState() {
+    videoURL = widget.link;
+    _fetchVideoMetadata(videoURL);
     final videoID = YoutubePlayer.convertUrlToId(videoURL);
     _controller = YoutubePlayerController(
       initialVideoId: videoID!,
@@ -33,72 +47,88 @@ class _Youtube_screenState extends State<Youtube_screen> {
     super.initState();
   }
 
+  Future<void> _fetchVideoMetadata(String videoUrl) async {
+    final video = await fetchVideoMetadata(videoUrl);
+    setState(() {
+      _videoMetaData = video;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    Size size = MediaQuery.of(context).size;
     return YoutubePlayerBuilder(
       player: YoutubePlayer(controller: _controller),
       builder: (context, player) => Scaffold(
-        appBar: AppBar(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            player,
-            SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _controller.metadata.title,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    _controller.metadata.author,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "${_controller.metadata.duration.inMinutes.toString()}:00 Minutes",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Divider(
-                    height: 1,
-                    thickness: 1,
-                    color: Colors.grey,
-                  ),
-                  SizedBox(height: 16),
-                  Divider(
-                    height: 1,
-                    thickness: 1,
-                    color: Colors.grey,
-                  ),
-                  SizedBox(height: 50),
-                  Container(
-                    height: 200,
-                    child: Center(
-                        child: Opacity(
-                      opacity: 0.8,
-                      child: Image.asset(
-                        'assets/icons/goku.gif',
-                      ),
-                    )),
-                  )
-                ],
-              ),
-            ),
-          ],
+        appBar: AppBar(
+          backgroundColor: theme.backgroundColor,
+        ),
+        body: Container(
+          color: theme.disabledColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              player,
+              SizedBox(height: size.height * 0.022), //16
+              Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.035),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (_videoMetaData != null) ...[
+                          Text(
+                            _videoMetaData!.title,
+                            style: TextStyle(
+                              fontSize: size.width * 0.050,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.009),
+                          Text(
+                            _videoMetaData!.author,
+                            style: TextStyle(
+                              fontSize: size.width * 0.040,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.009),
+                          Text(
+                            "${_videoMetaData!.duration!.inMinutes.toString()}:00 Minutes",
+                            style: TextStyle(
+                              fontSize: size.width * 0.035,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.017),
+                          Divider(
+                            height: 1,
+                            thickness: 1,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(height: size.height * 0.020),
+                          Divider(
+                            height: 1,
+                            thickness: 1,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(height: size.height * 0.050),
+                          Container(
+                            height: 200,
+                            child: Center(
+                                child: Opacity(
+                              opacity: 0.8,
+                              child: Image.asset(
+                                'assets/icons/goku.gif',
+                              ),
+                            )),
+                          )
+                        ] else ...[
+                          CircularProgressIndicator(), // Show loading indicator
+                        ],
+                      ])),
+            ],
+          ),
         ),
       ),
     );

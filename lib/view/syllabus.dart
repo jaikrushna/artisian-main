@@ -18,101 +18,103 @@ class Syllabus extends StatefulWidget {
 class _SyllabusState extends State<Syllabus> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(),
-        body: Padding(
-          padding: EdgeInsets.all(size.height * 0.011), //8
-          child: FutureBuilder<Course?>(
-              future: CourseViewModel().getCurrentCourseData(widget.level),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  final course = snapshot.data;
-                  if (course != null) {
-                    return ListView(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.all(size.height * 0.020), //8
-                      children: [
-                        Completion(
-                          level: widget.level,
-                        ),
-                        SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              CustomTile(
-                                title: 'Title',
-                                subtitle: '',
-                                field: 'vid1',
-                                isTicked: course.vid['vid1'],
-                                level: widget.level,
-                              ),
-                              Submission(
-                                field: 'sub1',
-                                isTicked: course.sub['sub1'],
-                                level: widget.level,
-                              ),
-                              CustomTile(
-                                title: 'Title',
-                                subtitle: '',
-                                field: 'vid2',
-                                isTicked: course.vid['vid2'],
-                                level: widget.level,
-                              ),
-                              Submission(
-                                field: 'sub2',
-                                isTicked: course.sub['sub2'],
-                                level: widget.level,
-                              ),
-                              CustomTile(
-                                title: 'Title',
-                                subtitle: '',
-                                field: 'vid3',
-                                isTicked: course.vid['vid3'],
-                                level: widget.level,
-                              ),
-                              Submission(
-                                field: 'sub3',
-                                isTicked: course.sub['sub3'],
-                                level: widget.level,
-                              ),
-                              CustomTile(
-                                title: 'Title',
-                                subtitle: '',
-                                field: 'vid4',
-                                isTicked: course.vid['vid4'],
-                                level: widget.level,
-                              ),
-                              Submission(
-                                field: 'sub4',
-                                isTicked: course.sub['sub4'],
-                                level: widget.level,
-                              ),
-                              CustomTile(
-                                title: 'Title',
-                                subtitle: '',
-                                field: 'vid5',
-                                isTicked: course.vid['vid5'],
-                                level: widget.level,
-                              ),
-                              Submission(
-                                field: 'sub5',
-                                isTicked: course.sub['sub5'],
-                                level: widget.level,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
+        appBar: AppBar(
+          backgroundColor: theme.backgroundColor,
+        ),
+        body: Container(
+          color: theme.disabledColor,
+          child: Padding(
+            padding: EdgeInsets.all(size.height * 0.011), //8
+            child: FutureBuilder<Course?>(
+                future: CourseViewModel().getCurrentCourseData(widget.level),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
                   } else {
-                    return Text('No course data available for $widget.level.');
+                    final course = snapshot.data;
+                    if (course != null) {
+                      return ListView(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.all(size.height * 0.020), //8
+                        children: [
+                          Completion(
+                            level: widget.level,
+                          ),
+                          SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                CustomTile(
+                                  index: 0,
+                                  field: 'vid1',
+                                  isTicked: course.vid['vid1'],
+                                  level: widget.level,
+                                ),
+                                Submission(
+                                  field: 'sub1',
+                                  isTicked: course.sub['sub1'],
+                                  level: widget.level,
+                                ),
+                                CustomTile(
+                                  index: 1,
+                                  field: 'vid2',
+                                  isTicked: course.vid['vid2'],
+                                  level: widget.level,
+                                ),
+                                Submission(
+                                  field: 'sub2',
+                                  isTicked: course.sub['sub2'],
+                                  level: widget.level,
+                                ),
+                                CustomTile(
+                                  index: 2,
+                                  field: 'vid3',
+                                  isTicked: course.vid['vid3'],
+                                  level: widget.level,
+                                ),
+                                Submission(
+                                  field: 'sub3',
+                                  isTicked: course.sub['sub3'],
+                                  level: widget.level,
+                                ),
+                                CustomTile(
+                                  index: 3,
+                                  field: 'vid4',
+                                  isTicked: course.vid['vid4'],
+                                  level: widget.level,
+                                ),
+                                Submission(
+                                  field: 'sub4',
+                                  isTicked: course.sub['sub4'],
+                                  level: widget.level,
+                                ),
+                                CustomTile(
+                                  index: 4,
+                                  field: 'vid5',
+                                  isTicked: course.vid['vid5'],
+                                  level: widget.level,
+                                ),
+                                Submission(
+                                  field: 'sub5',
+                                  isTicked: course.sub['sub5'],
+                                  level: widget.level,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Text(
+                          'No course data available for $widget.level.');
+                    }
                   }
-                }
-              }),
+                }),
+          ),
         ));
   }
 }

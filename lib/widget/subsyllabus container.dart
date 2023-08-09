@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:artisian/view/youtube.dart';
 
 class BulletTextButtonsContainer extends StatelessWidget {
+  BulletTextButtonsContainer({
+    required this.index,
+    required this.L,
+    required this.links,
+  });
+  int index;
+  List<String> L;
+  List<String> links;
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -14,17 +23,42 @@ class BulletTextButtonsContainer extends StatelessWidget {
             Colors.blueAccent.withOpacity(0.0), // 50% transparent green
           ],
         ),
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(size.width * 0.03),
       ),
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(size.width * 0.055),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BulletTextButton(text: 'Button 1'),
-          BulletTextButton(text: 'Button 2'),
-          BulletTextButton(text: 'Button 3'),
-          BulletTextButton(text: 'Button 4'),
-          BulletTextButton(text: 'Button 5'),
+          BulletTextButton(
+            text: L[0],
+            course: 0,
+            index: index,
+            link: links,
+          ),
+          BulletTextButton(
+            text: L[1],
+            course: 1,
+            index: index,
+            link: links,
+          ),
+          BulletTextButton(
+            text: L[2],
+            course: 2,
+            index: index,
+            link: links,
+          ),
+          BulletTextButton(
+            text: L[3],
+            course: 3,
+            index: index,
+            link: links,
+          ),
+          BulletTextButton(
+            text: L[4],
+            course: 4,
+            index: index,
+            link: links,
+          ),
         ],
       ),
     );
@@ -33,35 +67,47 @@ class BulletTextButtonsContainer extends StatelessWidget {
 
 class BulletTextButton extends StatelessWidget {
   final String text;
-
-  BulletTextButton({required this.text});
+  final int course;
+  final int index;
+  final List<String> link;
+  BulletTextButton(
+      {required this.text,
+      required this.course,
+      required this.index,
+      required this.link});
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return TextButton(
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Youtube_screen()),
+          MaterialPageRoute(
+              builder: (context) => Youtube_screen(
+                    link: link[course],
+                  )),
         );
       },
       child: SizedBox(
-        height: 20, // Set the desired height here
+        height: size.height * 0.06, // Set the desired height here
         child: Row(
           children: [
             Text(
-              '1.1',
+              '${index + 1}.${course + 1}',
               style: TextStyle(
-                fontSize: 15.0,
+                fontSize: size.height * 0.018,
                 color: Colors.white,
               ),
             ), // Unicode bullet character
-            SizedBox(width: 8.0),
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: 15.0,
-                color: Colors.white,
+            SizedBox(width: size.width * 0.017),
+            Flexible(
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontSize: size.height * 0.018,
+                  color: Colors.white,
+                ),
               ),
             ),
           ],

@@ -1,7 +1,8 @@
+// ignore_for_file: must_be_immutable, camel_case_types, use_build_context_synchronously
+
 import 'dart:io';
 import 'package:artisian/view/landing.dart';
 import 'package:artisian/viewmodel/course_view_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +20,7 @@ class custom_button extends StatelessWidget {
   String hobbytext;
   String biotext;
   custom_button({
+    Key? key,
     required this.width,
     required this.email,
     required this.passkey,
@@ -27,79 +29,75 @@ class custom_button extends StatelessWidget {
     required this.hobbytext,
     required this.biotext,
     required this.nametext,
-  });
-
-  final _firestone = FirebaseFirestore.instance;
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  }) : super(key: key);
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    Size size = MediaQuery.of(context).size;
     UserViewModel viewModel = Provider.of<UserViewModel>(context);
     CourseViewModel courseModel = Provider.of<CourseViewModel>(context);
     PostViewModel postModel = Provider.of<PostViewModel>(context);
-    void signinerror(String error_message) {
+    void signinerror(String errorMessage) {
       showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-                title: Text('Authentication Failed!'),
-                content: Text(error_message),
+                title: const Text('Authentication Failed!'),
+                content: Text(errorMessage),
                 actions: <Widget>[
                   TextButton(
                       onPressed: () {
                         Navigator.of(ctx).pop();
                       },
-                      child: Text('Okay'))
+                      child: const Text('Okay'))
                 ],
               ));
     }
 
-    return Container(
-      height: 50,
+    return SizedBox(
+      height: size.height * 0.065,
       width: width,
       child: ElevatedButton(
         onPressed: () async {
           try {
-            final newuser = await _auth.createUserWithEmailAndPassword(
+            await _auth.createUserWithEmailAndPassword(
                 email: email, password: passkey);
-            if (newuser != null) {
-              int age = int.tryParse(agetext) ?? 0;
-              viewModel.addUser(
-                imageUrl: selectedAvatar,
-                name: nametext,
-                age: age,
-                bio: biotext,
-                date: DateTime.now(),
-                hobby: hobbytext,
-                email: email,
-                streak: 0,
-              );
-              courseModel.addCourse(email: email, level: 'Beginner');
-              courseModel.addCourse(email: email, level: 'Intermediate');
-              courseModel.addCourse(email: email, level: 'Advance');
-              postModel.PostNew(email: email);
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Landing()));
-            }
+            int age = int.tryParse(agetext) ?? 0;
+            viewModel.addUser(
+              imageUrl: selectedAvatar,
+              name: nametext,
+              age: age,
+              bio: biotext,
+              date: DateTime.now(),
+              hobby: hobbytext,
+              email: email,
+              streak: 0,
+            );
+            courseModel.addCourse(email: email, level: 'Beginner');
+            courseModel.addCourse(email: email, level: 'Intermediate');
+            courseModel.addCourse(email: email, level: 'Advance');
+            postModel.PostNew(email: email);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Landing()));
           } on HttpException catch (error) {
-            print(error);
-            var error_message = 'Authentication failed';
+            var errorMessage = 'Authentication failed';
             if (error.toString().contains('INVALID_EMAIL')) {
-              error_message = 'Invalid email';
+              errorMessage = 'Invalid email';
             }
             if (error.toString().contains('WEAK_PASSWORD')) {
-              error_message = 'Password is weak, Enter another';
+              errorMessage = 'Password is weak, Enter another';
             }
-            signinerror(error_message);
+            signinerror(errorMessage);
           } catch (error) {
-            print(error);
-            var error_message = 'Authentication failed something went wrong';
-            signinerror(error_message);
+            var errorMessage = 'Authentication failed something went wrong';
+            signinerror(errorMessage);
           }
           // Get.to(Login_View());
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.green.shade300,
+          backgroundColor: theme.primaryColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(size.height * 0.030),
           ),
         ),
         child: Row(
@@ -108,11 +106,11 @@ class custom_button extends StatelessWidget {
             Text(
               "Register",
               style: GoogleFonts.poppins(
-                  fontSize: 15,
-                  color: Colors.black,
+                  fontSize: size.height * 0.020,
+                  color: theme.disabledColor,
                   fontWeight: FontWeight.w400),
             ),
-            Icon(Icons.arrow_forward_ios_sharp, color: Colors.black),
+            const Icon(Icons.arrow_forward_ios_sharp, color: Colors.black),
           ],
         ),
       ),

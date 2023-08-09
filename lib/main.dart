@@ -1,4 +1,5 @@
 import 'package:artisian/auth/signup_screen_new.dart';
+import 'package:artisian/provider/theme_provider.dart';
 import 'package:artisian/view/syllabus.dart';
 import 'package:artisian/viewmodel/course_view_model.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
@@ -10,7 +11,8 @@ import 'package:artisian/view/youtube.dart';
 import 'package:artisian/viewmodel/email_view.dart';
 import 'package:provider/provider.dart';
 import 'package:artisian/viewmodel/post_view_model.dart';
-
+import 'package:artisian/provider/dark_theme.dart';
+import 'package:artisian/provider/light_theme.dart';
 import 'view/landing.dart';
 
 Widget isLogin() {
@@ -26,6 +28,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ChangeNotifierProvider(create: (context) => EmailViewModel()),
       ChangeNotifierProvider(create: (context) => CourseViewModel()),
       ChangeNotifierProvider(create: (context) => PostViewModel()),
@@ -41,18 +44,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final currentTheme =
+        themeProvider.themeMode == ThemeMode.dark ? darkTheme : lightTheme;
     return MaterialApp(
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: themeProvider.themeMode,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: isLogin(),
       // initialRoute: '/home',
       routes: {
         '/syllabus': (context) => Syllabus(
               level: '',
             ),
-        '/youtube': (context) => Youtube_screen(),
+        '/youtube': (context) => Youtube_screen(
+              link: '',
+            ),
         '/submission': (context) =>
             Submission(isTicked: false, field: '', level: '')
       },

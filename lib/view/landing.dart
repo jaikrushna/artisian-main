@@ -22,11 +22,12 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
     Size size = MediaQuery.of(context).size;
     User? user = FirebaseAuth.instance.currentUser;
     userEmail = user?.email;
+    final theme = Theme.of(context);
     return Scaffold(
         drawer: App_Drawer(),
         appBar: AppBar(
           leading: const Center(
-            child: Text('swipe'),
+            child: Text('swipe<'),
           ),
           automaticallyImplyLeading: false,
           title: Padding(
@@ -36,7 +37,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
               height: size.height * 0.18, //140
             ),
           ),
-          backgroundColor: const Color(0xff101A30),
+          backgroundColor: theme.backgroundColor,
         ),
         body: getBody(),
         bottomNavigationBar: _buildBottomBar());
@@ -44,9 +45,10 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
 
   Widget _buildBottomBar() {
     Size size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     return CustomAnimatedBottomBar(
       containerHeight: size.height * 0.085, //70
-      backgroundColor: const Color(0xff101A30),
+      backgroundColor: theme.backgroundColor,
       selectedIndex: _currentIndex,
       showElevation: true,
       itemCornerRadius: size.width * 0.82, //24
@@ -56,30 +58,23 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
         BottomNavyBarItem(
           icon: const Icon(Icons.apps),
           title: const Text('Home'),
-          activeColor: const Color(0xffB0EB9F),
+          activeColor: theme.primaryColor,
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
           icon: const Icon(Icons.message),
           title: const Text(
-            'Messages ',
+            'Chat',
           ),
-          activeColor: const Color(0xffB0EB9F),
+          activeColor: theme.primaryColor,
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
           icon: const Icon(Icons.people),
-          title: const Text('Users'),
-          activeColor: const Color(0xffB0EB9F),
-          inactiveColor: _inactiveColor,
-          textAlign: TextAlign.center,
-        ),
-        BottomNavyBarItem(
-          icon: const Icon(Icons.settings),
-          title: const Text('Settings'),
-          activeColor: const Color(0xffB0EB9F),
+          title: const Text('User'),
+          activeColor: theme.primaryColor,
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
@@ -100,10 +95,6 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
       Container(
         alignment: Alignment.center,
         child: Account(email: userEmail),
-      ),
-      Container(
-        alignment: Alignment.center,
-        child: App_Drawer(),
       ),
     ];
     return IndexedStack(

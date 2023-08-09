@@ -1,4 +1,3 @@
-import '../auth/signup_screen.dart';
 import 'package:artisian/widget/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
