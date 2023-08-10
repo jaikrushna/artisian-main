@@ -56,7 +56,8 @@ class _LoginViewState extends State<LoginView> {
                         controller: email,
                         decoration:
                             ThemeHelper().textInputDecoration('Email', ''),
-                        style: TextStyle(fontSize: size.width * 0.042),
+                        style: TextStyle(
+                            fontSize: size.width * 0.042, color: Colors.black),
                       ),
                     ),
                     SizedBox(height: size.height * 0.030),
@@ -69,7 +70,8 @@ class _LoginViewState extends State<LoginView> {
                         obscureText: true,
                         decoration: ThemeHelper().textInputDecoration(
                             'Password', 'Enter your password'),
-                        style: TextStyle(fontSize: size.width * 0.042),
+                        style: TextStyle(
+                            fontSize: size.width * 0.042, color: Colors.black),
                       ),
                     ),
                     SizedBox(height: size.height * 0.022),

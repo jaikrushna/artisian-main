@@ -24,7 +24,7 @@ const kMessageContainerDecoration = BoxDecoration(
 );
 const kMessageTextFieldDecoration = InputDecoration(
   hintStyle: TextStyle(
-    color: Color(0xffD1A2FF),
+    color: Colors.black,
   ),
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
   hintText: 'Type your message here...',

@@ -183,7 +183,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   controller: nameController,
                   decoration: ThemeHelper()
                       .textInputDecoration('Name ', 'Enter your name'),
-                  style: TextStyle(fontSize: size.width * 0.042),
+                  style: TextStyle(
+                      fontSize: size.width * 0.042, color: Colors.black),
                 ),
               ),
               SizedBox(
@@ -199,7 +200,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   keyboardType: TextInputType.number,
                   decoration:
                       ThemeHelper().textInputDecoration('Enter your Age'),
-                  style: TextStyle(fontSize: size.width * 0.042),
+                  style: TextStyle(
+                      fontSize: size.width * 0.042, color: Colors.black),
                 ),
               ),
               SizedBox(
@@ -214,7 +216,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   controller: bioController,
                   decoration: ThemeHelper()
                       .textInputDecoration('Enter Bio ( Any Quote )'),
-                  style: TextStyle(fontSize: size.width * 0.042),
+                  style: TextStyle(
+                      fontSize: size.width * 0.042, color: Colors.black),
                 ),
               ),
               SizedBox(
@@ -229,7 +232,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   controller: hobbyController,
                   decoration: ThemeHelper()
                       .textInputDecoration('Enter a Hobby (any one)'),
-                  style: TextStyle(fontSize: size.width * 0.042),
+                  style: TextStyle(
+                      fontSize: size.width * 0.042, color: Colors.black),
                 ),
               ),
               SizedBox(

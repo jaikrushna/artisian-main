@@ -36,7 +36,7 @@ class _App_DrawerState extends State<App_Drawer> {
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return Center(child: const CircularProgressIndicator());
             }
 
             Users? user = snapshot.data;

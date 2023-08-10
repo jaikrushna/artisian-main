@@ -17,6 +17,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   final _inactiveColor = Colors.grey;
   late String? userEmail;
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -24,21 +25,20 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
     userEmail = user?.email;
     final theme = Theme.of(context);
     return Scaffold(
+        
         drawer: App_Drawer(),
-        appBar: AppBar(
-          leading: const Center(
-            child: Text('swipe<'),
-          ),
-          automaticallyImplyLeading: false,
-          title: Padding(
-            padding: EdgeInsets.only(left: size.width * 0.130), //57
-            child: Image.asset(
-              "assets/icons/logo.png",
-              height: size.height * 0.18, //140
-            ),
-          ),
-          backgroundColor: theme.backgroundColor,
-        ),
+        // appBar: AppBar(
+        //   backgroundColor: theme.disabledColor,
+        //   leading: IconButton(
+        //       icon: Icon(
+        //         Icons.menu,
+        //         color: theme.focusColor,
+        //       ),
+        //       onPressed: () => _key.currentState!.openDrawer()),
+        //   automaticallyImplyLeading: false,
+        //   title: Text("Home", style: TextStyle(color: theme.focusColor)),
+        //   centerTitle: true,
+        // ),
         body: getBody(),
         bottomNavigationBar: _buildBottomBar());
   }

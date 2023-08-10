@@ -1,5 +1,6 @@
 import 'package:artisian/auth/signup_screen_new.dart';
 import 'package:artisian/provider/theme_provider.dart';
+import 'package:artisian/view/splashscreen.dart';
 import 'package:artisian/view/syllabus.dart';
 import 'package:artisian/viewmodel/course_view_model.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
       darkTheme: darkTheme,
       themeMode: themeProvider.themeMode,
       title: 'Flutter Demo',
-      home: isLogin(),
+      home: SplashScreen(),
       // initialRoute: '/home',
       routes: {
         '/syllabus': (context) => Syllabus(

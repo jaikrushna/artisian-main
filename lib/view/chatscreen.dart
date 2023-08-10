@@ -57,91 +57,118 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
-    return Container(
-      color: theme.disabledColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          StreamBuilder<QuerySnapshot>(
-            stream: _firestone
-                .collection('message')
-                .orderBy('messagetime')
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.lightBlueAccent,
-                  ),
-                );
-              }
-              _firestone.collection('users').snapshots().listen((event) {
-                // named.clear(); // Clear the map before updating
-                event.docs.forEach((element) {
-                  named[element['email']] = element['name'];
+    return Scaffold(
+      backgroundColor: theme.disabledColor,
+      appBar: AppBar(
+        backgroundColor: theme.disabledColor,
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+            color: theme.focusColor,
+          ),
+          onPressed: () => Scaffold.of(context).openDrawer(),
+        ),
+        automaticallyImplyLeading: false,
+        title: Text("World Chats", style: TextStyle(color: theme.focusColor)),
+        centerTitle: true,
+      ),
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            StreamBuilder<QuerySnapshot>(
+              stream: _firestone
+                  .collection('message')
+                  .orderBy('messagetime')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.lightBlueAccent,
+                    ),
+                  );
+                }
+                _firestone.collection('users').snapshots().listen((event) {
+                  // named.clear(); // Clear the map before updating
+                  event.docs.forEach((element) {
+                    named[element['email']] = element['name'];
+                  });
                 });
-              });
-              final messages = snapshot.data!.docs.reversed;
-              List<Widget> Messagelist = [];
-              for (var message in messages) {
-                final messaged = message.get('text');
-                final email = message.get('email');
-                final name = named[email];
-                final mmail = message.get('id');
-                final messagewidget = messagebubble(
-                  messaged: messaged,
-                  name: name,
-                  isme: mmail == idi,
-                  email: email,
+                final messages = snapshot.data!.docs.reversed;
+                List<Widget> Messagelist = [];
+                for (var message in messages) {
+                  final messaged = message.get('text');
+                  final email = message.get('email');
+                  final name = named[email];
+                  final mmail = message.get('id');
+                  final messagewidget = messagebubble(
+                    messaged: messaged,
+                    name: name,
+                    isme: mmail == idi,
+                    email: email,
+                  );
+                  Messagelist.add(messagewidget);
+                }
+                return Expanded(
+                  child: ListView(
+                    reverse: true,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.020 //10
+                        ,
+                        vertical: size.height * 0.025), //20
+                    children: Messagelist,
+                  ),
                 );
-                Messagelist.add(messagewidget);
-              }
-              return Expanded(
-                child: ListView(
-                  reverse: true,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.width * 0.020 //10
-                      ,
-                      vertical: size.height * 0.025), //20
-                  children: Messagelist,
-                ),
-              );
-            },
-          ),
-          Container(
-            decoration: kMessageContainerDecoration,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: TextField(
-                    controller: messagecontroll,
-                    onChanged: (value) {
-                      messagetext = value;
-                    },
-                    decoration: kMessageTextFieldDecoration,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    messagecontroll.clear();
-                    _firestone.collection('message').add({
-                      'text': messagetext,
-                      'email': loggedinuser.email,
-                      'id': idi,
-                      'messagetime': Timestamp.now(),
-                    });
-                  },
-                  child: Text(
-                    'Send',
-                    style: kSendButtonTextStyle,
-                  ),
-                ),
-              ],
+              },
             ),
-          ),
-        ],
+            Container(
+              decoration: kMessageContainerDecoration,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      controller: messagecontroll,
+                      onChanged: (value) {
+                        messagetext = value;
+                      },
+                      decoration: InputDecoration(
+                        hintStyle: TextStyle(
+                          color: theme.focusColor,
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 20.0),
+                        hintText: 'Type your message here...',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      messagecontroll.clear();
+                      _firestone.collection('message').add({
+                        'text': messagetext,
+                        'email': loggedinuser.email,
+                        'id': idi,
+                        'messagetime': Timestamp.now(),
+                      });
+                    },
+                    child: Text(
+                      'Send',
+                      style: TextStyle(
+                        color: theme.focusColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -203,7 +230,7 @@ class messagebubble extends StatelessWidget {
               child: Text(
                 '$messaged',
                 style: TextStyle(
-                  color: isme ? Colors.white : theme.indicatorColor,
+                  color: theme.focusColor,
                   fontSize: size.width * 0.032,
                 ),
               ),

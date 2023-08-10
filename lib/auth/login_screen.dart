@@ -21,7 +21,14 @@ class _Login_ScreenState extends State<Login_Screen> {
   TextEditingController password = TextEditingController();
   final _auth = FirebaseAuth.instance;
   bool progress = false;
+  bool obscure3 = true;
   bool? isChecked = false;
+  void showpass3() {
+    setState(() {
+      obscure3 = !obscure3;
+    });
+  }
+
   void signinerror(String errorMessage) {
     showDialog(
         context: context,
@@ -83,7 +90,9 @@ class _Login_ScreenState extends State<Login_Screen> {
                           controller: email,
                           decoration:
                               ThemeHelper().textInputDecoration('Email', ''),
-                          style: TextStyle(fontSize: size.width * 0.042),
+                          style: TextStyle(
+                              fontSize: size.width * 0.042,
+                              color: Colors.black),
                         ),
                       ),
                       SizedBox(height: size.height * 0.030),
@@ -91,12 +100,30 @@ class _Login_ScreenState extends State<Login_Screen> {
                         height: size.height * 0.078, //66
                         width: size.width * 0.90,
                         decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        child: TextField(
+                        child: TextFormField(
                           controller: password,
-                          obscureText: true,
-                          decoration: ThemeHelper().textInputDecoration(
-                              'Password', 'Enter your password'),
-                          style: TextStyle(fontSize: size.width * 0.042),
+                          obscureText: obscure3,
+
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            filled: true,
+                            hintStyle:
+                                GoogleFonts.urbanist(color: Colors.grey[800]),
+                            hintText: 'Password',
+                            fillColor: Color(0xffEEEEEE),
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  showpass3();
+                                },
+                                icon: Icon(Icons.remove_red_eye)),
+                          ),
+                          // decoration: ThemeHelper().textInputDecoration(
+                          //     'Password', 'Enter your password'),
+                          style: TextStyle(
+                              fontSize: size.width * 0.042,
+                              color: Colors.black),
                         ),
                       ),
                       SizedBox(height: size.height * 0.022),

@@ -37,69 +37,90 @@ class _CarosalviewState extends State<Carosalview> {
     ),
   ];
   int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
-    return Container(
-      color: theme.disabledColor,
-      child: Column(
-        children: [
-          AutoRotatingCarousel(widgetList: widgetList, photoUrls: photoUrls),
-          SizedBox(
-            height: size.height * 0.48, //387
-            child: Column(
+    return SafeArea(
+      child: Container(
+        color: theme.disabledColor,
+        child: Column(
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    MyGridTile(
-                        imagePath: 'assets/icons/stage32.png',
-                        title: 'Rookie',
+                Builder(
+                  builder: (context) => IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: theme.focusColor,
+                    ),
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text("Home",
+                      style: TextStyle(color: theme.focusColor, fontSize: 20)),
+                ),
+              ],
+            ),
+            AutoRotatingCarousel(widgetList: widgetList, photoUrls: photoUrls),
+            SizedBox(
+              height: size.height * 0.48, //387
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      MyGridTile(
+                          imagePath: 'assets/icons/stage32.png',
+                          title: 'Rookie',
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Syllabus(level: 'Beginner')));
+                          }),
+                      MyGridTile(
+                        imagePath: 'assets/icons/stage22.png',
+                        title: 'Master',
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      Syllabus(level: 'Beginner')));
-                        }),
-                    MyGridTile(
-                      imagePath: 'assets/icons/stage22.png',
-                      title: 'Master',
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Syllabus(
-                                      level: 'Intermediate',
-                                    )));
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: size.height * 0.03,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MyGridTile(
-                      imagePath: 'assets/icons/stage12.png',
-                      title: 'Legend',
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Syllabus(
-                                      level: 'Advance',
-                                    )));
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                                  builder: (context) => Syllabus(
+                                        level: 'Intermediate',
+                                      )));
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MyGridTile(
+                        imagePath: 'assets/icons/stage12.png',
+                        title: 'Legend',
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Syllabus(
+                                        level: 'Advance',
+                                      )));
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

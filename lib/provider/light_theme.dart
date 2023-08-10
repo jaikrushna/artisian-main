@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 final ThemeData lightTheme = ThemeData.light().copyWith(
-  primaryColor: Color(0xff0B0822),
-  backgroundColor: Color(0xffD1A2FF),
+  primaryColor: Color(0xFF6200EE), // Deep Purple
+  backgroundColor: Color(0xFFFCE4EC), // Pink
   indicatorColor: Colors.white,
-  hintColor: Color(0xffEECED3),
-  highlightColor: Color(0xffFCE192),
-  hoverColor: Color(0xffB6B5D8),
+  hintColor: Color(0xFF90CAF9), // Light Blue
+  highlightColor: Color(0xFFFFF176), // Yellow
+  hoverColor: Color(0xFF9FA8DA), // Indigo
   focusColor: Colors.black,
-  disabledColor: Color(0xffE9DCE5),
+  disabledColor: Color(0xFFF5F4F6), // Light version of Color(0xff0B0822)
   cardColor: Colors.white,
   canvasColor: Colors.grey[50],
   brightness: Brightness.light,
