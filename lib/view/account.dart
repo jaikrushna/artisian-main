@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:artisian/model/user.dart';
 import 'package:artisian/view/updateprofile.dart';
-import 'package:artisian/viewmodel/post_view_model.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
 import 'package:artisian/widget/posttile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,7 +62,12 @@ class _AccountState extends State<Account> {
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
         automaticallyImplyLeading: false,
-        title: Text("Profile", style: TextStyle(color: theme.focusColor)),
+        title: Text("Profile",
+            style: TextStyle(
+                color: theme.focusColor,
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Heading')),
         centerTitle: true,
       ),
       body: Container(
@@ -79,7 +83,7 @@ class _AccountState extends State<Account> {
                 }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
+                  return Center(child: const CircularProgressIndicator());
                 }
 
                 Users? user = snapshot.data;
@@ -94,7 +98,7 @@ class _AccountState extends State<Account> {
                       borderRadius: BorderRadius.circular(size.width * 0.030),
                       child: user.imageUrl == ""
                           ? Image.asset(
-                              "assets/icons/logo 3.png",
+                              "assets/icons/logo.png",
                               height: 200,
                               width: 200,
                             )
@@ -102,7 +106,7 @@ class _AccountState extends State<Account> {
                               alignment: Alignment.center,
                               children: [
                                 FadeInImage.assetNetwork(
-                                  placeholder: "assets/icons/logo 3.png",
+                                  placeholder: "assets/icons/logo.png",
                                   image: user.imageUrl,
                                   width: size.width * 0.39,
                                   height: size.height * 0.210,
@@ -111,7 +115,7 @@ class _AccountState extends State<Account> {
                                   imageErrorBuilder:
                                       (context, error, stackTrace) {
                                     return Image.asset(
-                                      "assets/icons/logo 3.png",
+                                      "assets/icons/logo.png",
                                       height: size.height * 0.210,
                                       width: size.width * 0.39,
                                     );
@@ -119,8 +123,10 @@ class _AccountState extends State<Account> {
                                 ),
                                 Visibility(
                                   visible: user.imageUrl.isEmpty,
-                                  child: CircularProgressIndicator(
-                                    color: theme.primaryColor,
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: theme.primaryColor,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -146,19 +152,20 @@ class _AccountState extends State<Account> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        user.name.substring(0, 1).toUpperCase(),
-                                        style: TextStyle(
-                                          fontSize: size.height * 0.019,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        user.name.substring(1).toLowerCase(),
-                                        style: TextStyle(
-                                          fontSize: size.height * 0.019,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                                          user.name
+                                              .substring(0, 1)
+                                              .toUpperCase(),
+                                          style: TextStyle(
+                                              color: theme.focusColor,
+                                              fontSize: size.height * 0.024,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Name')),
+                                      Text(user.name.substring(1).toLowerCase(),
+                                          style: TextStyle(
+                                              color: theme.focusColor,
+                                              fontSize: size.height * 0.024,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Name')),
                                     ],
                                   ),
                                 ),
@@ -172,6 +179,7 @@ class _AccountState extends State<Account> {
                                         MaterialPageRoute(
                                           builder: (context) => UpdateScreen(
                                             email: widget.email.toString(),
+                                            user: user,
                                           ),
                                         ),
                                       );
@@ -183,10 +191,16 @@ class _AccountState extends State<Account> {
                             Row(
                               children: [
                                 Text(
-                                  'Age: ${user.age}',
+                                  'Age: ',
                                   style: TextStyle(
                                     fontSize: size.height * 0.019,
                                     fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  '${user.age}',
+                                  style: TextStyle(
+                                    fontSize: size.height * 0.019,
                                   ),
                                 ),
                               ],
@@ -194,13 +208,19 @@ class _AccountState extends State<Account> {
                             SizedBox(height: size.height * 0.010),
                             Row(
                               children: [
+                                Text(
+                                  'Hobby: ',
+                                  style: TextStyle(
+                                    fontSize: size.height * 0.019,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 Expanded(
                                   // Allow hobby text to wrap
                                   child: Text(
-                                    'Hobby: ${user.hobby}',
+                                    '${user.hobby}',
                                     style: TextStyle(
                                       fontSize: size.height * 0.019,
-                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -288,7 +308,8 @@ class _AccountState extends State<Account> {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             // While waiting for data, you can display a loading indicator.
-                            return const CircularProgressIndicator();
+                            return Center(
+                                child: const CircularProgressIndicator());
                           } else if (snapshot.hasError) {
                             // If an error occurs, display an error message.
                             return Text('Error: ${snapshot.error}');

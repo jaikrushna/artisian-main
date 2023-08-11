@@ -8,7 +8,6 @@ import 'package:artisian/viewmodel/registration_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 
 class App_Drawer extends StatefulWidget {
   const App_Drawer({Key? key}) : super(key: key);
@@ -50,37 +49,50 @@ class _App_DrawerState extends State<App_Drawer> {
               },
               child: Column(
                 children: [
-                  AppBar(
-                    backgroundColor: theme.backgroundColor,
-                    toolbarHeight: size.height * 0.280, //200
-                    title: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(size.width * 0.08),
-                          child: Image.network(
-                            user.imageUrl,
-                            width: size.width * 0.38, //30
-                            height: size.height * 0.210,
-                            fit: BoxFit.cover,
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      FocusScope.of(context)
+                          .unfocus(); // Close the keyboard when tapping outside the drawer
+                    },
+                    child: AppBar(
+                      backgroundColor: theme.backgroundColor,
+                      toolbarHeight: size.height * 0.280, //200
+                      title: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius:
+                                BorderRadius.circular(size.width * 0.08),
+                            child: user.imageUrl == ""
+                                ? Image.asset(
+                                    "assets/icons/logo.png",
+                                    height: 200,
+                                    width: 200,
+                                  )
+                                : Image.network(
+                                    user.imageUrl,
+                                    width: size.width * 0.38, //30
+                                    height: size.height * 0.210,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
-                        ),
-                        SizedBox(
-                          width: size.width * 0.038,
-                        ),
-                        Flexible(
-                          child: Text(
-                            user.name,
-                            style: TextStyle(
-                              color: theme.focusColor,
-                              fontSize: size.width * 0.045,
+                          SizedBox(
+                            width: size.width * 0.038,
+                          ),
+                          Flexible(
+                            child: Text(
+                              user.name,
+                              style: TextStyle(
+                                color: theme.focusColor,
+                                fontSize: size.width * 0.045,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                      automaticallyImplyLeading: false,
                     ),
-                    automaticallyImplyLeading: false,
                   ),
                   Divider(),
                   ListTile(

@@ -53,27 +53,33 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     return Scaffold(
       body: Stack(
         children: [
-          PageView.builder(
-            controller: _controller,
-            itemCount: pages.length,
-            itemBuilder: (context, index) {
-              return pages[index];
-            },
-            onPageChanged: (index) {
-              setState(() {
-                currentIndex = index;
-                if (currentIndex == 2) {
-                  _animationController?.forward();
-                  showButton = false;
-                } else {
-                  _animationController?.reverse();
-                  showButton = true;
-                }
-              });
-            },
+          SizedBox(
+            height: double.infinity,
+            width: double.infinity,
+            child: PageView.builder(
+              controller: _controller,
+              itemCount: pages.length,
+              itemBuilder: (context, index) {
+                return pages[index];
+              },
+              onPageChanged: (index) {
+                setState(() {
+                  currentIndex = index;
+                  if (currentIndex == 2) {
+                    _animationController?.forward();
+                    showButton = false;
+                  } else {
+                    _animationController?.reverse();
+                    showButton = true;
+                  }
+                });
+              },
+            ),
           ),
           if (currentIndex == 0)
             Container(
+              width: double.infinity, // Occupy full available width
+              height: double.infinity,
               alignment: Alignment(0, 0.55),
               child: SmoothPageIndicator(
                 controller: _controller,
@@ -86,7 +92,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 ),
               ),
             )
-            else if(currentIndex==1)
+          else if (currentIndex == 1)
             Container(
               alignment: Alignment(0, 0.6),
               child: SmoothPageIndicator(
@@ -152,7 +158,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     ),
                     child: ElevatedButton(
                       child: Row(
-                        
                         children: [
                           Padding(
                             padding: EdgeInsets.only(left: screenWidth * 0.03),

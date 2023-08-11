@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class OnboardingOne extends StatelessWidget {
   const OnboardingOne({Key? key}) : super(key: key);
@@ -12,10 +9,13 @@ class OnboardingOne extends StatelessWidget {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
 
-    return Column(
-      children: [
-        Image.asset("assets/on1.png"),
-      ],
+    return SizedBox(
+      height: screenHeight,
+      width: screenWidth,
+      child: Image.asset(
+        "assets/on1.png",
+        fit: BoxFit.fill,
+      ),
     );
   }
 }

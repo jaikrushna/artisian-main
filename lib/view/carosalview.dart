@@ -2,6 +2,7 @@ import 'package:artisian/widget/carousal.dart';
 import 'package:artisian/widget/gridtile.dart';
 import 'package:artisian/view/syllabus.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Carosalview extends StatefulWidget {
   const Carosalview({Key? key}) : super(key: key);
@@ -59,15 +60,45 @@ class _CarosalviewState extends State<Carosalview> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
+                  padding: const EdgeInsets.only(left: 130.0),
                   child: Text("Home",
-                      style: TextStyle(color: theme.focusColor, fontSize: 20)),
+                      style: TextStyle(
+                          color: theme.focusColor,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Heading')),
                 ),
               ],
             ),
             AutoRotatingCarousel(widgetList: widgetList, photoUrls: photoUrls),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  height: 1, // Height of the horizontal line
+                  width: size.width * 0.4, // Width of the horizontal line
+                  decoration: BoxDecoration(
+                    color: theme.focusColor, // Color of the line
+                  ),
+                ),
+                Text(
+                  '   Stages  ',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  height: 1, // Height of the horizontal line
+                  width: size.width * 0.4, // Width of the horizontal line
+                  decoration: BoxDecoration(
+                    color: theme.focusColor, // Color of the line
+                  ),
+                ),
+              ],
+            ),
             SizedBox(
-              height: size.height * 0.48, //387
+              height: size.height * 0.015,
+            ),
+            SizedBox(
+              height: size.height * 0.43, //387
               child: Column(
                 children: [
                   Row(
@@ -79,8 +110,10 @@ class _CarosalviewState extends State<Carosalview> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        Syllabus(level: 'Beginner')));
+                                    builder: (context) => Syllabus(
+                                          level: 'Beginner',
+                                          title: 'Rookie',
+                                        )));
                           }),
                       MyGridTile(
                         imagePath: 'assets/icons/stage22.png',
@@ -91,13 +124,14 @@ class _CarosalviewState extends State<Carosalview> {
                               MaterialPageRoute(
                                   builder: (context) => Syllabus(
                                         level: 'Intermediate',
+                                        title: 'Master',
                                       )));
                         },
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: size.height * 0.03,
+                    height: size.height * 0.005,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -111,6 +145,7 @@ class _CarosalviewState extends State<Carosalview> {
                               MaterialPageRoute(
                                   builder: (context) => Syllabus(
                                         level: 'Advance',
+                                        title: 'Legend',
                                       )));
                         },
                       ),

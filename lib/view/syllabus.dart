@@ -9,7 +9,9 @@ import 'package:artisian/viewmodel/course_view_model.dart';
 class Syllabus extends StatefulWidget {
   static const route = '/syllabus';
   late String level;
-  Syllabus({Key? key, required this.level}) : super(key: key);
+  late String title;
+  Syllabus({Key? key, required this.level, required this.title})
+      : super(key: key);
 
   @override
   State<Syllabus> createState() => _SyllabusState();
@@ -23,6 +25,15 @@ class _SyllabusState extends State<Syllabus> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: theme.backgroundColor,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 90),
+            child: Text(
+              widget.title,
+              style: TextStyle(
+                color: theme.focusColor,
+              ),
+            ),
+          ),
         ),
         body: Container(
           color: theme.disabledColor,
@@ -32,7 +43,7 @@ class _SyllabusState extends State<Syllabus> {
                 future: CourseViewModel().getCurrentCourseData(widget.level),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return Center(child: const CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
@@ -42,8 +53,11 @@ class _SyllabusState extends State<Syllabus> {
                         shrinkWrap: true,
                         padding: EdgeInsets.all(size.height * 0.020), //8
                         children: [
-                          Completion(
-                            level: widget.level,
+                          SizedBox(
+                            width: double.infinity,
+                            child: Completion(
+                              level: widget.level,
+                            ),
                           ),
                           SingleChildScrollView(
                             child: Column(

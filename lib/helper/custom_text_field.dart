@@ -8,16 +8,19 @@ class ThemeHelper {
       [String lableText = "", String hintText = ""]) {
     return InputDecoration(
       labelText: lableText,
+      labelStyle: TextStyle(
+        color: Color(0xff951B80),
+      ),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       fillColor: Colors.white,
       filled: true,
-      contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+      contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
       focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16.0),
-          borderSide: BorderSide(color: Color(0XFF91919F))),
+          borderRadius: BorderRadius.circular(22.0),
+          borderSide: BorderSide(color: Color(0xff951B80), width: 2.5)),
       enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16.0),
-          borderSide: BorderSide(color: Colors.grey.shade400)),
+          borderRadius: BorderRadius.circular(22.0),
+          borderSide: BorderSide(color: Color(0xff951B80), width: 1.0)),
       errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
           borderSide: BorderSide(color: Colors.red, width: 2.0)),
@@ -33,7 +36,7 @@ class ThemeHelper {
         color: Colors.grey.withOpacity(0),
         blurRadius: 20,
         offset: const Offset(0, 5),
-      )
+      ),
     ]);
   }
 

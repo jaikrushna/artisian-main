@@ -10,7 +10,7 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
   focusColor: Colors.black,
   disabledColor: Color(0xFFF5F4F6), // Light version of Color(0xff0B0822)
   cardColor: Colors.white,
-  canvasColor: Colors.grey[50],
+  canvasColor: Color(0xffA99BB2),
   brightness: Brightness.light,
   appBarTheme: AppBarTheme(
     elevation: 0.0,

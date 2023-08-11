@@ -69,7 +69,12 @@ class _ChatScreenState extends State<ChatScreen> {
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),
         automaticallyImplyLeading: false,
-        title: Text("World Chats", style: TextStyle(color: theme.focusColor)),
+        title: Text("World Chats",
+            style: TextStyle(
+                color: theme.focusColor,
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Heading')),
         centerTitle: true,
       ),
       body: Container(
@@ -221,7 +226,7 @@ class messagebubble extends StatelessWidget {
                     bottomLeft: Radius.circular(size.width * 0.070),
                     bottomRight: Radius.circular(size.width * 0.070),
                   ),
-            color: isme ? theme.primaryColor : theme.backgroundColor,
+            color: isme ? theme.secondaryHeaderColor : theme.backgroundColor,
             elevation: 5.0,
             child: Padding(
               padding: EdgeInsets.symmetric(

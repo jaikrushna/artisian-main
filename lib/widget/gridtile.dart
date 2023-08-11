@@ -17,7 +17,7 @@ class MyGridTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(size.width * 0.02),
       child: Container(
-        height: size.height * 0.2,
+        height: size.height * 0.18,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

@@ -71,7 +71,6 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController.forward();
   }
 
-  
   void _navigateToNextScreen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool onboardingShown = prefs.getBool(onboardingKey) ?? false;
@@ -81,7 +80,8 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => isLoggedIn ? Landing() : LoginView()),
+          MaterialPageRoute(
+              builder: (context) => isLoggedIn ? Landing() : LoginView()),
         );
       }
     } else {
@@ -109,7 +109,9 @@ class _SplashScreenState extends State<SplashScreen>
           ),
           AnimatedContainer(
             duration: const Duration(milliseconds: 1000),
-            color: _isFirstTextVisible ? Colors.transparent : const Color(0xff200D31),
+            color: _isFirstTextVisible
+                ? Colors.transparent
+                : const Color(0xff200D31),
             onEnd: () {
               if (!_isFirstTextVisible) {
                 _navigateToNextScreen();
@@ -145,7 +147,7 @@ class _SplashScreenState extends State<SplashScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                          'assets/icons/logo 3.png',
+                            'assets/icons/logo.png',
                             height: 500,
                             width: 500,
                           ),

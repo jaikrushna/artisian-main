@@ -59,40 +59,63 @@ class custom_button extends StatelessWidget {
       width: width,
       child: ElevatedButton(
         onPressed: () async {
-          try {
-            await _auth.createUserWithEmailAndPassword(
-                email: email, password: passkey);
-            int age = int.tryParse(agetext) ?? 0;
-            viewModel.addUser(
-              imageUrl: selectedAvatar,
-              name: nametext,
-              age: age,
-              bio: biotext,
-              date: DateTime.now(),
-              hobby: hobbytext,
-              email: email,
-              streak: 0,
+          if (nametext.isEmpty ||
+              agetext.isEmpty ||
+              biotext.isEmpty ||
+              hobbytext.isEmpty ||
+              selectedAvatar.isEmpty) {
+            showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: const Text('Warning'),
+                content: const Text('Please fill in all fields'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
             );
-            courseModel.addCourse(email: email, level: 'Beginner');
-            courseModel.addCourse(email: email, level: 'Intermediate');
-            courseModel.addCourse(email: email, level: 'Advance');
-            postModel.PostNew(email: email);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Landing()));
-          } on HttpException catch (error) {
-            var errorMessage = 'Authentication failed';
-            if (error.toString().contains('INVALID_EMAIL')) {
-              errorMessage = 'Invalid email';
+          } else {
+            try {
+              await _auth.createUserWithEmailAndPassword(
+                  email: email, password: passkey);
+              int age = int.tryParse(agetext) ?? 0;
+              viewModel.addUser(
+                imageUrl: selectedAvatar,
+                name: nametext,
+                age: age,
+                bio: biotext,
+                date: DateTime.now(),
+                hobby: hobbytext,
+                email: email,
+                streak: 0,
+              );
+              courseModel.addCourse(email: email, level: 'Beginner');
+              courseModel.addCourse(email: email, level: 'Intermediate');
+              courseModel.addCourse(email: email, level: 'Advance');
+              postModel.PostNew(email: email);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Landing()));
+            } on HttpException catch (error) {
+              var errorMessage = 'Authentication failed';
+              if (error.toString().contains('INVALID_EMAIL')) {
+                errorMessage = 'Invalid email';
+              }
+              if (error.toString().contains('WEAK_PASSWORD')) {
+                errorMessage = 'Password is weak, Enter another';
+              }
+              signinerror(errorMessage);
+            } catch (error) {
+              var errorMessage = 'Authentication failed something went wrong';
+              signinerror(errorMessage);
             }
-            if (error.toString().contains('WEAK_PASSWORD')) {
-              errorMessage = 'Password is weak, Enter another';
-            }
-            signinerror(errorMessage);
-          } catch (error) {
-            var errorMessage = 'Authentication failed something went wrong';
-            signinerror(errorMessage);
+            // Get.to(Login_View());
           }
-          // Get.to(Login_View());
+          ;
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: theme.primaryColor,

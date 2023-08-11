@@ -10,11 +10,13 @@ class OnboardingThree extends StatelessWidget {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
 
-    return Column(
-      
-      children: [
-        Image.asset("assets/on3.png"),
-      ],
+    return SizedBox(
+      height: screenHeight,
+      width: screenWidth,
+      child: Image.asset(
+        "assets/on3.png",
+        fit: BoxFit.fill,
+      ),
     );
   }
 }

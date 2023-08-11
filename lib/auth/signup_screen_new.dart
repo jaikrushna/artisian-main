@@ -18,6 +18,12 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController password = TextEditingController();
 
   bool isChecked = false;
+  bool obscure3 = true;
+  void showpass3() {
+    setState(() {
+      obscure3 = !obscure3;
+    });
+  }
 
   @override
   void dispose() {
@@ -62,14 +68,53 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     SizedBox(height: size.height * 0.030),
                     Container(
-                      height: size.height * 0.078,
+                      height: size.height * 0.078, //66
                       width: size.width * 0.90,
                       decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                      child: TextField(
+                      child: TextFormField(
                         controller: password,
-                        obscureText: true,
-                        decoration: ThemeHelper().textInputDecoration(
-                            'Password', 'Enter your password'),
+                        obscureText: obscure3,
+
+                        decoration: InputDecoration(
+                          labelText: 'Password..',
+                          labelStyle: TextStyle(
+                            color: Color(0xff951B80),
+                          ),
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          fillColor: Colors.white,
+                          filled: true,
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 20.0, horizontal: 20.0),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(22.0),
+                              borderSide: BorderSide(
+                                  color: Color(0xff951B80), width: 2.5)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(22.0),
+                              borderSide: BorderSide(
+                                  color: Color(0xff951B80), width: 1.0)),
+                          errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                              borderSide:
+                                  BorderSide(color: Colors.red, width: 2.0)),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                              borderSide:
+                                  BorderSide(color: Colors.red, width: 2.0)),
+                          hintStyle:
+                              GoogleFonts.urbanist(color: Colors.grey[800]),
+                          hintText: 'Password',
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                showpass3();
+                              },
+                              icon: Icon(
+                                Icons.remove_red_eye,
+                                color: Color(0xff951B80),
+                              )),
+                        ),
+                        // decoration: ThemeHelper().textInputDecoration(
+                        //     'Password', 'Enter your password'),
                         style: TextStyle(
                             fontSize: size.width * 0.042, color: Colors.black),
                       ),
@@ -109,15 +154,53 @@ class _LoginViewState extends State<LoginView> {
                             height: size.height * 0.065,
                             width: size.width * 0.55,
                             child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RegistrationScreen(
-                                            email: email.text,
-                                            passkey: password.text,
-                                          )),
-                                );
+                              onPressed: () async {
+                                String emailText = email.text;
+                                String passwordText = password.text;
+
+                                if (!emailText.contains('@') ||
+                                    !emailText.contains('.') ||
+                                    passwordText.length < 6 ||
+                                    (isChecked != null && !isChecked!)) {
+                                  String warningMessage = '';
+
+                                  if (!emailText.contains('@') ||
+                                      !emailText.contains('.')) {
+                                    warningMessage += 'Invalid email format\n';
+                                  } else if (passwordText.length < 6) {
+                                    warningMessage +=
+                                        'Password must be at least 6 characters\n';
+                                  } else if (isChecked != null && !isChecked!) {
+                                    warningMessage +=
+                                        'Please accept terms and conditions\n';
+                                  }
+
+                                  showDialog(
+                                    context: context,
+                                    builder: (ctx) => AlertDialog(
+                                      title: const Text('Warning'),
+                                      content: Text(warningMessage),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(ctx).pop();
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RegistrationScreen(
+                                              email: email.text,
+                                              passkey: password.text,
+                                            )),
+                                  );
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: theme.primaryColor,

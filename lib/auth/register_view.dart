@@ -119,7 +119,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             height: size.height * 0.18, //140
           ),
         ),
-        backgroundColor: theme.backgroundColor,
+        backgroundColor: theme.disabledColor,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -131,7 +131,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   _showImagePickerBottomSheet();
                 },
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(size.width * 0.055),
+                    borderRadius: BorderRadius.circular(size.width * 0.070),
                     child: Card(
                       elevation: 6,
                       child: selectedAvatar == ''

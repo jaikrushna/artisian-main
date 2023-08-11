@@ -103,7 +103,7 @@ class UserViewModel extends ChangeNotifier {
       DateTime currentDate = DateTime.now();
       int dateDifference = currentDate.difference(storedDate).inDays;
       // Check if the difference between the stored date and the current date is 1 day
-      if (dateDifference <= 3 && step!) {
+      if (1 <= dateDifference && dateDifference <= 3 && step!) {
         // Increment the streak by 1 and update the date to the current date
         int newStreak = (data['streak'] ?? 0) + 1;
         await documentRef.update({
@@ -139,7 +139,6 @@ class UserViewModel extends ChangeNotifier {
   Future<void> updateUserProfile({
     required String imageUrl,
     required String name,
-    required int age,
     required String hobby,
     required String bio,
   }) async {
@@ -160,7 +159,6 @@ class UserViewModel extends ChangeNotifier {
       await documentRef.update({
         'imageUrl': imageUrl,
         'name': name,
-        'age': age,
         'hobby': hobby,
         'bio': bio,
       });

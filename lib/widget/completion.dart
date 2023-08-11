@@ -31,13 +31,13 @@ class _CompletionState extends State<Completion> {
             if (course != null) {
               course = course * 10;
               return Card(
-                color: theme.primaryColor,
+                color: theme.canvasColor,
                 elevation: size.height * 0.07, //5
                 shadowColor: Colors.grey,
                 child: Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(size.height * 0.020),
+                      padding: EdgeInsets.all(size.height * 0.022),
                       child: CircularPercentIndicator(
                         animation: true,
                         animationDuration: 2000,
@@ -57,28 +57,30 @@ class _CompletionState extends State<Completion> {
                         ),
                       ),
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          '$course% Completed',
-                          style: TextStyle(
-                            fontSize: size.width * 0.042, //17
-                            color: theme.backgroundColor,
-                            fontWeight: FontWeight.bold,
+                    Flexible(
+                      child: Column(
+                        children: [
+                          Text(
+                            '$course% Completed',
+                            style: TextStyle(
+                              fontSize: size.width * 0.042, //17
+                              color: theme.backgroundColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.007, //7
-                        ),
-                        Text(
-                          course == 100 ? 'Yeh Buddy!' : 'Try Your Best !',
-                          style: TextStyle(
-                            fontSize: size.width * 0.058, //22
-                            color: Colors.indigo,
-                            fontWeight: FontWeight.bold,
+                          SizedBox(
+                            height: size.height * 0.007, //7
                           ),
-                        ),
-                      ],
+                          Text(
+                            course == 100 ? 'Yeh Buddy!' : 'Try Your Best !',
+                            style: TextStyle(
+                              fontSize: size.width * 0.058, //22
+                              color: Colors.indigo,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),

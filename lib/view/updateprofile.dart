@@ -1,18 +1,22 @@
 // ignore_for_file: library_private_types_in_public_api, must_be_immutable
 
 import 'package:artisian/helper/custom_text_field.dart';
+import 'package:artisian/model/user.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
 import 'package:artisian/widget/custom_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:artisian/widget/profilepic.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class UpdateScreen extends StatefulWidget {
+  Users? user;
   String email;
   UpdateScreen({
     Key? key,
     required this.email,
+    required this.user,
   }) : super(key: key);
   @override
   _UpdateScreenState createState() => _UpdateScreenState();
@@ -31,7 +35,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
     'https://firebasestorage.googleapis.com/v0/b/artisian-25b23.appspot.com/o/profilepic%2Flion.jpg?alt=media&token=ed5f39ca-532c-4b0c-8856-c370caa26504',
     'https://firebasestorage.googleapis.com/v0/b/artisian-25b23.appspot.com/o/profilepic%2Fwolf.jpg?alt=media&token=acf232e4-81a1-4fdc-ad72-7d28fd97ff3e'
   ];
-  String selectedAvatar = ''; // The default selected avatar
+  String selectedAvatar = '';
   void _showImagePickerBottomSheet() {
     showModalBottomSheet(
       context: context,
@@ -102,24 +106,20 @@ class _UpdateScreenState extends State<UpdateScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     UserViewModel viewModel = Provider.of<UserViewModel>(context);
     return Scaffold(
+      backgroundColor: theme.disabledColor,
       appBar: AppBar(
-        leading: Center(
-            child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(Icons.arrow_back_ios))),
+        backgroundColor: theme.disabledColor,
         automaticallyImplyLeading: false,
-        title: Padding(
-          padding: EdgeInsets.only(left: size.width * 0.130), //57
-          child: Image.asset(
-            "assets/icons/logo.png",
-            height: size.height * 0.18, //140
-          ),
-        ),
-        backgroundColor: const Color(0xff101A30),
+        title: Text("Update Profile",
+            style: TextStyle(
+              color: theme.focusColor,
+              fontSize: size.width * 0.05,
+              fontWeight: FontWeight.bold,
+            )),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -195,22 +195,6 @@ class _UpdateScreenState extends State<UpdateScreen> {
                 decoration: ThemeHelper().inputBoxDecorationShaddow(),
                 child: TextField(
                   textAlign: TextAlign.center,
-                  controller: ageController,
-                  keyboardType: TextInputType.number,
-                  decoration:
-                      ThemeHelper().textInputDecoration('Enter your Age'),
-                  style: TextStyle(fontSize: size.width * 0.042),
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.016,
-              ),
-              Container(
-                height: size.height * 0.078, //66
-                width: size.width * 0.90,
-                decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                child: TextField(
-                  textAlign: TextAlign.center,
                   controller: bioController,
                   decoration: ThemeHelper()
                       .textInputDecoration('Enter Bio ( Any Quote )'),
@@ -242,16 +226,23 @@ class _UpdateScreenState extends State<UpdateScreen> {
                   onPressed: () {
                     // Example: Update user profile
                     viewModel.updateUserProfile(
-                      imageUrl: selectedAvatar,
-                      name: nameController.text,
-                      age: int.parse(ageController.text),
-                      hobby: hobbyController.text,
-                      bio: bioController.text,
+                      imageUrl: selectedAvatar == ''
+                          ? widget.user!.imageUrl
+                          : selectedAvatar,
+                      name: nameController.text.isNotEmpty
+                          ? nameController.text
+                          : widget.user!.name,
+                      hobby: hobbyController.text.isNotEmpty
+                          ? hobbyController.text
+                          : widget.user!.hobby,
+                      bio: bioController.text.isNotEmpty
+                          ? bioController.text
+                          : widget.user!.bio,
                     );
                     Navigator.of(context).pop();
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade300,
+                    backgroundColor: theme.primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(size.height * 0.030),
                     ),

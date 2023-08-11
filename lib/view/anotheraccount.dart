@@ -15,20 +15,6 @@ class _Account_ViewState extends State<Account_View>
     final theme = Theme.of(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        leading: const Center(
-          child: Text('swipe<'),
-        ),
-        automaticallyImplyLeading: false,
-        title: Padding(
-          padding: EdgeInsets.only(left: size.width * 0.130), //57
-          child: Image.asset(
-            "assets/icons/logo.png",
-            height: size.height * 0.18, //140
-          ),
-        ),
-        backgroundColor: theme.backgroundColor,
-      ),
       body: Account(email: widget.email),
     );
   }

@@ -119,7 +119,37 @@ class _SubmissionState extends State<Submission> {
                     referenceDirImages.child(uniqueFileName);
 
                 try {
-                  await referenceImageToUpload.putFile(File(file.path));
+                  UploadTask uploadTask =
+                      referenceImageToUpload.putFile(File(file.path));
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      double uploadProgress = 0.0; // Initialize progress
+                      uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
+                        uploadProgress =
+                            snapshot.bytesTransferred / snapshot.totalBytes;
+                        // Update the progress using the snapshot's data
+                      });
+
+                      return StatefulBuilder(
+                        builder: (context, setState) {
+                          return AlertDialog(
+                            title: Center(child: Text('Uploading sketch...')),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CircularProgressIndicator(
+                                    value: uploadProgress),
+                                SizedBox(height: 10),
+                                Image.asset('assets/icons/loading.gif')
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                  TaskSnapshot taskSnapshot = await uploadTask;
                   Navigator.of(context).pop();
                   showDialog(
                     context: context,
@@ -171,7 +201,37 @@ class _SubmissionState extends State<Submission> {
                     referenceDirImages.child(uniqueFileName);
 
                 try {
-                  await referenceImageToUpload.putFile(File(file.path));
+                  UploadTask uploadTask =
+                      referenceImageToUpload.putFile(File(file.path));
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      double uploadProgress = 0.0; // Initialize progress
+                      uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
+                        uploadProgress =
+                            snapshot.bytesTransferred / snapshot.totalBytes;
+                        // Update the progress using the snapshot's data
+                      });
+
+                      return StatefulBuilder(
+                        builder: (context, setState) {
+                          return AlertDialog(
+                            title: Center(child: Text('Uploading sketch...')),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CircularProgressIndicator(
+                                    value: uploadProgress),
+                                SizedBox(height: 10),
+                                Image.asset('assets/icons/loading.gif')
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                  TaskSnapshot taskSnapshot = await uploadTask;
                   Navigator.of(context).pop();
                   showDialog(
                     context: context,

@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/syllabus': (context) => Syllabus(
               level: '',
+              title: '',
             ),
         '/youtube': (context) => Youtube_screen(
               link: '',

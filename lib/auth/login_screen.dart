@@ -1,12 +1,14 @@
 // ignore_for_file: use_build_context_synchronously, camel_case_types
 
 import 'dart:io';
+import 'package:artisian/auth/signup_screen_new.dart';
 import 'package:artisian/helper/custom_text_field.dart';
 import 'package:artisian/view/landing.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:flutter/gestures.dart';
 
 class Login_Screen extends StatefulWidget {
   const Login_Screen({Key? key}) : super(key: key);
@@ -105,19 +107,42 @@ class _Login_ScreenState extends State<Login_Screen> {
                           obscureText: obscure3,
 
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                            labelText: 'Password..',
+                            labelStyle: TextStyle(
+                              color: Color(0xff951B80),
                             ),
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            fillColor: Colors.white,
                             filled: true,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 20.0),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(22.0),
+                                borderSide: BorderSide(
+                                    color: Color(0xff951B80), width: 2.5)),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(22.0),
+                                borderSide: BorderSide(
+                                    color: Color(0xff951B80), width: 1.0)),
+                            errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16.0),
+                                borderSide:
+                                    BorderSide(color: Colors.red, width: 2.0)),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16.0),
+                                borderSide:
+                                    BorderSide(color: Colors.red, width: 2.0)),
                             hintStyle:
                                 GoogleFonts.urbanist(color: Colors.grey[800]),
                             hintText: 'Password',
-                            fillColor: Color(0xffEEEEEE),
                             suffixIcon: IconButton(
                                 onPressed: () {
                                   showpass3();
                                 },
-                                icon: Icon(Icons.remove_red_eye)),
+                                icon: Icon(
+                                  Icons.remove_red_eye,
+                                  color: Color(0xff951B80),
+                                )),
                           ),
                           // decoration: ThemeHelper().textInputDecoration(
                           //     'Password', 'Enter your password'),
@@ -199,6 +224,44 @@ class _Login_ScreenState extends State<Login_Screen> {
                             ),
                           ),
                         ],
+                      ),
+                      // ],
+                      //   ),
+                      // ),
+                      SizedBox(height: size.height * 0.245),
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(vertical: size.height * 0.042),
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Create new account? ",
+                                style: GoogleFonts.inter(
+                                  color: const Color(0XFF91919F),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: size.width * 0.036,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Sign Up',
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginView()));
+                                  },
+                                style: const TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
