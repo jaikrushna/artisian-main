@@ -8,25 +8,26 @@ class ThemeHelper {
       [String lableText = "", String hintText = ""]) {
     return InputDecoration(
       labelText: lableText,
-      labelStyle: TextStyle(
+      labelStyle: const TextStyle(
         color: Color(0xff951B80),
       ),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       fillColor: Colors.white,
       filled: true,
-      contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+      contentPadding:
+          const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(22.0),
-          borderSide: BorderSide(color: Color(0xff951B80), width: 2.5)),
+          borderSide: const BorderSide(color: Color(0xff951B80), width: 2.5)),
       enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(22.0),
-          borderSide: BorderSide(color: Color(0xff951B80), width: 1.0)),
+          borderSide: const BorderSide(color: Color(0xff951B80), width: 1.0)),
       errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
-          borderSide: BorderSide(color: Colors.red, width: 2.0)),
+          borderSide: const BorderSide(color: Colors.red, width: 2.0)),
       focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
-          borderSide: BorderSide(color: Colors.red, width: 2.0)),
+          borderSide: const BorderSide(color: Colors.red, width: 2.0)),
     );
   }
 
@@ -52,14 +53,14 @@ class ThemeHelper {
     }
 
     return BoxDecoration(
-      boxShadow: [
+      boxShadow: const [
         BoxShadow(
             color: Color(0XFF91919F), offset: Offset(0, 4), blurRadius: 5.0)
       ],
       gradient: LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        stops: [0.0, 1.0],
+        stops: const [0.0, 1.0],
         colors: [
           c1,
         ],
@@ -76,7 +77,7 @@ class ThemeHelper {
           borderRadius: BorderRadius.circular(30.0),
         ),
       ),
-      minimumSize: MaterialStateProperty.all(Size(50, 50)),
+      minimumSize: MaterialStateProperty.all(const Size(50, 50)),
       backgroundColor: MaterialStateProperty.all(Colors.transparent),
       shadowColor: MaterialStateProperty.all(Colors.transparent),
     );
@@ -89,15 +90,15 @@ class ThemeHelper {
       content: Text(content),
       actions: [
         TextButton(
-          child: Text(
-            "OK",
-            style: TextStyle(color: Colors.white),
-          ),
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.black38)),
           onPressed: () {
             Navigator.of(context).pop();
           },
+          child: const Text(
+            "OK",
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ],
     );

@@ -4,22 +4,21 @@ class CustomButton extends StatelessWidget {
   final double size;
   final Color innerColor;
   final Color outerColor;
-  final VoidCallback onPressed;
-  final Key? key; // Make the key property nullable
+  final VoidCallback onPressed; // Make the key property nullable
 
-  CustomButton({
+  const CustomButton({
+    Key? key,
     required this.size,
     required this.innerColor,
     required this.outerColor,
-    required this.onPressed,
-    this.key, // Provide a default value of null
-  });
+    required this.onPressed, // Provide a default value of null
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
-      child: Container(
+      child: SizedBox(
         key: key, // Assign the key to the container
         width: size,
         height: size,
@@ -37,7 +36,7 @@ class CustomButton extends StatelessWidget {
             Container(
               width: size * 0.75,
               height: size * 0.75,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,
               ),
@@ -49,7 +48,7 @@ class CustomButton extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: innerColor,
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_forward_sharp,
                 size: 40,
                 color: Colors.white,

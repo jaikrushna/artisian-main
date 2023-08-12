@@ -1,11 +1,11 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, must_be_immutable
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class Youtube_screen extends StatefulWidget {
-  Youtube_screen({required this.link});
+  Youtube_screen({Key? key, required this.link}) : super(key: key);
   static const route = '/youtube';
   String link;
   @override
@@ -101,19 +101,19 @@ class _Youtube_screenState extends State<Youtube_screen> {
                             ),
                           ),
                           SizedBox(height: size.height * 0.017),
-                          Divider(
+                          const Divider(
                             height: 1,
                             thickness: 1,
                             color: Colors.grey,
                           ),
                           SizedBox(height: size.height * 0.020),
-                          Divider(
+                          const Divider(
                             height: 1,
                             thickness: 1,
                             color: Colors.grey,
                           ),
                           SizedBox(height: size.height * 0.050),
-                          Container(
+                          SizedBox(
                             height: 200,
                             child: Center(
                                 child: Opacity(
@@ -124,7 +124,9 @@ class _Youtube_screenState extends State<Youtube_screen> {
                             )),
                           )
                         ] else ...[
-                          CircularProgressIndicator(), // Show loading indicator
+                          const Center(
+                              child:
+                                  CircularProgressIndicator()), // Show loading indicator
                         ],
                       ])),
             ],

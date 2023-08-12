@@ -3,8 +3,6 @@
 import 'package:artisian/helper/custom_text_field.dart';
 import 'package:artisian/model/user.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
-import 'package:artisian/widget/custom_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:artisian/widget/profilepic.dart';
 import 'package:google_fonts/google_fonts.dart';

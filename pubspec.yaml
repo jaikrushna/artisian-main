@@ -102,6 +102,9 @@ flutter:
      - family: Name
        fonts:
           - asset: fonts/name.ttf
+     - family: Title
+       fonts:
+          - asset: fonts/Tt.ttf
 #     - family: Trajan Pro
 #       fonts:
 #         - asset: fonts/TrajanPro.ttf

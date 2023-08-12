@@ -17,28 +17,13 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   final _inactiveColor = Colors.grey;
   late String? userEmail;
-  
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     User? user = FirebaseAuth.instance.currentUser;
     userEmail = user?.email;
-    final theme = Theme.of(context);
     return Scaffold(
-        
-        drawer: App_Drawer(),
-        // appBar: AppBar(
-        //   backgroundColor: theme.disabledColor,
-        //   leading: IconButton(
-        //       icon: Icon(
-        //         Icons.menu,
-        //         color: theme.focusColor,
-        //       ),
-        //       onPressed: () => _key.currentState!.openDrawer()),
-        //   automaticallyImplyLeading: false,
-        //   title: Text("Home", style: TextStyle(color: theme.focusColor)),
-        //   centerTitle: true,
-        // ),
+        drawer: const App_Drawer(),
         body: getBody(),
         bottomNavigationBar: _buildBottomBar());
   }
@@ -86,11 +71,11 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
     List<Widget> pages = [
       Container(
         alignment: Alignment.center,
-        child: Carosalview(),
+        child: const Carosalview(),
       ),
       Container(
         alignment: Alignment.center,
-        child: ChatScreen(),
+        child: const ChatScreen(),
       ),
       Container(
         alignment: Alignment.center,

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 List<List<String>> Intermediate = [
   [
     "Studying human anatomy in more depth",

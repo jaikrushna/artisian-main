@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:async';
 import 'package:artisian/auth/signup_screen_new.dart';
 import 'package:artisian/view/landing.dart';
@@ -81,7 +83,8 @@ class _SplashScreenState extends State<SplashScreen>
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => isLoggedIn ? Landing() : LoginView()),
+              builder: (context) =>
+                  isLoggedIn ? const Landing() : const LoginView()),
         );
       }
     } else {
@@ -90,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => OnboardingScreen()),
+          MaterialPageRoute(builder: (context) => const OnboardingScreen()),
         );
       }
     }
@@ -98,8 +101,9 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color(0xffF7E5B7),
+      backgroundColor: const Color(0xffF7E5B7),
       body: Stack(
         children: [
           SvgPicture.asset(
@@ -125,16 +129,11 @@ class _SplashScreenState extends State<SplashScreen>
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Image.asset(
-                        //   'assets/icons/logo 3.png',
-                        //   height: 500,
-                        //   width: 500,
-                        // ),
                         Text(
                           'Welcome',
                           style: GoogleFonts.capriola(
                             color: const Color(0xffF7E5B7),
-                            fontSize: 50,
+                            fontSize: size.width * 0.1,
                           ),
                           key: const ValueKey<int>(1),
                         ),
@@ -148,24 +147,9 @@ class _SplashScreenState extends State<SplashScreen>
                         children: [
                           Image.asset(
                             'assets/icons/logo.png',
-                            height: 500,
-                            width: 500,
+                            height: size.height * 0.5,
+                            width: size.width * 0.8,
                           ),
-                          // Text(
-                          //   'Craft My Plate',
-                          //   style: GoogleFonts.capriola(
-                          //     color: const Color(0xffF7E5B7),
-                          //     fontSize: 32,
-                          //   ),
-                          //   key: const ValueKey<int>(2),
-                          // ),
-                          // Text(
-                          //   'You customise, We cater',
-                          //   style: GoogleFonts.courgette(
-                          //     color: const Color(0xffD5B67D),
-                          //     fontSize: 16,
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),

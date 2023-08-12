@@ -2,7 +2,6 @@ import 'package:artisian/widget/carousal.dart';
 import 'package:artisian/widget/gridtile.dart';
 import 'package:artisian/view/syllabus.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Carosalview extends StatefulWidget {
   const Carosalview({Key? key}) : super(key: key);
@@ -63,10 +62,11 @@ class _CarosalviewState extends State<Carosalview> {
                   padding: const EdgeInsets.only(left: 130.0),
                   child: Text("Home",
                       style: TextStyle(
-                          color: theme.focusColor,
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Heading')),
+                        color: theme.focusColor,
+                        fontSize: size.height * 0.047,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Title',
+                      )),
                 ),
               ],
             ),
@@ -81,7 +81,7 @@ class _CarosalviewState extends State<Carosalview> {
                     color: theme.focusColor, // Color of the line
                   ),
                 ),
-                Text(
+                const Text(
                   '   Stages  ',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),

@@ -134,13 +134,14 @@ class _SubmissionState extends State<Submission> {
                       return StatefulBuilder(
                         builder: (context, setState) {
                           return AlertDialog(
-                            title: Center(child: Text('Uploading sketch...')),
+                            title: const Center(
+                                child: Text('Uploading sketch...')),
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 CircularProgressIndicator(
                                     value: uploadProgress),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Image.asset('assets/icons/loading.gif')
                               ],
                             ),
@@ -149,21 +150,20 @@ class _SubmissionState extends State<Submission> {
                       );
                     },
                   );
-                  TaskSnapshot taskSnapshot = await uploadTask;
                   Navigator.of(context).pop();
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Submission Successful'),
-                        content: Text(
+                        title: const Text('Submission Successful'),
+                        content: const Text(
                             'Your submission has been successfully uploaded.'),
                         actions: [
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop(); // Close the dialog
                             },
-                            child: Text('OK'),
+                            child: const Text('OK'),
                           ),
                         ],
                       );
@@ -216,13 +216,14 @@ class _SubmissionState extends State<Submission> {
                       return StatefulBuilder(
                         builder: (context, setState) {
                           return AlertDialog(
-                            title: Center(child: Text('Uploading sketch...')),
+                            title: const Center(
+                                child: Text('Uploading sketch...')),
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 CircularProgressIndicator(
                                     value: uploadProgress),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Image.asset('assets/icons/loading.gif')
                               ],
                             ),
@@ -231,21 +232,20 @@ class _SubmissionState extends State<Submission> {
                       );
                     },
                   );
-                  TaskSnapshot taskSnapshot = await uploadTask;
                   Navigator.of(context).pop();
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Submission Successful'),
-                        content: Text(
+                        title: const Text('Submission Successful'),
+                        content: const Text(
                             'Your submission has been successfully uploaded.'),
                         actions: [
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop(); // Close the dialog
                             },
-                            child: Text('OK'),
+                            child: const Text('OK'),
                           ),
                         ],
                       );

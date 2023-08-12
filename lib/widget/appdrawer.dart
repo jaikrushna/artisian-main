@@ -25,7 +25,6 @@ class _App_DrawerState extends State<App_Drawer> {
     EmailViewModel emailModel = Provider.of<EmailViewModel>(context);
     String? email = emailModel.userEmail;
     final theme = Theme.of(context);
-    bool isDarkModeEnabled = false;
     return Drawer(
       child: StreamBuilder<Users?>(
           stream: viewModel.getCurrentUserData(email),
@@ -35,7 +34,7 @@ class _App_DrawerState extends State<App_Drawer> {
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: const CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             Users? user = snapshot.data;
@@ -67,8 +66,8 @@ class _App_DrawerState extends State<App_Drawer> {
                             child: user.imageUrl == ""
                                 ? Image.asset(
                                     "assets/icons/logo.png",
-                                    height: 200,
-                                    width: 200,
+                                    width: size.width * 0.38, //30
+                                    height: size.height * 0.210,
                                   )
                                 : Image.network(
                                     user.imageUrl,
@@ -94,11 +93,11 @@ class _App_DrawerState extends State<App_Drawer> {
                       automaticallyImplyLeading: false,
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   ListTile(
-                    title: Text("Dark Mode"),
+                    title: const Text("Dark Mode"),
                     trailing: Switch(
-                      activeColor: Color(0xff1E8829),
+                      activeColor: const Color(0xff1E8829),
                       value: themeProvider.themeMode ==
                           ThemeMode.dark, // Use the bool value here
                       onChanged: (val) {
@@ -108,10 +107,10 @@ class _App_DrawerState extends State<App_Drawer> {
                       },
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   TextButton(
                     child: ListTile(
-                      title: Text("Log Out"),
+                      title: const Text("Log Out"),
                       trailing: Icon(
                         Icons.logout,
                         color: theme.focusColor,

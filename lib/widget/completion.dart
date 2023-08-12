@@ -23,7 +23,7 @@ class _CompletionState extends State<Completion> {
         stream: viewModel.getCourseValue(widget.level),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: const CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {

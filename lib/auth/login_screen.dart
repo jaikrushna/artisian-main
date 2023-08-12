@@ -17,7 +17,6 @@ class Login_Screen extends StatefulWidget {
   State<Login_Screen> createState() => _Login_ScreenState();
 }
 
-// ignore: camel_case_types
 class _Login_ScreenState extends State<Login_Screen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -40,7 +39,10 @@ class _Login_ScreenState extends State<Login_Screen> {
               actions: <Widget>[
                 TextButton(
                     onPressed: () {
-                      Navigator.of(ctx).pop();
+                      Navigator.of(ctx).pop(); // Close the dialog
+                      setState(() {
+                        progress = false; // Close the progress indicator
+                      });
                     },
                     child: const Text('Okay'))
               ],
@@ -90,8 +92,8 @@ class _Login_ScreenState extends State<Login_Screen> {
                         decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         child: TextField(
                           controller: email,
-                          decoration:
-                              ThemeHelper().textInputDecoration('Email', ''),
+                          decoration: ThemeHelper()
+                              .textInputDecoration('Email', 'Enter Your Email'),
                           style: TextStyle(
                               fontSize: size.width * 0.042,
                               color: Colors.black),
@@ -108,30 +110,31 @@ class _Login_ScreenState extends State<Login_Screen> {
 
                           decoration: InputDecoration(
                             labelText: 'Password..',
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               color: Color(0xff951B80),
                             ),
                             floatingLabelBehavior: FloatingLabelBehavior.never,
                             fillColor: Colors.white,
                             filled: true,
                             contentPadding: EdgeInsets.symmetric(
-                                vertical: 20.0, horizontal: 20.0),
+                                vertical: size.height * 0.025,
+                                horizontal: size.width * 0.06),
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(22.0),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: Color(0xff951B80), width: 2.5)),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(22.0),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: Color(0xff951B80), width: 1.0)),
                             errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16.0),
-                                borderSide:
-                                    BorderSide(color: Colors.red, width: 2.0)),
+                                borderSide: const BorderSide(
+                                    color: Colors.red, width: 2.0)),
                             focusedErrorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16.0),
-                                borderSide:
-                                    BorderSide(color: Colors.red, width: 2.0)),
+                                borderSide: const BorderSide(
+                                    color: Colors.red, width: 2.0)),
                             hintStyle:
                                 GoogleFonts.urbanist(color: Colors.grey[800]),
                             hintText: 'Password',
@@ -139,7 +142,7 @@ class _Login_ScreenState extends State<Login_Screen> {
                                 onPressed: () {
                                   showpass3();
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.remove_red_eye,
                                   color: Color(0xff951B80),
                                 )),

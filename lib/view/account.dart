@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:artisian/model/user.dart';
 import 'package:artisian/view/updateprofile.dart';
 import 'package:artisian/viewmodel/registration_view_model.dart';
@@ -65,9 +63,9 @@ class _AccountState extends State<Account> {
         title: Text("Profile",
             style: TextStyle(
                 color: theme.focusColor,
-                fontSize: 35,
+                fontSize: size.height * 0.047,
                 fontWeight: FontWeight.bold,
-                fontFamily: 'Heading')),
+                fontFamily: 'Title')),
         centerTitle: true,
       ),
       body: Container(
@@ -83,7 +81,7 @@ class _AccountState extends State<Account> {
                 }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: const CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 Users? user = snapshot.data;
@@ -97,11 +95,9 @@ class _AccountState extends State<Account> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(size.width * 0.030),
                       child: user.imageUrl == ""
-                          ? Image.asset(
-                              "assets/icons/logo.png",
-                              height: 200,
-                              width: 200,
-                            )
+                          ? Image.asset("assets/icons/logo.png",
+                              width: size.width * 0.39,
+                              height: size.height * 0.210)
                           : Stack(
                               alignment: Alignment.center,
                               children: [
@@ -139,110 +135,128 @@ class _AccountState extends State<Account> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.all(size.height * 0.025),
-                        child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start, // Adjust alignment
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                          user.name
-                                              .substring(0, 1)
-                                              .toUpperCase(),
-                                          style: TextStyle(
-                                              color: theme.focusColor,
-                                              fontSize: size.height * 0.024,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: 'Name')),
-                                      Text(user.name.substring(1).toLowerCase(),
-                                          style: TextStyle(
-                                              color: theme.focusColor,
-                                              fontSize: size.height * 0.024,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: 'Name')),
-                                    ],
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                          gradient: LinearGradient(
+                            colors: [
+                              const Color(0xff331241).withOpacity(0.10),
+                              const Color(0xFFFCE4EC).withOpacity(0.40)
+                            ], // Add your desired gradient colors here
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(size.height * 0.025),
+                          child: Column(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start, // Adjust alignment
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                            user.name
+                                                .substring(0, 1)
+                                                .toUpperCase(),
+                                            style: TextStyle(
+                                                color: theme.focusColor,
+                                                fontSize: size.height * 0.024,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Name')),
+                                        Text(
+                                            user.name
+                                                .substring(1)
+                                                .toLowerCase(),
+                                            style: TextStyle(
+                                                color: theme.focusColor,
+                                                fontSize: size.height * 0.024,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Name')),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                if (widget.email == userEmail)
-                                  IconButton(
-                                    iconSize: size.height * 0.019,
-                                    icon: const Icon(Icons.edit),
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => UpdateScreen(
-                                            email: widget.email.toString(),
-                                            user: user,
+                                  if (widget.email == userEmail)
+                                    IconButton(
+                                      iconSize: size.height * 0.019,
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => UpdateScreen(
+                                              email: widget.email.toString(),
+                                              user: user,
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
+                                ],
+                              ),
+                              SizedBox(height: size.height * 0.015),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Age: ',
+                                    style: TextStyle(
+                                      fontSize: size.height * 0.019,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                              ],
-                            ),
-                            SizedBox(height: size.height * 0.015),
-                            Row(
-                              children: [
-                                Text(
-                                  'Age: ',
-                                  style: TextStyle(
-                                    fontSize: size.height * 0.019,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  '${user.age}',
-                                  style: TextStyle(
-                                    fontSize: size.height * 0.019,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: size.height * 0.010),
-                            Row(
-                              children: [
-                                Text(
-                                  'Hobby: ',
-                                  style: TextStyle(
-                                    fontSize: size.height * 0.019,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Expanded(
-                                  // Allow hobby text to wrap
-                                  child: Text(
-                                    '${user.hobby}',
+                                  Text(
+                                    '${user.age}',
                                     style: TextStyle(
                                       fontSize: size.height * 0.019,
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: size.height * 0.010),
-                            Row(
-                              children: [
-                                Expanded(
-                                  // Allow bio text to wrap
-                                  child: Text(
-                                    '" ${user.bio}"',
+                                ],
+                              ),
+                              SizedBox(height: size.height * 0.010),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Hobby: ',
                                     style: TextStyle(
-                                      fontSize: size.height * 0.018,
+                                      fontSize: size.height * 0.019,
                                       fontWeight: FontWeight.bold,
-                                      color: Color(0xffCEA2FD),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Expanded(
+                                    // Allow hobby text to wrap
+                                    child: Text(
+                                      user.hobby,
+                                      style: TextStyle(
+                                        fontSize: size.height * 0.019,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: size.height * 0.010),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    // Allow bio text to wrap
+                                    child: Text(
+                                      '" ${user.bio}"',
+                                      style: TextStyle(
+                                        fontSize: size.height * 0.030,
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color(0xffCEA2FD),
+                                        fontFamily: 'Heading',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -308,8 +322,8 @@ class _AccountState extends State<Account> {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             // While waiting for data, you can display a loading indicator.
-                            return Center(
-                                child: const CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           } else if (snapshot.hasError) {
                             // If an error occurs, display an error message.
                             return Text('Error: ${snapshot.error}');

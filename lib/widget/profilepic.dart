@@ -4,7 +4,8 @@ class ProfilePic extends StatelessWidget {
   final String imageUrl;
   final VoidCallback onTap;
 
-  ProfilePic({required this.imageUrl, required this.onTap});
+  const ProfilePic({Key? key, required this.imageUrl, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

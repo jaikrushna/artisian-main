@@ -5,11 +5,12 @@ class MyGridTile extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
 
-  MyGridTile({
+  const MyGridTile({
+    Key? key,
     required this.imagePath,
     required this.title,
     required this.onPressed,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class MyGridTile extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xff5D0B5F).withOpacity(0.10), // 50% transparent blue
+              const Color(0xff5D0B5F).withOpacity(0.10), // 50% transparent blue
               Colors.deepPurple.withOpacity(0.7), // 50% transparent green
             ],
           ),
@@ -36,7 +37,7 @@ class MyGridTile extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: size.width * 0.46,
                   child: Image.asset(
                     imagePath,

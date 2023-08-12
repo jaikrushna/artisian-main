@@ -77,30 +77,31 @@ class _LoginViewState extends State<LoginView> {
 
                         decoration: InputDecoration(
                           labelText: 'Password..',
-                          labelStyle: TextStyle(
+                          labelStyle: const TextStyle(
                             color: Color(0xff951B80),
                           ),
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           fillColor: Colors.white,
                           filled: true,
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 20.0),
+                              vertical: size.height * 0.025,
+                              horizontal: size.width * 0.06),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(22.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Color(0xff951B80), width: 2.5)),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(22.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Color(0xff951B80), width: 1.0)),
                           errorBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16.0),
-                              borderSide:
-                                  BorderSide(color: Colors.red, width: 2.0)),
+                              borderSide: const BorderSide(
+                                  color: Colors.red, width: 2.0)),
                           focusedErrorBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16.0),
-                              borderSide:
-                                  BorderSide(color: Colors.red, width: 2.0)),
+                              borderSide: const BorderSide(
+                                  color: Colors.red, width: 2.0)),
                           hintStyle:
                               GoogleFonts.urbanist(color: Colors.grey[800]),
                           hintText: 'Password',
@@ -108,7 +109,7 @@ class _LoginViewState extends State<LoginView> {
                               onPressed: () {
                                 showpass3();
                               },
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.remove_red_eye,
                                 color: Color(0xff951B80),
                               )),

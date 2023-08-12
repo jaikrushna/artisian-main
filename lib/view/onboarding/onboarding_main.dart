@@ -4,7 +4,6 @@ import 'package:artisian/view/onboarding/onboardingthree.dart';
 import 'package:artisian/view/onboarding/onboardingtwo.dart';
 import 'package:artisian/widget/buttoncustom.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -19,9 +18,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     with SingleTickerProviderStateMixin {
   final _controller = PageController();
   final pages = [
-    OnboardingOne(),
-    OnboardingTwo(),
-    OnboardingThree(),
+    const OnboardingOne(),
+    const OnboardingTwo(),
+    const OnboardingThree(),
   ];
 
   int currentIndex = 0;
@@ -80,13 +79,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             Container(
               width: double.infinity, // Occupy full available width
               height: double.infinity,
-              alignment: Alignment(0, 0.55),
+              alignment: const Alignment(0, 0.55),
               child: SmoothPageIndicator(
                 controller: _controller,
                 count: pages.length,
                 effect: SlideEffect(
-                  dotColor: Color(0xffE0D4EC),
-                  activeDotColor: Color(0xff6318AF),
+                  dotColor: const Color(0xffE0D4EC),
+                  activeDotColor: const Color(0xff6318AF),
                   dotHeight: screenHeight * 0.01,
                   dotWidth: screenWidth * 0.07,
                 ),
@@ -94,13 +93,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             )
           else if (currentIndex == 1)
             Container(
-              alignment: Alignment(0, 0.6),
+              alignment: const Alignment(0, 0.6),
               child: SmoothPageIndicator(
                 controller: _controller,
                 count: pages.length,
                 effect: SlideEffect(
-                  dotColor: Color(0xffE0D4EC),
-                  activeDotColor: Color(0xff6318AF),
+                  dotColor: const Color(0xffE0D4EC),
+                  activeDotColor: const Color(0xff6318AF),
                   dotHeight: screenHeight * 0.01,
                   dotWidth: screenWidth * 0.07,
                 ),
@@ -108,13 +107,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             )
           else
             Container(
-              alignment: Alignment(0, 0.58),
+              alignment: const Alignment(0, 0.58),
               child: SmoothPageIndicator(
                 controller: _controller,
                 count: pages.length,
                 effect: SlideEffect(
-                  dotColor: Color(0xffE0D4EC),
-                  activeDotColor: Color(0xff6318AF),
+                  dotColor: const Color(0xffE0D4EC),
+                  activeDotColor: const Color(0xff6318AF),
                   dotHeight: screenHeight * 0.01,
                   dotWidth: screenWidth * 0.07,
                 ),
@@ -141,11 +140,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             child: currentIndex != 2
                 ? CustomButton(
                     size: screenHeight * 0.09,
-                    innerColor: Color(0xff6017AA),
-                    outerColor: Color(0xffE0D4EC),
+                    innerColor: const Color(0xff6017AA),
+                    outerColor: const Color(0xffE0D4EC),
                     onPressed: () {
                       _controller.nextPage(
-                        duration: Duration(milliseconds: 1),
+                        duration: const Duration(milliseconds: 1),
                         curve: Curves.decelerate,
                       );
                     },
@@ -157,6 +156,22 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                       borderRadius: BorderRadius.circular(screenHeight * 0.04),
                     ),
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xffE0D4EC),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            screenHeight * 0.04,
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginView()),
+                          (route) => false,
+                        );
+                      },
                       child: Row(
                         children: [
                           Padding(
@@ -164,7 +179,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             child: Text(
                               "Get Started",
                               style: GoogleFonts.lexend(
-                                color: Color(0xff6318AF),
+                                color: const Color(0xff6318AF),
                                 fontSize: screenWidth * 0.04,
                               ),
                             ),
@@ -177,8 +192,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             backgroundColor: Colors.white,
                             child: CircleAvatar(
                               radius: screenHeight * 0.033,
-                              backgroundColor: Color(0xff6318AF),
-                              child: Icon(
+                              backgroundColor: const Color(0xff6318AF),
+                              child: const Icon(
                                 Icons.arrow_forward_sharp,
                                 color: Colors.white,
                               ),
@@ -186,21 +201,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                           ),
                         ],
                       ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xffE0D4EC),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            screenHeight * 0.04,
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginView()),
-                          (route) => false,
-                        );
-                      },
                     ),
                   ),
           ),

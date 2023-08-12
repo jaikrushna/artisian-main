@@ -98,8 +98,12 @@ class custom_button extends StatelessWidget {
               courseModel.addCourse(email: email, level: 'Intermediate');
               courseModel.addCourse(email: email, level: 'Advance');
               postModel.PostNew(email: email);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Landing()));
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const Landing()),
+                (route) =>
+                    false, // This prevents any routes from being kept in the stack
+              );
             } on HttpException catch (error) {
               var errorMessage = 'Authentication failed';
               if (error.toString().contains('INVALID_EMAIL')) {
@@ -115,7 +119,6 @@ class custom_button extends StatelessWidget {
             }
             // Get.to(Login_View());
           }
-          ;
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: theme.primaryColor,

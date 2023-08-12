@@ -1,12 +1,15 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:artisian/view/youtube.dart';
 
 class BulletTextButtonsContainer extends StatelessWidget {
   BulletTextButtonsContainer({
+    Key? key,
     required this.index,
     required this.L,
     required this.links,
-  });
+  }) : super(key: key);
   int index;
   List<String> L;
   List<String> links;
@@ -70,11 +73,13 @@ class BulletTextButton extends StatelessWidget {
   final int course;
   final int index;
   final List<String> link;
-  BulletTextButton(
-      {required this.text,
+  const BulletTextButton(
+      {Key? key,
+      required this.text,
       required this.course,
       required this.index,
-      required this.link});
+      required this.link})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

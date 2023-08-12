@@ -1,14 +1,17 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:artisian/viewmodel/post_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PostTile extends StatefulWidget {
-  PostTile({
+  const PostTile({
+    Key? key,
     required this.id,
     required this.url,
     required this.email,
-  });
+  }) : super(key: key);
   final String url;
   final String id;
   final String? email;
@@ -28,21 +31,21 @@ class _PostTileState extends State<PostTile> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Delete Post'),
-            content: Text('Are you sure you want to delete the post?'),
+            title: const Text('Delete Post'),
+            content: const Text('Are you sure you want to delete the post?'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                   viewModel.deletePost(userEmail.toString(), widget.id);
                 },
-                child: Text('Delete'),
+                child: const Text('Delete'),
               ),
             ],
           );
@@ -59,7 +62,7 @@ class _PostTileState extends State<PostTile> {
         child: Column(
           children: [
             Image.network(
-              '${widget.url}',
+              widget.url,
               fit: BoxFit.fitHeight,
               width: size.width * 0.99,
               height: size.height * 0.35,
@@ -72,10 +75,10 @@ class _PostTileState extends State<PostTile> {
                           onPressed: () {
                             _showDeleteConfirmationDialog();
                           },
-                          icon: Icon(Icons.delete)),
+                          icon: const Icon(Icons.delete)),
                     ],
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ],
         ));
   }

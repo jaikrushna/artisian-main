@@ -26,7 +26,7 @@ class _SyllabusState extends State<Syllabus> {
         appBar: AppBar(
           backgroundColor: theme.backgroundColor,
           title: Padding(
-            padding: const EdgeInsets.only(left: 90),
+            padding: EdgeInsets.only(left: size.height * 0.115),
             child: Text(
               widget.title,
               style: TextStyle(
@@ -43,7 +43,7 @@ class _SyllabusState extends State<Syllabus> {
                 future: CourseViewModel().getCurrentCourseData(widget.level),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: const CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
