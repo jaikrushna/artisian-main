@@ -121,14 +121,17 @@ class _SubmissionState extends State<Submission> {
                 try {
                   UploadTask uploadTask =
                       referenceImageToUpload.putFile(File(file.path));
+
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       double uploadProgress = 0.0; // Initialize progress
+
                       uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
-                        uploadProgress =
-                            snapshot.bytesTransferred / snapshot.totalBytes;
-                        // Update the progress using the snapshot's data
+                        setState(() {
+                          uploadProgress =
+                              snapshot.bytesTransferred / snapshot.totalBytes;
+                        });
                       });
 
                       return StatefulBuilder(
@@ -150,7 +153,11 @@ class _SubmissionState extends State<Submission> {
                       );
                     },
                   );
-                  Navigator.of(context).pop();
+
+                  await uploadTask; // Wait for the upload task to complete
+
+                  Navigator.of(context).pop(); // Close the progress dialog
+
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -170,16 +177,19 @@ class _SubmissionState extends State<Submission> {
                     },
                   );
                   imageUrl = await referenceImageToUpload.getDownloadURL();
-                  FirebaseFirestore.instance
+
+                  // Assuming 'firestore' is correctly initialized for Firestore
+                  await firestone
                       .collection('post')
                       .doc('$email')
                       .collection('$email')
                       .add({
                     'imageUrl': imageUrl,
-                    'date': DateTime.now(),
+                    'date': date,
                   });
                 } catch (error) {
-                  //Some error occurred
+                  // Handle the error
+                  print('Error: $error');
                 }
               },
             ),
@@ -203,14 +213,17 @@ class _SubmissionState extends State<Submission> {
                 try {
                   UploadTask uploadTask =
                       referenceImageToUpload.putFile(File(file.path));
+
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       double uploadProgress = 0.0; // Initialize progress
+
                       uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
-                        uploadProgress =
-                            snapshot.bytesTransferred / snapshot.totalBytes;
-                        // Update the progress using the snapshot's data
+                        setState(() {
+                          uploadProgress =
+                              snapshot.bytesTransferred / snapshot.totalBytes;
+                        });
                       });
 
                       return StatefulBuilder(
@@ -232,7 +245,11 @@ class _SubmissionState extends State<Submission> {
                       );
                     },
                   );
-                  Navigator.of(context).pop();
+
+                  await uploadTask; // Wait for the upload task to complete
+
+                  Navigator.of(context).pop(); // Close the progress dialog
+
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -252,7 +269,9 @@ class _SubmissionState extends State<Submission> {
                     },
                   );
                   imageUrl = await referenceImageToUpload.getDownloadURL();
-                  firestone
+
+                  // Assuming 'firestore' is correctly initialized for Firestore
+                  await firestone
                       .collection('post')
                       .doc('$email')
                       .collection('$email')
@@ -260,6 +279,7 @@ class _SubmissionState extends State<Submission> {
                     'imageUrl': imageUrl,
                     'date': date,
                   });
+                  Navigator.of(context).pop();
                 } catch (error) {
                   // Handle the error
                   print('Error: $error');

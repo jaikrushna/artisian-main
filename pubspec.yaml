@@ -42,11 +42,11 @@ dependencies:
   youtube_player_flutter:  ^8.1.2
   provider: ^6.0.5
   image_picker: ^1.0.1
-  firebase_storage: ^11.2.5
-  firebase_core: ^2.15.0
+  firebase_storage: ^11.2.6
+  firebase_core: ^2.15.1
   cloud_firestore: ^4.8.3
   flutter_switch: ^0.3.2
-  firebase_auth: ^4.7.1
+  firebase_auth: ^4.7.3
   google_fonts: ^4.0.4
   google_sign_in: ^6.1.0
   smooth_page_indicator: ^1.1.0
@@ -56,7 +56,7 @@ dependencies:
   youtube_explode_dart: ^2.0.1
   flutter_svg: ^2.0.7
   shared_preferences: ^2.2.0
-
+  firebase_app_check: ^0.1.5+2
 dev_dependencies:
   flutter_test:
     sdk: flutter
