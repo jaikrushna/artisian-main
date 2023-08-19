@@ -2,7 +2,7 @@
 
 List<List<String>> Advance = [
   [
-    "",
+    "Get idea of Grid For Proportions",
     "Sketch Realistic Skin texture",
     "Sketch Realistic lips",
     "Sketch Realistic Hairs",
