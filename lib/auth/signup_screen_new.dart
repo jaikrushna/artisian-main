@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:artisian/auth/login_screen.dart';
 import 'package:artisian/helper/custom_text_field.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -30,6 +31,16 @@ class _LoginViewState extends State<LoginView> {
     email.dispose();
     password.dispose();
     super.dispose();
+  }
+
+  void _launchURL() async {
+    const url =
+        'https://raw.githubusercontent.com/jaikrushna/Privacy_Policy-Artisians/main/Terms%26Conditions'; // Replace with your URL
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -123,21 +134,24 @@ class _LoginViewState extends State<LoginView> {
                     SizedBox(height: size.height * 0.022),
                     CheckboxListTile(
                       selectedTileColor: const Color(0XFF7F3DFF),
-                      title: Text.rich(
-                        TextSpan(
-                          text: '',
-                          style: TextStyle(fontSize: size.width * 0.036),
-                          children: const [
-                            TextSpan(
-                              text: 'By signing up, you agree to the ',
-                            ),
-                            TextSpan(
-                              text: 'Terms of Service and Privacy Policy',
-                              style: TextStyle(
-                                color: Colors.green,
+                      title: GestureDetector(
+                        onTap: _launchURL,
+                        child: Text.rich(
+                          TextSpan(
+                            text: '',
+                            style: TextStyle(fontSize: size.width * 0.036),
+                            children: const [
+                              TextSpan(
+                                text: 'By signing up, you agree to the ',
                               ),
-                            )
-                          ],
+                              TextSpan(
+                                text: 'Terms of Service and Privacy Policy',
+                                style: TextStyle(
+                                  color: Colors.green,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       value: isChecked,

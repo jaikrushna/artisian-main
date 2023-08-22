@@ -27,9 +27,19 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    named = {}; // Initialize the named map
+    named = {};
+    // Initialize the named map
+    fetchUserNames();
     streammessage();
     newuser();
+  }
+
+  void fetchUserNames() async {
+    final usersSnapshot = await _firestone.collection('users').get();
+    named.clear();
+    for (var userSnapshot in usersSnapshot.docs) {
+      named[userSnapshot['email']] = userSnapshot['name'];
+    }
   }
 
   void newuser() async {
