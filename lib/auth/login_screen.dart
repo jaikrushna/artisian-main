@@ -171,11 +171,13 @@ class _Login_ScreenState extends State<Login_Screen> {
                                           email: email.text,
                                           password: password.text);
                                   if (user != null) {
-                                    Navigator.push(
+                                    Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const Landing()));
+                                                const Landing()),
+                                        (route) => false);
+                                    ;
                                   }
                                   setState(() {
                                     progress = false;

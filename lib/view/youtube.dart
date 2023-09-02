@@ -1,5 +1,7 @@
 // ignore_for_file: camel_case_types, must_be_immutable
 
+import 'package:artisian/helper/admobservice.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -17,6 +19,9 @@ class _Youtube_screenState extends State<Youtube_screen> {
   late YoutubePlayerController _controller;
   String? videoID;
   Video? _videoMetaData;
+  BannerAd? _banner;
+
+  AdHelper adHelper = AdHelper();
   Future<Video> fetchVideoMetadata(String videoUrl) async {
     final yt = YoutubeExplode();
     final videoId = YoutubePlayer.convertUrlToId(videoUrl);
@@ -28,6 +33,7 @@ class _Youtube_screenState extends State<Youtube_screen> {
   @override
   void initState() {
     videoURL = widget.link;
+    _banner = adHelper.createBannerAd()..load();
     _fetchVideoMetadata(videoURL);
     final videoID = YoutubePlayer.convertUrlToId(videoURL);
     _controller = YoutubePlayerController(
@@ -132,6 +138,11 @@ class _Youtube_screenState extends State<Youtube_screen> {
             ],
           ),
         ),
+        bottomNavigationBar: Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  height: 52,
+                  child: AdWidget(ad: _banner!),
+                )
       ),
     );
   }

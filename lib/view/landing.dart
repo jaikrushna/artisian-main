@@ -1,8 +1,10 @@
+import 'package:artisian/helper/admobservice.dart';
 import 'package:artisian/widget/custombottom.dart';
 import 'package:artisian/view/carosalview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:artisian/widget/appdrawer.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'account.dart';
 import 'chatscreen.dart';
 
@@ -17,6 +19,13 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   final _inactiveColor = Colors.grey;
   late String? userEmail;
+  BannerAd? _banner;
+  AdHelper adHelper = AdHelper();
+  @override
+  void initState() {
+    super.initState();
+    _banner = adHelper.createBannerAd()..load();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,37 +40,50 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   Widget _buildBottomBar() {
     Size size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
-    return CustomAnimatedBottomBar(
-      containerHeight: size.height * 0.085, //70
-      backgroundColor: theme.backgroundColor,
-      selectedIndex: _currentIndex,
-      showElevation: true,
-      itemCornerRadius: size.width * 0.82, //24
-      curve: Curves.easeIn,
-      onItemSelected: (index) => setState(() => _currentIndex = index),
-      items: <BottomNavyBarItem>[
-        BottomNavyBarItem(
-          icon: const Icon(Icons.apps),
-          title: const Text('Home'),
-          activeColor: theme.primaryColor,
-          inactiveColor: _inactiveColor,
-          textAlign: TextAlign.center,
-        ),
-        BottomNavyBarItem(
-          icon: const Icon(Icons.message),
-          title: const Text(
-            'Chat',
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        StatefulBuilder(
+          builder: (context, setState) => Container(
+            child: AdWidget(ad: _banner!),
+            width: double.infinity,
+            height: 60.0,
+            alignment: Alignment.center,
           ),
-          activeColor: theme.primaryColor,
-          inactiveColor: _inactiveColor,
-          textAlign: TextAlign.center,
         ),
-        BottomNavyBarItem(
-          icon: const Icon(Icons.people),
-          title: const Text('User'),
-          activeColor: theme.primaryColor,
-          inactiveColor: _inactiveColor,
-          textAlign: TextAlign.center,
+        CustomAnimatedBottomBar(
+          containerHeight: size.height * 0.085, //70
+          backgroundColor: theme.backgroundColor,
+          selectedIndex: _currentIndex,
+          showElevation: true,
+          itemCornerRadius: size.width * 0.82, //24
+          curve: Curves.easeIn,
+          onItemSelected: (index) => setState(() => _currentIndex = index),
+          items: <BottomNavyBarItem>[
+            BottomNavyBarItem(
+              icon: const Icon(Icons.apps),
+              title: const Text('Home'),
+              activeColor: theme.primaryColor,
+              inactiveColor: _inactiveColor,
+              textAlign: TextAlign.center,
+            ),
+            BottomNavyBarItem(
+              icon: const Icon(Icons.message),
+              title: const Text(
+                'Chat',
+              ),
+              activeColor: theme.primaryColor,
+              inactiveColor: _inactiveColor,
+              textAlign: TextAlign.center,
+            ),
+            BottomNavyBarItem(
+              icon: const Icon(Icons.people),
+              title: const Text('User'),
+              activeColor: theme.primaryColor,
+              inactiveColor: _inactiveColor,
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ],
     );

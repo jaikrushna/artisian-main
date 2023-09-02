@@ -10,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:artisian/view/youtube.dart';
 import 'package:artisian/viewmodel/email_view.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:artisian/viewmodel/post_view_model.dart';
 import 'package:artisian/provider/dark_theme.dart';
@@ -27,6 +28,15 @@ Widget isLogin() {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // await MobileAds.instance.initialize().then((InitializationStatus status) {
+  //   print('Initialization done: ${status.adapterStatuses}');
+  //   // MobileAds.instance.updateRequestConfiguration(
+  //   //   RequestConfiguration(
+  //   //       tagForChildDirectedTreatment:
+  //   //           TagForChildDirectedTreatment.unspecified,
+  //   //       testDeviceIds: <String>["86AEA7415636933EEB64326F8DB9B546"]),
+  //   // );
+  // });
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => ThemeProvider()),
@@ -53,7 +63,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: themeProvider.themeMode,
-      title: 'Flutter Demo',
+      title: 'Artisians',
       home: SplashScreen(),
       // initialRoute: '/home',
       routes: {
